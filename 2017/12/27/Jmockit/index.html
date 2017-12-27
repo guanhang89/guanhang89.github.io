@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="#Jmockit使用详解之Mocking 简介翻译自官方文档 Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。  Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期望行为，常常">
+<meta name="description" content="简介翻译自官方文档 Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。  Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期望行为，常常就是我们希望伪造的部分；replay是回放">
 <meta name="keywords" content="Jmockit">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jmockit使用详解之Mocking">
 <meta property="og:url" content="http://yoursite.com/2017/12/27/Jmockit/index.html">
 <meta property="og:site_name" content="夜深人未眠">
-<meta property="og:description" content="#Jmockit使用详解之Mocking 简介翻译自官方文档 Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。  Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期望行为，常常">
+<meta property="og:description" content="简介翻译自官方文档 Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。  Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期望行为，常常就是我们希望伪造的部分；replay是回放">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-27T14:15:03.890Z">
+<meta property="og:updated_time" content="2017-12-27T14:30:00.817Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jmockit使用详解之Mocking">
-<meta name="twitter:description" content="#Jmockit使用详解之Mocking 简介翻译自官方文档 Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。  Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期望行为，常常">
+<meta name="twitter:description" content="简介翻译自官方文档 Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。  Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期望行为，常常就是我们希望伪造的部分；replay是回放">
 
 
 
@@ -378,8 +378,7 @@
       
 
       
-        <p>#Jmockit使用详解之Mocking</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>翻译自官方文档</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>翻译自官方文档</p>
 <p>Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。</p>
 <blockquote>
 <p>Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期望行为，常常就是我们希望伪造的部分；replay是回放，是调用我们想测试的代码的时候；Verfications是验证（可以使用各种assert），它的语法和Exceptations类似，是用来验证我们的最后的结果符不符合期望的逻辑。</p>
