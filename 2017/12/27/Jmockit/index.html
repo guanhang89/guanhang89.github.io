@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Jmockit," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="[TOC] #Jmockit使用详解之Mocking 简介翻译自官方文档 Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。  Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期">
+<meta name="keywords" content="Jmockit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jmockit使用详解之Mocking">
+<meta property="og:url" content="http://yoursite.com/2017/12/27/Jmockit/index.html">
+<meta property="og:site_name" content="夜深人未眠">
+<meta property="og:description" content="[TOC] #Jmockit使用详解之Mocking 简介翻译自官方文档 Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。  Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-27T14:10:48.713Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jmockit使用详解之Mocking">
+<meta name="twitter:description" content="[TOC] #Jmockit使用详解之Mocking 简介翻译自官方文档 Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。  Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/27/Jmockit/"/>
+
+
+
+
+
+  <title>Jmockit使用详解之Mocking | 夜深人未眠</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">夜深人未眠</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Follow you heart</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/27/Jmockit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小航">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://tva3.sinaimg.cn/crop.0.0.996.996.180/8b409a87jw8f1k4u06xdvj20ro0rpta2.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="夜深人未眠">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Jmockit使用详解之Mocking</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T22:14:18+08:00">
+                2017-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mock/" itemprop="url" rel="index">
+                    <span itemprop="name">Mock</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<p>#Jmockit使用详解之Mocking</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>翻译自官方文档</p>
+<p>Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。</p>
+<blockquote>
+<p>Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期望行为，常常就是我们希望伪造的部分；replay是回放，是调用我们想测试的代码的时候；Verfications是验证（可以使用各种assert），它的语法和Exceptations类似，是用来验证我们的最后的结果符不符合期望的逻辑。</p>
+</blockquote>
+<p>我的理解：</p>
+<blockquote>
+<p>mocking关注输入输出，对于给定输入，moking能够产生期望的输出，它不倾向去更改mock对象的内部实现来实现期望输出</p>
+<p>faking常常针对某个方法或某个类的内部实现进行伪造(内部搞破坏)，通过改变部分代码的运行逻辑产生期望的结果</p>
+<p>Jmockit能够mock public方法，final，static方法方法和构造函数。当mock一个对象后，在原对象运行的时候将会使用mock后的对象来代替运行。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="一个案例"><a href="#一个案例" class="headerlink" title="一个案例"></a>一个案例</h2><p>假设现在有一个sevice类，需要完成这些操作：</p>
+<ol>
+<li>查询数据库</li>
+<li>数据入库</li>
+<li>发邮件通知</li>
+</ol>
+<p>对于LLT（low level test）来说，我们需要验证程序的内部逻辑是否正确，在操作数据库、发邮件时只需要得到正确的反馈（访问数据库、发邮件都能操作一般都是依赖第三方，这些第三方的东西一般都是假定正确的），而不需关注（通常也没法配置，因为环境是变化的）要连接哪个数据库，给哪个地址发邮件等操作，因此这些跟我们程序的内部逻辑不是很相关或者需要依赖真实环境的部分可以mock掉。</p>
+<p><strong>这个案例发邮件是mock的，至于实体类和数据配置以及操作可以忽略。</strong></p>
+<p>定义实体类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EntityX</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="meta">@Id</span> <span class="meta">@GeneratedValue</span> <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">   <span class="meta">@Column</span>(length = <span class="number">20</span>, nullable = <span class="keyword">false</span>) <span class="keyword">private</span> String someProperty;</span><br><span class="line">   <span class="meta">@Column</span>(length = <span class="number">100</span>) <span class="keyword">private</span> String customerEmail;</span><br><span class="line">   <span class="meta">@Column</span>(precision = <span class="number">15</span>, scale = <span class="number">2</span>) <span class="keyword">private</span> BigDecimal total;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">EntityX</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">EntityX</span><span class="params">(<span class="keyword">int</span> type, String code, String customerEmail)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.customerEmail = customerEmail;</span><br><span class="line">      someProperty = <span class="string">"abc"</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Database类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Database</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;EntityManager&gt; workUnit = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> EntityManagerFactory entityManagerFactory;</span><br><span class="line">   <span class="keyword">static</span></span><br><span class="line">   &#123;</span><br><span class="line">      EntityManagerFactory factory = <span class="keyword">null</span>;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">         factory = Persistence.createEntityManagerFactory(<span class="string">"AppPersistenceUnit"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">catch</span> (PersistenceException e) &#123;</span><br><span class="line">         e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">      entityManagerFactory = factory;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">Database</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> &lt;E&gt; <span class="function">E <span class="title">find</span><span class="params">(Class&lt;E&gt; entityClass, Object entityId)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      E entity = workUnit().find(entityClass, entityId);</span><br><span class="line">      <span class="keyword">return</span> entity;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">find</span><span class="params">(String ql, Object... args)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      Query query = workUnit().createQuery(ql);</span><br><span class="line">      <span class="keyword">int</span> position = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (Object arg : args) &#123;</span><br><span class="line">         query.setParameter(position, arg);</span><br><span class="line">         position++;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">         <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">         List&lt;E&gt; result = query.getResultList();</span><br><span class="line">         <span class="keyword">return</span> result;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">catch</span> (PersistenceException e) &#123;</span><br><span class="line">         Throwable cause = e.getCause();</span><br><span class="line">         <span class="keyword">throw</span> cause <span class="keyword">instanceof</span> SQLException ? <span class="keyword">new</span> RuntimeException(cause) : e;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">persist</span><span class="params">(Object data)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      workUnit().persist(data);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(Object persistentEntity)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      workUnit().remove(persistentEntity);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> EntityManager <span class="title">workUnit</span><span class="params">()</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      EntityManager wu = workUnit.get();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (wu == <span class="keyword">null</span>) &#123;</span><br><span class="line">         wu = entityManagerFactory.createEntityManager();</span><br><span class="line">         workUnit.set(wu);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> wu;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>存库和查询时使用到的内存数据库HSQL的配置（这里查数据库不是mock的，是通过查询实际的内存数据库得到数据,因此不用太关注）：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;persistence</span><br><span class="line">   xmlns=<span class="string">"http://xmlns.jcp.org/xml/ns/persistence"</span> xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">   xsi:schemaLocation=<span class="string">"http://xmlns.jcp.org/xml/ns/persistence</span></span><br><span class="line"><span class="string">                       http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"</span> version=<span class="string">"2.1"</span>&gt;</span><br><span class="line"></span><br><span class="line">   &lt;persistence-unit name=<span class="string">"AppPersistenceUnit"</span>&gt;</span><br><span class="line">      &lt;<span class="class"><span class="keyword">class</span>&gt;<span class="title">tutorial</span>.<span class="title">domain</span>.<span class="title">EntityX</span>&lt;/<span class="title">class</span>&gt;</span></span><br><span class="line"><span class="class">      &lt;<span class="title">properties</span>&gt;</span></span><br><span class="line"><span class="class">         &lt;<span class="title">property</span> <span class="title">name</span></span>=<span class="string">"javax.persistence.jdbc.driver"</span> value=<span class="string">"org.hsqldb.jdbcDriver"</span>/&gt;</span><br><span class="line">         &lt;property name=<span class="string">"javax.persistence.jdbc.url"</span> value=<span class="string">"jdbc:hsqldb:."</span>/&gt;</span><br><span class="line">         &lt;property name=<span class="string">"javax.persistence.jdbc.user"</span> value=<span class="string">"sa"</span>/&gt;</span><br><span class="line">         &lt;property name=<span class="string">"javax.persistence.schema-generation.database.action"</span> value=<span class="string">"create"</span>/&gt;</span><br><span class="line">      &lt;/properties&gt;</span><br><span class="line">   &lt;/persistence-unit&gt;</span><br><span class="line">&lt;/persistence&gt;</span><br></pre></td></tr></table></figure>
+<p>service类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBusinessService</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> EntityX data;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">MyBusinessService</span><span class="params">(EntityX data)</span> </span>&#123; <span class="keyword">this</span>.data = data; &#125;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doBusinessOperationXyz</span><span class="params">()</span> <span class="keyword">throws</span> EmailException</span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      List&lt;EntityX&gt; items = find(<span class="string">"select item from EntityX item where item.someProperty=?1"</span>, data.getSomeProperty());</span><br><span class="line"></span><br><span class="line">      BigDecimal total = <span class="keyword">new</span> BigDecimal(<span class="string">"12.30"</span>);</span><br><span class="line">      data.setTotal(total);</span><br><span class="line">      persist(data);</span><br><span class="line">      sendNotificationEmail(items);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sendNotificationEmail</span><span class="params">(List&lt;EntityX&gt; items)</span> <span class="keyword">throws</span> EmailException</span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      Email email = <span class="keyword">new</span> SimpleEmail();</span><br><span class="line">      email.setSubject(<span class="string">"Notification about processing of ..."</span>);</span><br><span class="line">      email.addTo(data.getCustomerEmail());</span><br><span class="line">      String message = buildNotificationMessage(items);</span><br><span class="line">      email.setMsg(message);</span><br><span class="line"></span><br><span class="line">      email.send();</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">buildNotificationMessage</span><span class="params">(List&lt;EntityX&gt; items)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      StringBuilder message = <span class="keyword">new</span> StringBuilder();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (EntityX item : items) &#123;</span><br><span class="line">         message.append(item.getSomeProperty()).append(<span class="string">" Total: "</span>).append(item.getTotal());</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> message.toString();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>主要的测试代码</strong>：</p>
+<p>@Test注解负责正确的初始化相关对象，有点像Spring的@Component</p>
+<p>@Mocked 注解标识相关的类将会被Mock掉</p>
+<p>Verifications 表示验证阶段，例如，{ anyEmail.send(); times = 1; }表示上面代码运行过程中，anyEmail.send运行了一次</p>
+<p>Expectations 表示期望，可以让我们mock的对象产生期望的运行结果。这能够帮助我们在测试在不同的条件（例如是否出现异常）下代码逻辑的正确性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBusinessServiceTest</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="meta">@Rule</span> <span class="keyword">public</span> <span class="keyword">final</span> ExpectedException thrown = ExpectedException.none();</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Tested</span> <span class="keyword">final</span> EntityX data = <span class="keyword">new</span> EntityX(<span class="number">1</span>, <span class="string">"abc"</span>, <span class="string">"someone@somewhere.com"</span>);</span><br><span class="line">   <span class="meta">@Tested</span>(fullyInitialized = <span class="keyword">true</span>) MyBusinessService businessService;</span><br><span class="line">   <span class="meta">@Mocked</span> SimpleEmail anyEmail;</span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doBusinessOperationXyz</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      EntityX existingItem = <span class="keyword">new</span> EntityX(<span class="number">1</span>, <span class="string">"AX5"</span>, <span class="string">"abc@xpta.net"</span>);</span><br><span class="line">      persist(existingItem);<span class="comment">//持久化，这里没使用Mock</span></span><br><span class="line">      <span class="comment">//被测试代码</span></span><br><span class="line">      businessService.doBusinessOperationXyz();</span><br><span class="line">      assertNotEquals(<span class="number">0</span>, data.getId()); <span class="comment">// implies "data" was persisted</span></span><br><span class="line">      <span class="keyword">new</span> Verifications() &#123;&#123; anyEmail.send(); times = <span class="number">1</span>; &#125;&#125;;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doBusinessOperationXyzWithInvalidEmailAddress</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">      String email = <span class="string">"invalid address"</span>;</span><br><span class="line">      data.setCustomerEmail(email);Expectations </span><br><span class="line">      <span class="keyword">new</span> Expectations() &#123;&#123; anyEmail.addTo(email); result = <span class="keyword">new</span> EmailException(); &#125;&#125;;</span><br><span class="line">      thrown.expect(EmailException.class);</span><br><span class="line">      businessService.doBusinessOperationXyz();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Mocking"><a href="#Mocking" class="headerlink" title="Mocking"></a>Mocking</h2><p>jmockit中Expectations Api 主要提供了mocking的功能，mocking主要关注代码的行为，用于测试比较独立的两个模块间的交互功能，也就是当一个unit（一个类或者模块）依赖另一个unit时，我们可以将另一个unit mock掉。</p>
+<h3 id="Mock的类型和实例"><a href="#Mock的类型和实例" class="headerlink" title="Mock的类型和实例"></a>Mock的类型和实例</h3><p>方法以及构造器是moking主要的对象。主要有两种moking对象的声明形式：作为一个类的属性、作为方法中的一个参数（传参）</p>
+<p>mock的type（类型）可以是接口，类以及注解或者枚举。在测试阶段，mocked type的所有非私有方法和所有非私有构造器都会被mock，如果mock的类型是一个类，它的所有父类（不包括Object）也会被mock。</p>
+<p>当一个方法或构造器被mock，在测试的时候，具体的实现将会有Jmockit掌管。</p>
+<p>案例代码如下：</p>
+<p>若mock的对象作为方法的参数，该对象将会由Jmockit来创建，然后传递给JUunit等test runner，<strong>所以参数不能为nulll</strong></p>
+<p>若mock的对象作为属性变量，Jmocki将会创建后赋值给这个变量，<strong>前提是它不能为final</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// "Dependency" is mocked for all tests in this test class.</span></span><br><span class="line"><span class="comment">// The "mockInstance" field holds a mocked instance automatically created for use in each test.</span></span><br><span class="line"><span class="comment">//该mock对象作用于整个测试类</span></span><br><span class="line"><span class="meta">@Mocked</span> Dependency mockInstance;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="comment">//作为方法的参数传入Mock对象</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doBusinessOperationXyz</span><span class="params">(@Mocked AnotherDependency anotherMock)</span> </span>&#123;</span><br><span class="line">   ...</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123; <span class="comment">// an "expectation block"</span></span><br><span class="line">      ...</span><br><span class="line">      <span class="comment">// Record an expectation, with a given value to be returned:</span></span><br><span class="line">      <span class="comment">//记录期望（调用某个方法产生期望的输出）</span></span><br><span class="line">      mockInstance.mockedMethod(...); result = <span class="number">123</span>;</span><br><span class="line">      ...</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">   ...</span><br><span class="line">   <span class="comment">// Call the code under test.</span></span><br><span class="line">   <span class="comment">// 验证阶段，就是调用要测试的代码</span></span><br><span class="line">   ...</span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123; <span class="comment">// a "verification block"</span></span><br><span class="line">      <span class="comment">// Verifies an expected invocation:</span></span><br><span class="line">      anotherMock.save(any); times = <span class="number">1</span>;</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相关注解的差异：</p>
+<blockquote>
+<p>@Mocked 主要的mocking注解，可以带一个属性stubOutClassInitialization</p>
+<p>@Injectable  单例，只会mock一个实例的实例方法</p>
+<p>@Capturing 将会mock所有实现该mock接口的类</p>
+</blockquote>
+<h3 id="期望（Expectations）"><a href="#期望（Expectations）" class="headerlink" title="期望（Expectations）"></a>期望（Expectations）</h3><p>期望中一个方法可以出现多次，<strong>实际运行中的方法匹配expectation不仅是看方法签名，也看传递的参数的值是否一致。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doBusinessOperationXyz</span><span class="params">(@Mocked Dependency mockInstance)</span> </span>&#123;</span><br><span class="line">   ...</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      ...</span><br><span class="line">      <span class="comment">// An expectation for an instance method:</span></span><br><span class="line">      mockInstance.someMethod(<span class="number">1</span>, <span class="string">"test"</span>); result = <span class="string">"mocked"</span>;</span><br><span class="line">      ...</span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// A call to code under test occurs here, leading to mock invocations</span></span><br><span class="line">   <span class="comment">// that may or may not match specified expectations.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="record-replay-verify-模型"><a href="#record-replay-verify-模型" class="headerlink" title="record-replay-verify 模型"></a>record-replay-verify 模型</h3><p>测试过程可以被分为三个阶段：</p>
+<blockquote>
+<p>准备阶段：初始化相关的类</p>
+<p>测试代码执行阶段</p>
+<p>测试结果验证阶段</p>
+</blockquote>
+<p>但是在基于（期望的）行为的测试中，我们可以将测试分为：</p>
+<blockquote>
+<p>记录阶段： 所谓记录就是记录我们mock的对象的行为，实际上就是上面的期望（记录不如说是期望）</p>
+<p>回放阶段： 也就是代码实际执行阶段（回放我们上面的记录）</p>
+<p>验证阶段： 验证代码是否按照期望进行运行（各种assert）</p>
+</blockquote>
+<p>下面是几种常见rrv模型出现的形式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeTest</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="comment">// Zero or more "mock fields" common to all test methods in the class:</span></span><br><span class="line">   <span class="comment">//作用于整个类</span></span><br><span class="line">   <span class="meta">@Mocked</span> Collaborator mockCollaborator;</span><br><span class="line">   <span class="meta">@Mocked</span> AnotherDependency anotherDependency;</span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testWithRecordAndReplayOnly</span><span class="params">(mock parameters)</span> </span>&#123;</span><br><span class="line">      <span class="comment">// Preparation code not specific to JMockit, if any.</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">new</span> Expectations() &#123;&#123; <span class="comment">// an "expectation block"</span></span><br><span class="line">         <span class="comment">// One or more invocations to mocked types, causing expectations to be recorded.</span></span><br><span class="line">         <span class="comment">// Invocations to non-mocked types are also allowed anywhere inside this block</span></span><br><span class="line">         <span class="comment">// (though not recommended).</span></span><br><span class="line">      &#125;&#125;;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Code under test is exercised.</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// Verification code (JUnit/TestNG assertions), if any.</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testWithReplayAndVerifyOnly</span><span class="params">(mock parameters)</span> </span>&#123;</span><br><span class="line">      <span class="comment">// Preparation code not specific to JMockit, if any.</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// Code under test is exercised.</span></span><br><span class="line">	  <span class="comment">//这里没有Expectations也行</span></span><br><span class="line">      <span class="keyword">new</span> Verifications() &#123;&#123; <span class="comment">// a "verification block"</span></span><br><span class="line">         <span class="comment">// One or more invocations to mocked types, causing expectations to be verified.</span></span><br><span class="line">         <span class="comment">// Invocations to non-mocked types are also allowed anywhere inside this block</span></span><br><span class="line">         <span class="comment">// (though not recommended).</span></span><br><span class="line">      &#125;&#125;;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Additional verification code, if any, either here or before the verification block.</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testWithBothRecordAndVerify</span><span class="params">(mock parameters)</span> </span>&#123;</span><br><span class="line">      <span class="comment">// Preparation code not specific to JMockit, if any.</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">         <span class="comment">// One or more invocations to mocked types, causing expectations to be recorded.</span></span><br><span class="line">      &#125;&#125;;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Code under test is exercised.</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">new</span> VerificationsInOrder() &#123;&#123; <span class="comment">// an ordered verification block</span></span><br><span class="line">         <span class="comment">// One or more invocations to mocked types, causing expectations to be verified</span></span><br><span class="line">         <span class="comment">// in the specified order.</span></span><br><span class="line">      &#125;&#125;;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Additional verification code, if any, either here or before the verification block.</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试类的初始化和注入"><a href="#测试类的初始化和注入" class="headerlink" title="测试类的初始化和注入"></a>测试类的初始化和注入</h3><blockquote>
+<p>@Tested 注解的实例属性将会被自动初始化和注入，如果在测试方法执行前仍为null，将会调用默认构造函数（可以保证不为null）</p>
+<p>@Injectable 对象的注入，可以不是mock对象</p>
+<p>@Mocked或者@Capturing不会进行对象注入</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeTest</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="meta">@Tested</span> CodeUnderTest tested;</span><br><span class="line">   <span class="meta">@Injectable</span> Dependency dep1;</span><br><span class="line">   <span class="meta">@Injectable</span> AnotherDependency dep2;</span><br><span class="line">   <span class="comment">//需要指明初始值，不然将会使用默认值</span></span><br><span class="line">   <span class="meta">@Injectable</span> <span class="keyword">int</span> someIntegralProperty = <span class="number">123</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//可以通过注解来赋值</span></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">someTestMethod</span><span class="params">(@Injectable(<span class="string">"true"</span>)</span> <span class="keyword">boolean</span> flag, @<span class="title">Injectable</span><span class="params">(<span class="string">"Mary"</span>)</span> String name) </span>&#123;</span><br><span class="line">      <span class="comment">// Record expectations on mocked types, if needed.</span></span><br><span class="line"></span><br><span class="line">      tested.exerciseCodeUnderTest();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Verify expectations on mocked types, if required.</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Record"><a href="#Record" class="headerlink" title="Record"></a>Record</h3><p>记录阶段可以记录返回值（result=），在回放阶段，相应的方法被调用后就会返回记录的值</p>
+<p>如果希望有异常出现可以用result赋值</p>
+<p>result多次赋值表示可以返回多个结果(依次的，不是同时返回)</p>
+<p>也可以用return(value1,value2)的形式来返回多个值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassUnderTest</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">(<span class="number">1</span>)<span class="keyword">private</span> <span class="keyword">final</span> DependencyAbc abc = <span class="keyword">new</span> DependencyAbc();</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">(<span class="number">2</span>)   <span class="keyword">int</span> n = abc.intReturningMethod();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">         String s;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">try</span> &#123;</span><br><span class="line">(<span class="number">3</span>)         s = abc.stringReturningMethod();</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">catch</span> (SomeCheckedException e) &#123;</span><br><span class="line">            <span class="comment">// somehow handle the exception</span></span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         <span class="comment">// do some other stuff</span></span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Tested</span> ClassUnderTest cut;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomethingHandlesSomeCheckedException</span><span class="params">(@Mocked DependencyAbc abc)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">(<span class="number">1</span>)   abc.intReturningMethod(); result = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">(<span class="number">2</span>)   abc.stringReturningMethod();</span><br><span class="line">      returns(<span class="string">"str1"</span>, <span class="string">"str2"</span>);</span><br><span class="line">      result = <span class="keyword">new</span> SomeCheckedException();</span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   cut.doSomething();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="灵活的参数匹配"><a href="#灵活的参数匹配" class="headerlink" title="灵活的参数匹配"></a>灵活的参数匹配</h3><p><strong>注意</strong>：期望记录中的方法如果有具体参数，那么在运行时，和期望中的方法签名、参数以及参数具体的值一致的方法才会匹配期望（如果参数是对象，调用对象的equals来判别两个对象是否相同）。所以这是一种严格匹配。下面讲的是一种模糊匹配</p>
+<h4 id="“any”匹配-具体参数类型前面-any"><a href="#“any”匹配-具体参数类型前面-any" class="headerlink" title="“any”匹配(具体参数类型前面+any)"></a>“any”匹配(具体参数类型前面+any)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Tested</span> CodeUnderTest cut;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">someTestMethod</span><span class="params">(@Mocked DependencyAbc abc)</span> </span>&#123;</span><br><span class="line">   DataItem item = <span class="keyword">new</span> DataItem(...);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      <span class="comment">// 匹配 "voidMethod(String, List)" 方法的调用</span></span><br><span class="line">      abc.voidMethod(anyString, (List&lt;?&gt;) any);</span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   cut.doSomething(item);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123;</span><br><span class="line">      <span class="comment">// Matches invocations to the specified method with any value of type long or Long.</span></span><br><span class="line">      <span class="comment">//匹配anotherVoidMethod（Long）</span></span><br><span class="line">      abc.anotherVoidMethod(anyLong);</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="“with”匹配"><a href="#“with”匹配" class="headerlink" title="“with”匹配"></a>“with”匹配</h4><p>withNotNull 不为null</p>
+<p>withAny 任何的参数</p>
+<p>withSubstring 任何包含某个字符串的字符串</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">someTestMethod</span><span class="params">(@Mocked DependencyAbc abc)</span> </span>&#123;</span><br><span class="line">   DataItem item = <span class="keyword">new</span> DataItem(...);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      <span class="comment">// Will match "voidMethod(String, List)" invocations with the first argument</span></span><br><span class="line">      <span class="comment">// equal to "str" and the second not null.</span></span><br><span class="line">      abc.voidMethod(<span class="string">"str"</span>, (List&lt;?&gt;) withNotNull());</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Will match invocations to DependencyAbc#stringReturningMethod(DataItem, String)</span></span><br><span class="line">      <span class="comment">// with the first argument pointing to "item" and the second one containing "xyz".</span></span><br><span class="line">      abc.stringReturningMethod(withSameInstance(item), withSubstring(<span class="string">"xyz"</span>));</span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   cut.doSomething(item);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123;</span><br><span class="line">      <span class="comment">// Matches invocations to the specified method with any long-valued argument.</span></span><br><span class="line">      abc.anotherVoidMethod(withAny(<span class="number">1L</span>));</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="指定执行次数的限制"><a href="#指定执行次数的限制" class="headerlink" title="指定执行次数的限制"></a>指定执行次数的限制</h3><p>记录或者验证阶段都可以使用该限制。</p>
+<p>如果是记录了限制，那么在实际运行时超过限制将会出错</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Tested</span> CodeUnderTest cut;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">someTestMethod</span><span class="params">(@Mocked DependencyAbc abc)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      <span class="comment">// By default, at least one invocation is expected, i.e. "minTimes = 1":</span></span><br><span class="line">      <span class="keyword">new</span> DependencyAbc();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// At least two invocations are expected:</span></span><br><span class="line">     <span class="comment">//最少执行两次</span></span><br><span class="line">      abc.voidMethod(); minTimes = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 1 to 5 invocations are expected:</span></span><br><span class="line">     <span class="comment">//1-5次</span></span><br><span class="line">      abc.stringReturningMethod(); minTimes = <span class="number">1</span>; maxTimes = <span class="number">5</span>;</span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   cut.doSomething();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">someOtherTestMethod</span><span class="params">(@Mocked DependencyAbc abc)</span> </span>&#123;</span><br><span class="line">   cut.doSomething();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123;</span><br><span class="line">      <span class="comment">// Verifies that zero or one invocations occurred, with the specified argument value:</span></span><br><span class="line">      abc.anotherVoidMethod(<span class="number">3</span>); maxTimes = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Verifies the occurrence of at least one invocation with the specified arguments:</span></span><br><span class="line">      DependencyAbc.someStaticMethod(<span class="string">"test"</span>, <span class="keyword">false</span>); <span class="comment">// "minTimes = 1" is implied</span></span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="显示验证"><a href="#显示验证" class="headerlink" title="显示验证"></a>显示验证</h3><p>在Verifications里面你可以使用类似于Expectations的语法来显示验证函数是否调用。注意可以加上”times=n”来限定调用的次数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyInvocationsExplicitlyAtEndOfTest</span><span class="params">(@Mocked Dependency mock)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// Nothing recorded here, though it could be.</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// Inside tested code:</span></span><br><span class="line">   Dependency dependency = <span class="keyword">new</span> Dependency();</span><br><span class="line">   dependency.doSomething(<span class="number">123</span>, <span class="keyword">true</span>, <span class="string">"abc-xyz"</span>);</span><br><span class="line">   <span class="comment">// 验证指定参数类型的doSomething至少被调用了一次</span></span><br><span class="line">   <span class="comment">// Verifies that Dependency#doSomething(int, boolean, String) was called at least once,</span></span><br><span class="line">   <span class="comment">// with arguments that obey the specified constraints:</span></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123; mock.doSomething(anyInt, <span class="keyword">true</span>, withPrefix(<span class="string">"abc"</span>)); &#125;&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>验证函数调用顺序：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyingExpectationsInOrder</span><span class="params">(@Mocked DependencyAbc abc)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// Somewhere inside the tested code:</span></span><br><span class="line">   abc.aMethod();</span><br><span class="line">   abc.doSomething(<span class="string">"blah"</span>, <span class="number">123</span>);</span><br><span class="line">   abc.anotherMethod(<span class="number">5</span>);</span><br><span class="line">   ...</span><br><span class="line">   <span class="comment">//验证是否按照该顺序进行</span></span><br><span class="line">   <span class="comment">//doSomething的顺序没有验证，顺序以及是否产生调用都没有影响</span></span><br><span class="line">   <span class="keyword">new</span> VerificationsInOrder() &#123;&#123;</span><br><span class="line">      <span class="comment">// The order of these invocations must be the same as the order</span></span><br><span class="line">      <span class="comment">// of occurrence during replay of the matching invocations.</span></span><br><span class="line">      abc.aMethod();</span><br><span class="line">      abc.anotherMethod(anyInt);</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Delegate：自定义结果-result-return"><a href="#Delegate：自定义结果-result-return" class="headerlink" title="Delegate：自定义结果(result, return)"></a>Delegate：自定义结果(result, return)</h3><p>适用于我们想根据函数调用的参数来决定函数运行的结果的场景</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Tested</span> CodeUnderTest cut;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delegatingInvocationsToACustomDelegate</span><span class="params">(@Mocked DependencyAbc anyAbc)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      anyAbc.intReturningMethod(anyInt, anyString);</span><br><span class="line">      <span class="comment">//使用Delegate来定制化结果</span></span><br><span class="line">      result = <span class="keyword">new</span> Delegate() &#123;</span><br><span class="line">         <span class="function"><span class="keyword">int</span> <span class="title">aDelegateMethod</span><span class="params">(<span class="keyword">int</span> i, String s)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> i == <span class="number">1</span> ? i : s.length();</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;;</span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Calls to "intReturningMethod(int, String)" will execute the delegate method above.</span></span><br><span class="line">   cut.doSomething();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：Delegate是个空接口，只是用来告诉JMockit哪个调用要被delegated，方法的名字没有限制，同时参数可以匹配真实的调用也可以没有，另外delegate方法有一个默认的参数Invocation，它可以获取运行时调用实例的相关参数。返回的参数也可以和记录的方法不相同，但正常情况下应该都相同，为了防止后面的类型转换错误。</p>
+<p><strong>构造函数也可以被delegate</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delegatingConstructorInvocations</span><span class="params">(@Mocked Collaborator anyCollaboratorInstance)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      <span class="keyword">new</span> Collaborator(anyInt);</span><br><span class="line">      result = <span class="keyword">new</span> Delegate() &#123;</span><br><span class="line">         <span class="function"><span class="keyword">void</span> <span class="title">delegate</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123; <span class="keyword">if</span> (i &lt; <span class="number">1</span>) <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(); &#125;</span><br><span class="line">      &#125;;</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">   <span class="comment">//第一个调用Collaborator(int)构造函数的实例将会执行上面的delegate方法</span></span><br><span class="line">   <span class="comment">// The first instantiation using "Collaborator(int)" will execute the delegate above.</span></span><br><span class="line">   <span class="keyword">new</span> Collaborator(<span class="number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="验证时获取调用参数"><a href="#验证时获取调用参数" class="headerlink" title="验证时获取调用参数"></a>验证时获取调用参数</h3><blockquote>
+<p>T withCapture() : 针对单词调用</p>
+<p>T withCapture(List&lt; T&gt;) ： 针对多次调用</p>
+<p>List&lt; T&gt; withCapture(T) ：针对构造函数（新创建的实例）</p>
+</blockquote>
+<p>单次调用的参数获取:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">capturingArgumentsFromSingleInvocation</span><span class="params">(@Mocked Collaborator mock)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// Inside tested code:</span></span><br><span class="line">   ...</span><br><span class="line">   <span class="keyword">new</span> Collaborator().doSomething(<span class="number">0.5</span>, <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>], <span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Back in test code:</span></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123;</span><br><span class="line">      <span class="keyword">double</span> d;</span><br><span class="line">      String s;</span><br><span class="line">      mock.doSomething(d = withCapture(), <span class="keyword">null</span>, s = withCapture());</span><br><span class="line"></span><br><span class="line">      assertTrue(d &gt; <span class="number">0.0</span>);</span><br><span class="line">      assertTrue(s.length() &gt; <span class="number">1</span>);</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>withCpture()只能在verification块里使用，如果产生了多次调用，只会获取最后一次调用的信息</p>
+<p>多次调用的参数获取：</p>
+<p>withCapture(List)也可以使用在expectation中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">capturingArgumentsFromMultipleInvocations</span><span class="params">(@Mocked Collaborator mock)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// Inside tested code:</span></span><br><span class="line">   mock.doSomething(dataObject1);</span><br><span class="line">   mock.doSomething(dataObject2);</span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Back in test code:</span></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123;</span><br><span class="line">      List&lt;DataObject&gt; dataObjects = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">      mock.doSomething(withCapture(dataObjects));</span><br><span class="line"></span><br><span class="line">      assertEquals(<span class="number">2</span>, dataObjects.size());</span><br><span class="line">      DataObject data1 = dataObjects.get(<span class="number">0</span>);</span><br><span class="line">      DataObject data2 = dataObjects.get(<span class="number">1</span>);</span><br><span class="line">      <span class="comment">// Perform arbitrary assertions on data1 and data2.</span></span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>获取构造函数的参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">capturingNewInstances</span><span class="params">(@Mocked Person mockedPerson)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// From the code under test:</span></span><br><span class="line">   dao.create(<span class="keyword">new</span> Person(<span class="string">"Paul"</span>, <span class="number">10</span>));</span><br><span class="line">   dao.create(<span class="keyword">new</span> Person(<span class="string">"Mary"</span>, <span class="number">15</span>));</span><br><span class="line">   dao.create(<span class="keyword">new</span> Person(<span class="string">"Joe"</span>, <span class="number">20</span>));</span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Back in test code:</span></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123;</span><br><span class="line">      <span class="comment">// Captures the new instances created with a specific constructor.</span></span><br><span class="line">      List&lt;Person&gt; personsInstantiated = withCapture(<span class="keyword">new</span> Person(anyString, anyInt));</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Now captures the instances of the same type passed to a method.</span></span><br><span class="line">      List&lt;Person&gt; personsCreated = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">      dao.create(withCapture(personsCreated));</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Finally, verifies both lists are the same.</span></span><br><span class="line">      assertEquals(personsInstantiated, personsCreated);</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="级联Mock"><a href="#级联Mock" class="headerlink" title="级联Mock"></a>级联Mock</h3><p>针对这种obj1.getObj2(…).getYetAnotherObj().doSomething(…)级联调用的Mock。我们上面所讲的三个注解都可以实现这个功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">recordAndVerifyExpectationsOnCascadedMocks</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">   //将会匹配运行中任何新建的Socket对象</span></span></span><br><span class="line"><span class="function"><span class="params">   @Mocked Socket anySocket, // will match any new Socket object created during the test</span></span></span><br><span class="line"><span class="function"><span class="params">   //将会匹配级联产生的SocketChannel对象</span></span></span><br><span class="line"><span class="function"><span class="params">   @Mocked SocketChannel cascadedChannel // will match cascaded instances</span></span></span><br><span class="line"><span class="function"><span class="params">)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      <span class="comment">// Calls to Socket#getChannel() will automatically return a cascaded SocketChannel;</span></span><br><span class="line">      <span class="comment">// such an instance will be the same as the second mock parameter, allowing us to</span></span><br><span class="line">      <span class="comment">// use it for expectations that will match all cascaded channel instances:</span></span><br><span class="line">      cascadedChannel.isConnected(); result = <span class="keyword">false</span>;</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">   <span class="comment">//当调用getChannel时返回的就是cascadeChannel对象</span></span><br><span class="line">   <span class="comment">// Inside production code:</span></span><br><span class="line">   Socket sk = <span class="keyword">new</span> Socket(); <span class="comment">// mocked as "anySocket"</span></span><br><span class="line">   SocketChannel ch = sk.getChannel(); <span class="comment">// mocked as "cascadedChannel"</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (!ch.isConnected()) &#123;</span><br><span class="line">      SocketAddress sa = <span class="keyword">new</span> InetSocketAddress(<span class="string">"remoteHost"</span>, <span class="number">123</span>);</span><br><span class="line">      ch.connect(sa);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   InetAddress adr1 = sk.getInetAddress();  <span class="comment">// returns a newly created InetAddress instance</span></span><br><span class="line">   InetAddress adr2 = sk.getLocalAddress(); <span class="comment">// returns another new instance</span></span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Back in test code:</span></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123; cascadedChannel.connect((SocketAddress) withNotNull()); &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>静态工厂方法的级联：</strong></p>
+<p>下面的方法不用关心FacesContext.getCurrentInstance()，因为jsf就是这个调用的返回值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postErrorMessageToUIForInvalidInputFields</span><span class="params">(@Mocked FacesContext jsf)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// Set up invalid inputs, somehow.</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// Code under test which validates input fields from a JSF page, adding</span></span><br><span class="line">   <span class="comment">// error messages to the JSF context in case of validation failures.</span></span><br><span class="line">   FacesContext ctx = FacesContext.getCurrentInstance();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (some input is invalid) &#123;</span><br><span class="line">      ctx.addMessage(<span class="keyword">null</span>, <span class="keyword">new</span> FacesMessage(<span class="string">"Input xyz is invalid: blah blah..."</span>));</span><br><span class="line">   &#125;</span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Test code: verify appropriate error message was added to context.</span></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123;</span><br><span class="line">      FacesMessage msg;</span><br><span class="line">      jsf.addMessage(<span class="keyword">null</span>, msg = withCapture());</span><br><span class="line">      assertTrue(msg.getSummary().contains(<span class="string">"blah blah"</span>));</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>对方法返回的是自身对象的级联Mock：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createOSProcessToCopyTempFiles</span><span class="params">(@Mocked ProcessBuilder pb)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">   <span class="comment">// Code under test creates a new process to execute an OS-specific command.</span></span><br><span class="line">   String cmdLine = <span class="string">"copy /Y *.txt D:\\TEMP"</span>;</span><br><span class="line">   File wrkDir = <span class="keyword">new</span> File(<span class="string">"C:\\TEMP"</span>);</span><br><span class="line">   Process copy = <span class="keyword">new</span> ProcessBuilder().command(cmdLine).directory(wrkDir).inheritIO().start();</span><br><span class="line">   <span class="keyword">int</span> exit = copy.waitFor();</span><br><span class="line">   ...</span><br><span class="line">   <span class="comment">//验证pb.command使用特定的参数调用了start方法</span></span><br><span class="line">   <span class="comment">// Verify the desired process was created with the correct command.</span></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123; pb.command(withSubstring(<span class="string">"copy"</span>)).start(); &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="指定Mock的对象实例"><a href="#指定Mock的对象实例" class="headerlink" title="指定Mock的对象实例"></a>指定Mock的对象实例</h3><p>@Mocked注解并不是指定哪个对象要被Mock，它是一种指定类型的Mock。因此如果指定某个对象被Mock，这时候就需要使用@Injectable注解，它是单例的，指定某一个实例被Mock。</p>
+<p>注意：@Injectable Mock的实例是指传进来的或者是类里面注入的实例，不是调用构造函数创建的实例（因为是单例的，新创建的实例属于另一个对象了），另外静态方法（ 静态方法属于类不属于对象）以及构造函数是不能被Mock的。</p>
+<p>使用Injectable的好处就是单个定制化Mock对象的行为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcatenatingInputStream</span> <span class="keyword">extends</span> <span class="title">InputStream</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Queue&lt;InputStream&gt; sequentialInputs;</span><br><span class="line">   <span class="keyword">private</span> InputStream currentInput;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">ConcatenatingInputStream</span><span class="params">(InputStream... sequentialInputs)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.sequentialInputs = <span class="keyword">new</span> LinkedList&lt;InputStream&gt;(Arrays.asList(sequentialInputs));</span><br><span class="line">      currentInput = <span class="keyword">this</span>.sequentialInputs.poll();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (currentInput == <span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">int</span> nextByte = currentInput.read();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (nextByte &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">         <span class="keyword">return</span> nextByte;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      currentInput = sequentialInputs.poll();</span><br><span class="line">      <span class="keyword">return</span> read();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">concatenateInputStreams</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">   //注入两个Mock对象</span></span></span><br><span class="line"><span class="function"><span class="params">   @Injectable InputStream input1, @Injectable InputStream input2</span></span></span><br><span class="line"><span class="function"><span class="params">)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      input1.read(); returns(<span class="number">1</span>, <span class="number">2</span>, -<span class="number">1</span>);</span><br><span class="line">      input2.read(); returns(<span class="number">3</span>, -<span class="number">1</span>);</span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   InputStream concatenatedInput = <span class="keyword">new</span> ConcatenatingInputStream(input1, input2);</span><br><span class="line">   <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">3</span>];</span><br><span class="line">   concatenatedInput.read(buf);</span><br><span class="line"></span><br><span class="line">   assertArrayEquals(<span class="keyword">new</span> <span class="keyword">byte</span>[] &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;, buf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用Mock注解来定制化Mock实例：</p>
+<p>@Mocked和@Capturing注解其实也能指定对象，只要我们定义多个mock类属性或参数就行（有区分）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">matchOnMockInstance</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">   @Mocked Collaborator mock, @Mocked Collaborator otherInstance</span></span></span><br><span class="line"><span class="function"><span class="params">)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123; mock.getValue(); result = <span class="number">12</span>; &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Exercise code under test with mocked instance passed from the test:</span></span><br><span class="line">   <span class="keyword">int</span> result = mock.getValue();</span><br><span class="line">   assertEquals(<span class="number">12</span>, result);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// If another instance is created inside code under test...</span></span><br><span class="line">   Collaborator another = <span class="keyword">new</span> Collaborator();</span><br><span class="line"></span><br><span class="line">   <span class="comment">// ...we won't get the recorded result, but the default one:</span></span><br><span class="line">   assertEquals(<span class="number">0</span>, another.getValue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>使用指定构造器（包括指定参数）创建的实例：</strong></p>
+<p>也就是指定在测试过程中创建的实例（测试前为创建）</p>
+<p>需要注意的是，Expectations中定义的使用指定构造器构造的对象并不是一对一的映射，可以是多对一的映射（也就是 不是只生效一次）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">newCollaboratorsWithDifferentBehaviors</span><span class="params">(@Mocked Collaborator anyCollaborator)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// Record different behaviors for each set of instances:</span></span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      <span class="comment">//下面两个使用了制定了构造器</span></span><br><span class="line">      <span class="comment">// One set, instances created with "a value":</span></span><br><span class="line">      Collaborator col1 = <span class="keyword">new</span> Collaborator(<span class="string">"a value"</span>);</span><br><span class="line">      col1.doSomething(anyInt); result = <span class="number">123</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Another set, instances created with "another value":</span></span><br><span class="line">      Collaborator col2 = <span class="keyword">new</span> Collaborator(<span class="string">"another value"</span>);</span><br><span class="line">      col2.doSomething(anyInt); result = <span class="keyword">new</span> InvalidStateException();</span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Code under test:</span></span><br><span class="line">   <span class="keyword">new</span> Collaborator(<span class="string">"a value"</span>).doSomething(<span class="number">5</span>); <span class="comment">// will return 123</span></span><br><span class="line">   <span class="comment">//下面的将会抛异常</span></span><br><span class="line">   <span class="keyword">new</span> Collaborator(<span class="string">"another value"</span>).doSomething(<span class="number">0</span>); <span class="comment">// will throw the exception</span></span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另一种机制；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">newCollaboratorsWithDifferentBehaviors</span><span class="params">(@Mocked Collaborator col1, @Mocked Collaborator col2)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      <span class="comment">// Map separate sets of future instances to separate mock parameters:</span></span><br><span class="line">      <span class="keyword">new</span> Collaborator(<span class="string">"a value"</span>); result = col1;</span><br><span class="line">      <span class="keyword">new</span> Collaborator(<span class="string">"another value"</span>); result = col2;</span><br><span class="line">      <span class="comment">//可以统一创建，统一record</span></span><br><span class="line">      <span class="comment">// Record different behaviors for each set of instances:</span></span><br><span class="line">      col1.doSomething(anyInt); result = <span class="number">123</span>;</span><br><span class="line">      col2.doSomething(anyInt); result = <span class="keyword">new</span> InvalidStateException();</span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Code under test:</span></span><br><span class="line">   <span class="keyword">new</span> Collaborator(<span class="string">"a value"</span>).doSomething(<span class="number">5</span>); <span class="comment">// will return 123</span></span><br><span class="line">   ...</span><br><span class="line">   <span class="keyword">new</span> Collaborator(<span class="string">"another value"</span>).doSomething(<span class="number">0</span>); <span class="comment">// will throw the exception</span></span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="部分Mocking"><a href="#部分Mocking" class="headerlink" title="部分Mocking"></a>部分Mocking</h3><p>jmockit默认所有的方法和构造函数都是被mock的，包括它的父类(除了Object)也会被Mock.但有时候我们只想部分Mock，不被Mock的部分仍按正常的逻辑执行。</p>
+<p>案例：</p>
+<p>Expectations可以传一个或多个类和Class，如果是传一个Class，该class中所有的方法和构造函数都可以被mocked（包括父类中的），该类的所有实例都会被认为是mock的对象。如果传的是对象，则只有方法（不包括构造函数）能被mock，而且仅有那个传的实例才能被mock。</p>
+<p>注意：下面的这些方式有引出了另一种指定Mock对象类型的方式，也就是不通过类属性输入以及作为方法参数传入的方式来Mock某个类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PartialMockingTest</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Collaborator</span></span></span><br><span class="line"><span class="class">   </span>&#123;</span><br><span class="line">      <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">      Collaborator() &#123; value = -<span class="number">1</span>; &#125;</span><br><span class="line">      Collaborator(<span class="keyword">int</span> value) &#123; <span class="keyword">this</span>.value = value; &#125;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> value; &#125;</span><br><span class="line">      <span class="function"><span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">simpleOperation</span><span class="params">(<span class="keyword">int</span> a, String b, Date c)</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">true</span>; &#125;</span><br><span class="line">      <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(<span class="keyword">boolean</span> b, String s)</span> </span>&#123; <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(); &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">partiallyMockingAClassAndItsInstances</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Collaborator anyInstance = <span class="keyword">new</span> Collaborator();</span><br><span class="line">	  <span class="comment">//传需要Mock的类</span></span><br><span class="line">      <span class="keyword">new</span> Expectations(Collaborator.class) &#123;&#123;</span><br><span class="line">         anyInstance.getValue(); result = <span class="number">123</span>;</span><br><span class="line">      &#125;&#125;;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Not mocked, as no constructor expectations were recorded:</span></span><br><span class="line">      Collaborator c1 = <span class="keyword">new</span> Collaborator();</span><br><span class="line">      Collaborator c2 = <span class="keyword">new</span> Collaborator(<span class="number">150</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Mocked, as a matching method expectation was recorded:</span></span><br><span class="line">      assertEquals(<span class="number">123</span>, c1.getValue());</span><br><span class="line">      assertEquals(<span class="number">123</span>, c2.getValue());</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Not mocked:</span></span><br><span class="line">      assertTrue(c1.simpleOperation(<span class="number">1</span>, <span class="string">"b"</span>, <span class="keyword">null</span>));</span><br><span class="line">      assertEquals(<span class="number">45</span>, <span class="keyword">new</span> Collaborator(<span class="number">45</span>).value);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">partiallyMockingASingleInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Collaborator collaborator = <span class="keyword">new</span> Collaborator(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">new</span> Expectations(collaborator) &#123;&#123;</span><br><span class="line">         collaborator.getValue(); result = <span class="number">123</span>;</span><br><span class="line">         collaborator.simpleOperation(<span class="number">1</span>, <span class="string">""</span>, <span class="keyword">null</span>); result = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">         <span class="comment">// Static methods can be dynamically mocked too.</span></span><br><span class="line">         Collaborator.doSomething(anyBoolean, <span class="string">"test"</span>);</span><br><span class="line">      &#125;&#125;;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Mocked:</span></span><br><span class="line">      assertEquals(<span class="number">123</span>, collaborator.getValue());</span><br><span class="line">      assertFalse(collaborator.simpleOperation(<span class="number">1</span>, <span class="string">""</span>, <span class="keyword">null</span>));</span><br><span class="line">      Collaborator.doSomething(<span class="keyword">true</span>, <span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Not mocked:</span></span><br><span class="line">      assertEquals(<span class="number">2</span>, collaborator.value);</span><br><span class="line">      assertEquals(<span class="number">45</span>, <span class="keyword">new</span> Collaborator(<span class="number">45</span>).getValue());</span><br><span class="line">      assertEquals(-<span class="number">1</span>, <span class="keyword">new</span> Collaborator().getValue());</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当我们指定某个类或者某个类型被部分mock时，它仍能在验证阶段使用，即使没有record过</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">partiallyMockingAnObjectJustForVerifications</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   Collaborator collaborator = <span class="keyword">new</span> Collaborator(<span class="number">123</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> Expectations(collaborator) &#123;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// No expectations were recorded, so nothing will be mocked.</span></span><br><span class="line">   <span class="keyword">int</span> value = collaborator.getValue(); <span class="comment">// value == 123</span></span><br><span class="line">   collaborator.simpleOperation(<span class="number">45</span>, <span class="string">"testing"</span>, <span class="keyword">new</span> Date());</span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Unmocked methods can still be verified:</span></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123; c1.simpleOperation(anyInt, anyString, (Date) any); &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外，还有一个最简单部分mock的方法，就是同时对mock的类属性实例使用@Tested和@Mocked注解</p>
+<h3 id="捕获实现类和实例"><a href="#捕获实现类和实例" class="headerlink" title="捕获实现类和实例"></a>捕获实现类和实例</h3><p>假设我们想测试的方式是基于某个接口的，也就是我们要mock该接口的实现类。但是有些实现类是通过匿名方式来创建的，比如下面的Service2。下面就是基于这种情况来讨论</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Service</span> </span>&#123; <span class="function"><span class="keyword">int</span> <span class="title">doSomething</span><span class="params">()</span></span>; &#125;</span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceImpl</span> <span class="keyword">implements</span> <span class="title">Service</span> </span>&#123; <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">TestedUnit</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Service service1 = <span class="keyword">new</span> ServiceImpl();</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Service service2 = <span class="keyword">new</span> Service() &#123; <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">2</span>; &#125; &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">businessOperation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> service1.doSomething() + service2.doSomething();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>mock不确定的实现类，使用@Capturing注解，它能mock所有的实现类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">UnitTest</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="meta">@Capturing</span> Service anyService;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mockingImplementationClassesFromAGivenBaseType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">new</span> Expectations() &#123;&#123; anyService.doSomething(); returns(<span class="number">3</span>, <span class="number">4</span>); &#125;&#125;;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">int</span> result = <span class="keyword">new</span> TestedUnit().businessOperation();</span><br><span class="line"></span><br><span class="line">      assertEquals(<span class="number">7</span>, result);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>指定待创建类的行为：</p>
+<p>maxInstances指定最大多少个实例被指定为和当前capture对象的行为一致。@Capturing会mock所有的实现类，不管有没有maxInstances注解，至于被mock对象的行为，可以通过maxInstances来控制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testWithDifferentBehaviorForFirstNewInstanceAndRemainingNewInstances</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">   //Buffer是个接口</span></span></span><br><span class="line"><span class="function"><span class="params">   @Capturing(maxInstances = <span class="number">1</span>)</span> Buffer firstNewBuffer, @Capturing Buffer remainingNewBuffers</span></span><br><span class="line"><span class="function">) </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      firstNewBuffer.position(); result = <span class="number">10</span>;</span><br><span class="line">      remainingNewBuffers.position(); result = <span class="number">20</span>;</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">   </span><br><span class="line">   <span class="comment">// Code under test creates several buffers...</span></span><br><span class="line">   ByteBuffer buffer1 = ByteBuffer.allocate(<span class="number">100</span>);</span><br><span class="line">   IntBuffer  buffer2 = IntBuffer.wrap(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;);</span><br><span class="line">   CharBuffer buffer3 = CharBuffer.wrap(<span class="string">"                "</span>);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// ... and eventually read their positions, getting 10 for</span></span><br><span class="line">   <span class="comment">// the first buffer created, and 20 for the remaining ones.</span></span><br><span class="line">   assertEquals(<span class="number">10</span>, buffer1.position());</span><br><span class="line">   assertEquals(<span class="number">20</span>, buffer2.position());</span><br><span class="line">   assertEquals(<span class="number">20</span>, buffer3.position());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="全验证和其他的验证法"><a href="#全验证和其他的验证法" class="headerlink" title="全验证和其他的验证法"></a>全验证和其他的验证法</h3><p>全验证：也就是验证的步骤中少了一环，就会验证失败</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyAllInvocations</span><span class="params">(@Mocked Dependency mock)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// Code under test included here for easy reference:</span></span><br><span class="line">   mock.setSomething(<span class="number">123</span>);</span><br><span class="line">   mock.setSomethingElse(<span class="string">"anotherValue"</span>);</span><br><span class="line">   mock.setSomething(<span class="number">45</span>);</span><br><span class="line">   mock.save();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> FullVerifications() &#123;&#123;</span><br><span class="line">      <span class="comment">// Verifications here are unordered, so the following invocations could be in any order.</span></span><br><span class="line">      mock.setSomething(anyInt); <span class="comment">// verifies two actual invocations</span></span><br><span class="line">      mock.setSomethingElse(anyString);</span><br><span class="line">      mock.save(); <span class="comment">// if this verification (or any other above) is removed the test will fail</span></span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>验证某个调用没被调用:使用”times=0”</strong></p>
+<p>部分顺序的验证：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mocked</span> DependencyAbc abc;</span><br><span class="line"><span class="meta">@Mocked</span> AnotherDependency xyz;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyingTheOrderOfSomeExpectationsRelativeToAllOthers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> CodeUnderTest().doSomething();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> VerificationsInOrder() &#123;&#123;</span><br><span class="line">      abc.methodThatNeedsToExecuteFirst();</span><br><span class="line">      <span class="comment">//unverifiedInvocations表示未排序的方法可以在这块执行</span></span><br><span class="line">      unverifiedInvocations(); <span class="comment">// Invocations not verified must come here...</span></span><br><span class="line">      xyz.method1();</span><br><span class="line">      abc.method2();</span><br><span class="line">      unverifiedInvocations(); <span class="comment">// ... and/or here.</span></span><br><span class="line">      xyz.methodThatNeedsToExecuteLast();</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyFirstAndLastCallsWithOthersInBetweenInAnyOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="comment">// Invocations that occur while exercising the code under test:</span></span><br><span class="line">   mock.prepare();</span><br><span class="line">   mock.setSomethingElse(<span class="string">"anotherValue"</span>);</span><br><span class="line">   mock.setSomething(<span class="number">123</span>);</span><br><span class="line">   mock.notifyBeforeSave();</span><br><span class="line">   mock.save();</span><br><span class="line">   <span class="comment">//需要排序的验证和不需要排序的验证分成两个部分来写</span></span><br><span class="line">   <span class="keyword">new</span> VerificationsInOrder() &#123;&#123;</span><br><span class="line">      mock.prepare(); <span class="comment">// first expected call</span></span><br><span class="line">      unverifiedInvocations(); <span class="comment">// others at this point</span></span><br><span class="line">      mock.notifyBeforeSave(); <span class="comment">// just before last</span></span><br><span class="line">      mock.save(); times = <span class="number">1</span>; <span class="comment">// last expected call</span></span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Unordered verification of the invocations previously left unverified.</span></span><br><span class="line">   <span class="comment">// Could be ordered, but then it would be simpler to just include these invocations</span></span><br><span class="line">   <span class="comment">// in the previous block, at the place where "unverifiedInvocations()" is called.</span></span><br><span class="line">   <span class="keyword">new</span> Verifications() &#123;&#123;</span><br><span class="line">      mock.setSomething(<span class="number">123</span>);</span><br><span class="line">      mock.setSomethingElse(anyString);</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>排序的全验证：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyAllInvocationsInOrder</span><span class="params">(@Mocked Dependency mock)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// Code under test included here for easy reference:</span></span><br><span class="line">   mock.setSomething(<span class="number">123</span>);</span><br><span class="line">   mock.setSomethingElse(<span class="string">"anotherValue"</span>);</span><br><span class="line">   mock.setSomething(<span class="number">45</span>);</span><br><span class="line">   mock.save();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> FullVerificationsInOrder() &#123;&#123;</span><br><span class="line">      mock.setSomething(anyInt);</span><br><span class="line">      mock.setSomethingElse(anyString);</span><br><span class="line">      mock.setSomething(anyInt);</span><br><span class="line">      mock.save();</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>针对某Mock对象的全验证：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyAllInvocationsToOnlyOneOfTwoMockedTypes</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">   @Mocked Dependency mock1, @Mocked AnotherDependency mock2</span></span></span><br><span class="line"><span class="function"><span class="params">)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// Inside code under test:</span></span><br><span class="line">   mock1.prepare();</span><br><span class="line">   mock1.setSomething(<span class="number">123</span>);</span><br><span class="line">   mock2.doSomething();</span><br><span class="line">   mock1.editABunchMoreStuff();</span><br><span class="line">   mock1.save();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> FullVerifications(mock1) &#123;&#123;</span><br><span class="line">      mock1.prepare();</span><br><span class="line">      mock1.setSomething(anyInt);</span><br><span class="line">      mock1.editABunchMoreStuff();</span><br><span class="line">      mock1.save(); times = <span class="number">1</span>;</span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>验证没有调用发生:</p>
+<p>注意下面的代码：为什么doSomething不在验证阶段统计？因为Expectations有doSomthing的期望，默认是被验证的，所以在Verifications里面被忽略。同时如果前面的验证也验证了某些方法，后面的全验证也会省略</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyNoInvocationsOnOneOfTwoMockedDependenciesBeyondThoseRecordedAsExpected</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">   @Mocked Dependency mock1, @Mocked AnotherDependency mock2</span></span></span><br><span class="line"><span class="function"><span class="params">)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123;</span><br><span class="line">      <span class="comment">// These two are recorded as expected:</span></span><br><span class="line">      mock1.setSomething(anyInt);</span><br><span class="line">      mock2.doSomething(); times = <span class="number">1</span>;</span><br><span class="line">   &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Inside code under test:</span></span><br><span class="line">   mock1.prepare();</span><br><span class="line">   mock1.setSomething(<span class="number">1</span>);</span><br><span class="line">   mock1.setSomething(<span class="number">2</span>);</span><br><span class="line">   mock1.save();</span><br><span class="line">   mock2.doSomething();</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Will verify that no invocations other than to "doSomething()" occurred on mock2:</span></span><br><span class="line">   <span class="keyword">new</span> FullVerifications(mock2) &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>验证未指定的调用不应该发生：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readOnlyOperation</span><span class="params">(@Mocked Dependency mock)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> Expectations() &#123;&#123; mock.getData(); result = <span class="string">"test data"</span>; &#125;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Code under test:</span></span><br><span class="line">   String data = mock.getData();</span><br><span class="line">   <span class="comment">// mock.save() should not be called here</span></span><br><span class="line">   ...</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> FullVerifications() &#123;&#123;</span><br><span class="line">      <span class="comment">//只有getData能够被调用，其他的方法如果被调用就会失败，minTimes应该是个标记</span></span><br><span class="line">      mock.getData(); minTimes = <span class="number">0</span>; <span class="comment">// calls to getData() are allowed, others are not</span></span><br><span class="line">   &#125;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Jmockit/" rel="tag"># Jmockit</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/27/华为的那些事之研发/" rel="next" title="华为的那些事之研发">
+                <i class="fa fa-chevron-left"></i> 华为的那些事之研发
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/27/Jmockit使用详解之Faking/" rel="prev" title="Jmockit使用详解之Faking">
+                Jmockit使用详解之Faking <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="http://tva3.sinaimg.cn/crop.0.0.996.996.180/8b409a87jw8f1k4u06xdvj20ro0rpta2.jpg"
+              alt="小航" />
+          
+            <p class="site-author-name" itemprop="name">小航</p>
+            <p class="site-description motion-element" itemprop="description">Never mind</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives">
+            
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/guanhang89" title="CSDN博客" target="_blank">CSDN博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个案例"><span class="nav-number">2.</span> <span class="nav-text">一个案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mocking"><span class="nav-number">3.</span> <span class="nav-text">Mocking</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mock的类型和实例"><span class="nav-number">3.1.</span> <span class="nav-text">Mock的类型和实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#期望（Expectations）"><span class="nav-number">3.2.</span> <span class="nav-text">期望（Expectations）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#record-replay-verify-模型"><span class="nav-number">3.3.</span> <span class="nav-text">record-replay-verify 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试类的初始化和注入"><span class="nav-number">3.4.</span> <span class="nav-text">测试类的初始化和注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Record"><span class="nav-number">3.5.</span> <span class="nav-text">Record</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#灵活的参数匹配"><span class="nav-number">3.6.</span> <span class="nav-text">灵活的参数匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#“any”匹配-具体参数类型前面-any"><span class="nav-number">3.6.1.</span> <span class="nav-text">“any”匹配(具体参数类型前面+any)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#“with”匹配"><span class="nav-number">3.6.2.</span> <span class="nav-text">“with”匹配</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指定执行次数的限制"><span class="nav-number">3.7.</span> <span class="nav-text">指定执行次数的限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示验证"><span class="nav-number">3.8.</span> <span class="nav-text">显示验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Delegate：自定义结果-result-return"><span class="nav-number">3.9.</span> <span class="nav-text">Delegate：自定义结果(result, return)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证时获取调用参数"><span class="nav-number">3.10.</span> <span class="nav-text">验证时获取调用参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#级联Mock"><span class="nav-number">3.11.</span> <span class="nav-text">级联Mock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指定Mock的对象实例"><span class="nav-number">3.12.</span> <span class="nav-text">指定Mock的对象实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部分Mocking"><span class="nav-number">3.13.</span> <span class="nav-text">部分Mocking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#捕获实现类和实例"><span class="nav-number">3.14.</span> <span class="nav-text">捕获实现类和实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全验证和其他的验证法"><span class="nav-number">3.15.</span> <span class="nav-text">全验证和其他的验证法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小航</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
