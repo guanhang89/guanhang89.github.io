@@ -74,7 +74,7 @@
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20200321202342271.png">
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20200321204028173.png">
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20200321204135039.png">
-<meta property="og:updated_time" content="2020-08-23T16:47:26.661Z">
+<meta property="og:updated_time" content="2020-08-23T16:57:30.704Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Cloud Hystrix">
 <meta name="twitter:description" content="微服务故障导致调用方的对外服务也出现延迟， 若此时调用方的请求不断增加， 最后就会因等待出现故障的依赖方响应形成任务积压， 最终导致自身服务的瘫痪 在分布式架构中，当某个服务单元发生故障。通过断路器的故障监控（类似熔断保险丝）， 向调用方返回 一个错误响应， 而不是长时间的等待。 这样就不会使得线程因调用故障服务被长时间占用不释放，避免了故障在分布式系统中的蔓延。">
@@ -260,7 +260,7 @@
 </li>
 <li><p>我们修改服务测得实现,加上睡眠，然后访问消费方接口，同样会得到error错误</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/hello"</span>, method = RequestMethod.GET)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">  ServiceInstance instance = client.getLocalServiceInstance();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 测试超时触发断路器</span></span><br><span class="line">  <span class="keyword">int</span> sleepTime = <span class="keyword">new</span> Random().nextInt(<span class="number">3000</span>);</span><br><span class="line">  logger.info(<span class="string">"sleepTime:"</span> + sleepTime);</span><br><span class="line">  Thread.sleep(sleepTime);</span><br><span class="line"></span><br><span class="line">  logger.info(<span class="string">"/hello, host:"</span> + instance.getHost() + <span class="string">", service_id:"</span> + instance.getServiceId());</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"Hello World"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>原因在于我们配置了超时时间：</p>
+<p><strong>原因在于我们配置了超时时间，默认是2S：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=2000</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
@@ -268,7 +268,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 实际命令的实现</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteCommand</span> <span class="keyword">implements</span> <span class="title">Command</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Receiver receiver;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteCommand</span><span class="params">(Receiver receiver)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.receiver = receiver;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.receiver.action();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//实际命令的执行</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Receiver</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//执行真正的操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//抽象的命令接口</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Command</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 调用者</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Invoker</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Command command;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCommand</span><span class="params">(Command command)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.command = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.command.execute();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Receiver receiver = <span class="keyword">new</span> Receiver();</span><br><span class="line">        Command command = <span class="keyword">new</span> ConcreteCommand(receiver);</span><br><span class="line">        Invoker invoker = <span class="keyword">new</span> Invoker();</span><br><span class="line">        invoker.setCommand(command);</span><br><span class="line">        invoker.action();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Receiver: 接收者， 它知道如何处理具体的业务逻辑。</p>
 <blockquote>
-<p>Command: 抽象命令， 它定义了 一 个命令对象 应具备的 一系列命令操作， 比如execute()、 undo() 、 redo()等。 当命令操作被调用的时候就会触发接收者去做具体命令对应的业务逻辑。<br>ConcreteComrnand: 具体的命令实现， 在这里它绑定了命令操作与接收者之间的关系， execute()命令的实现委托给了 Receiver的 action()函数。<br>Invoker: 调用者， 它持有 一个命令对象， 并且可以在需要的时候通过命令对象完成具体的业务逻辑</p>
+<p>Command: 抽象命令， 它定义了一个命令对象 应具备的一系列命令操作， 比如execute()、 undo() 、 redo()等。 当命令操作被调用的时候就会触发接收者去做具体命令对应的业务逻辑。<br>ConcreteComrnand: 具体的命令实现， 在这里它绑定了命令操作与接收者之间的关系， execute()命令的实现委托给了 Receiver的 action()函数。<br>Invoker: 调用者， 它持有 一个命令对象， 并且可以在需要的时候通过命令对象完成具体的业务逻辑</p>
 </blockquote>
 <p>调用者Invoker与操作者Receiver通过 Command命令接口实现了解耦(传统的实现比如传递命令的枚举，然后判断命令类型去做不同的操作，这种不方便扩展)</p>
 <p>Invoker和Receiver的关系非常类似于 “请求－响应 ” 模式， 所以它比较适用于实现记录日志、 撤销操作、 队列请求等</p>
@@ -276,13 +276,13 @@
 <blockquote>
 <p>execute(): 同步执行，从依赖的服务 返回一个单一的结果对象， 或是在发生错误的时候抛出异常。</p>
 <p>queue(): 异步执行， 直接返回一个Future对象， 其中包含了服务执行结束时要返回的单一结果对象</p>
-<p>R value = command.execute() ;<br>Future<r> fValue = command.queue();</r></p>
+<p>R value = command.execute() ;<br>Future\<r> fValue = command.queue();</r></p>
 </blockquote>
-<p>HystrixObservableCommand实现了另外两种 执行方式:</p>
+<p>HystrixObservableCommand实现了另外两种执行方式:</p>
 <blockquote>
-<p>observe(): 返回Observable对象，它代表了操作的多个结果，它是 一个Hot Observable</p>
+<p>observe(): 返回Observable对象，它代表了操作的多个结果，它是一个HotObservable</p>
 <p>toObservable(): 同样会返回Observable对象， 也代表了操作的多个结果，但它返回的是 一个Cold Observable</p>
-<p>Observable<r> ohValue = command.observe(};<br>Observable<r> ocValue = command. toObservable(};</r></r></p>
+<p>Observable\<r> ohValue = command.observe(};<br>Observable\<r> ocValue = command. toObservable(};</r></r></p>
 </blockquote>
 <p>Observable,可以把它理解为 “ 事件源 ” 或是 “ 被观察者” ， 与其对应的Subscriber对象以理解为 “ 订阅者”或是 “ 观察者”</p>
 <blockquote>
@@ -769,11 +769,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Spring Cloud</a>
+                <a href="javascript:void(0)" class="js-tag color3">ES</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ES</a>
+                <a href="javascript:void(0)" class="js-tag color3">Spring Cloud</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -786,6 +786,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">虚拟机</a>
               </li>
             
             <div class="clearfix"></div>
