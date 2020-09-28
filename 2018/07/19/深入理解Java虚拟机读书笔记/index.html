@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20200309013419402.png">
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20200309015552997.png">
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20200309021239276.png">
-<meta property="og:updated_time" content="2020-09-28T07:16:39.950Z">
+<meta property="og:updated_time" content="2020-09-28T07:26:31.358Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解Java虚拟机读书笔记">
 <meta name="twitter:description" content="[TOC] Java虚拟机的发展史（略） SunClassic/Exact VM只能用纯解释方式来执行Java代码，如果使用JIT编译器，就必须使用外挂。但是如果外挂了JIT编译器，JIT编译器完全接管了虚拟机的执行系统，解释器便不再工作了，即解释器和编译器不能配合工作。编译器和解释其的区别">
@@ -732,10 +732,8 @@
 </li>
 </ol>
 <h4 id="属性表集合"><a href="#属性表集合" class="headerlink" title="属性表集合"></a>属性表集合</h4><ol>
-<li><p>在Class文件、字段表、方法表都可以携带自己的属性表集合，以用于描述某些场景专有的信息。属性值长度不一，数据自定义结构，只要指出占用多少字节就可以了</p>
-</li>
-<li><p>Java虚拟机执行字节码是基于栈的体系结构</p>
-</li>
+<li>在Class文件、字段表、方法表都可以携带自己的属性表集合，以用于描述某些场景专有的信息。属性值长度不一，数据自定义结构，只要指出占用多少字节就可以了</li>
+<li>Java虚拟机执行字节码是基于栈的体系结构</li>
 <li><p>Code属性：</p>
 <blockquote>
 <p> Java程序方法体中的代码经过Javac编译器处理后，最终变为字节码指令存储在Code属性内，注意接口或者抽象类的方法不存在Code属性</p>
@@ -750,35 +748,25 @@
 <p> 编译器使用的异常表而不是简单的跳转命令来实现Java异常及finally处理机制，编译器会自动在每段可能的分支路径之后都将finally语句块的内容冗余生成一遍实现finally语义</p>
 </blockquote>
 </li>
-<li><p>Exceptions属性：</p>
-<p>与Code属性平级的一项属性，Exceptions属性的作用是列举出方法中可能抛出的受检查异常，也就是方法描述时在throws关键字后面列举的异常</p>
+<li><p>Exceptions属性：<br>与Code属性平级的一项属性，Exceptions属性的作用是列举出方法中可能抛出的受检查异常，也就是方法描述时在throws关键字后面列举的异常</p>
 </li>
-<li><p>LineNumberTable属性</p>
-<p>用于描述Java源码行号与字节码行号之间的对应关系，并不是运行时必须的属性，但默认会生成到Class文件之中， 可以在Javac中使用-g： none或-g： lines 选项来取消或要求生成这项信息</p>
+<li><p>LineNumberTable属性<br>用于描述Java源码行号与字节码行号之间的对应关系，并不是运行时必须的属性，但默认会生成到Class文件之中， 可以在Javac中使用-g： none或-g： lines 选项来取消或要求生成这项信息</p>
 </li>
-<li><p>LocalVariableTable属性</p>
-<p>用于描述栈帧中局部变量表中的变量与Java源码中定义的变量之间的关系。如果没有生成这项属性， 最大的影响就是当其他人引用这个方法时， 所 有的参数名称都将会丢失</p>
+<li><p>LocalVariableTable属性<br>用于描述栈帧中局部变量表中的变量与Java源码中定义的变量之间的关系。如果没有生成这项属性， 最大的影响就是当其他人引用这个方法时， 所 有的参数名称都将会丢失</p>
 </li>
-<li><p>SourceFile属性</p>
-<p>用于记录生成这个Class文件的源码文件名称</p>
+<li><p>SourceFile属性<br>用于记录生成这个Class文件的源码文件名称</p>
 </li>
-<li><p>ConstantValue属性</p>
-<p>该属性的作用是通知虚拟机自动为静态变量赋值，只有被static关键字修饰的变量才可以使用这项属性。对于非static类型的变量的赋值的赋值只在实例构造器中进行的，对于类变量（static）来说，如果使用了final或者数据类型为基本类型或者String的话，就生成ConstantValue属性来进行初始化，如果没有final，或者并非基本类型及字符串，会在类构造器中进行初始化</p>
+<li><p>ConstantValue属性<br>该属性的作用是通知虚拟机自动为静态变量赋值，只有被static关键字修饰的变量才可以使用这项属性。对于非static类型的变量的赋值的赋值只在实例构造器中进行的，对于类变量（static）来说，如果使用了final或者数据类型为基本类型或者String的话，就生成ConstantValue属性来进行初始化，如果没有final，或者并非基本类型及字符串，会在类构造器中进行初始化</p>
 </li>
-<li><p>InnerClass属性</p>
-<p>用于记录内部类与宿主类之间的关联。如果一个类中定义了内部类，那编译器将会为它以及它所包含的内部类生成该属性。</p>
+<li><p>InnerClass属性<br>用于记录内部类与宿主类之间的关联。如果一个类中定义了内部类，那编译器将会为它以及它所包含的内部类生成该属性。</p>
 </li>
-<li><p>Deprecated以及Synthetic属性</p>
-<p>这两个属性都属于标志类型的布尔属性，只存在有和没有。前者表示某个类、字段、或者方法已经被程序作者定位不再推荐使用；后者表示此字段或者方法并不是由Java源码直接产生，而是由编译器自动产生的，最常见的是Bridge Method，但是除init和clinit方法之外</p>
+<li><p>Deprecated以及Synthetic属性<br>这两个属性都属于标志类型的布尔属性，只存在有和没有。前者表示某个类、字段、或者方法已经被程序作者定位不再推荐使用；后者表示此字段或者方法并不是由Java源码直接产生，而是由编译器自动产生的，最常见的是Bridge Method，但是除init和clinit方法之外</p>
 </li>
-<li><p>StackMapTable属性</p>
-<p>位于Code属性的属性表中，这个属性会在虚拟机类加载的字节码验证阶段被新类型检查验证器使用，目的是在于代替比较消耗性能的基于数据流的类推导验证器</p>
+<li><p>StackMapTable属性<br>位于Code属性的属性表中，这个属性会在虚拟机类加载的字节码验证阶段被新类型检查验证器使用，目的是在于代替比较消耗性能的基于数据流的类推导验证器</p>
 </li>
-<li><p>Signature属性</p>
-<p>该属性会记录类、接口、初始化方法或者成员的泛型签名信息</p>
+<li><p>Signature属性<br>该属性会记录类、接口、初始化方法或者成员的泛型签名信息</p>
 </li>
-<li><p>BootstrapMethods属性</p>
-<p>是一个复杂的变长属性，用于保存invokedynamic指令引用的引导方法限定符</p>
+<li><p>BootstrapMethods属性<br>是一个复杂的变长属性，用于保存invokedynamic指令引用的引导方法限定符</p>
 </li>
 </ol>
 <blockquote>
@@ -1469,11 +1457,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color3">Spring Cloud</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Spring Cloud</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
