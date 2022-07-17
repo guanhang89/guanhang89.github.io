@@ -6,20 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Jmockit使用详解之Faking | 夜深人未眠</title>
+  <title>Tag: Mongo | 夜深人未眠</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Jmockit使用详解之Faking简介Faking主要用来构造假的实现，通常是部分伪造方法和构造函数，来到得到期望的运行逻辑，常用来伪造第三方组件（发邮件，发请求等）。 伪造方法和类方法通过@Mock来伪造，被伪造的类只要继承mockit.MockUp&amp;lt; T &amp;gt;就行，这里T是需要被伪造的类">
-<meta name="keywords" content="Java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Jmockit使用详解之Faking">
-<meta property="og:url" content="http://yoursite.com/2017/12/27/Jmockit使用详解之Faking/index.html">
+  <meta name="description" content="Never mind">
+<meta property="og:type" content="website">
+<meta property="og:title" content="夜深人未眠">
+<meta property="og:url" content="http://yoursite.com/tags/Mongo/index.html">
 <meta property="og:site_name" content="夜深人未眠">
-<meta property="og:description" content="Jmockit使用详解之Faking简介Faking主要用来构造假的实现，通常是部分伪造方法和构造函数，来到得到期望的运行逻辑，常用来伪造第三方组件（发邮件，发请求等）。 伪造方法和类方法通过@Mock来伪造，被伪造的类只要继承mockit.MockUp&amp;lt; T &amp;gt;就行，这里T是需要被伪造的类">
+<meta property="og:description" content="Never mind">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-11T08:02:20.379Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jmockit使用详解之Faking">
-<meta name="twitter:description" content="Jmockit使用详解之Faking简介Faking主要用来构造假的实现，通常是部分伪造方法和构造函数，来到得到期望的运行逻辑，常用来伪造第三方组件（发邮件，发请求等）。 伪造方法和类方法通过@Mock来伪造，被伪造的类只要继承mockit.MockUp&amp;lt; T &amp;gt;就行，这里T是需要被伪造的类">
+<meta name="twitter:title" content="夜深人未眠">
+<meta name="twitter:description" content="Never mind">
   
     <link rel="alternative" href="/atom.xml" title="夜深人未眠" type="application/atom+xml">
   
@@ -153,222 +151,71 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Jmockit使用详解之Faking" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Jmockit使用详解之Faking
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/12/27/MongoDB/" class="archive-article-date">
+  	<time datetime="2019-12-27T14:14:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-27</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/12/27/MongoDB/">MongoDB之入门</a>
     </h1>
   
 
-        
-        <a href="/2017/12/27/Jmockit使用详解之Faking/" class="archive-article-date">
-  	<time datetime="2017-12-27T14:15:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Jmockit使用详解之Faking"><a href="#Jmockit使用详解之Faking" class="headerlink" title="Jmockit使用详解之Faking"></a>Jmockit使用详解之Faking</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Faking主要用来构造假的实现，通常是部分伪造方法和构造函数，来到得到期望的运行逻辑，常用来伪造第三方组件（发邮件，发请求等）。</p>
-<h2 id="伪造方法和类"><a href="#伪造方法和类" class="headerlink" title="伪造方法和类"></a>伪造方法和类</h2><p>方法通过@Mock来伪造，被伪造的类只要继承mockit.MockUp&lt; T &gt;就行，这里T是需要被伪造的类<br><a id="more"></a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FakeLoginContext</span> <span class="keyword">extends</span> <span class="title">MockUp</span>&lt;<span class="title">LoginContext</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="comment">//伪造了LoginContext的部分方法和构造函数</span></span><br><span class="line">   </span><br><span class="line">   <span class="comment">//伪造了构造函数</span></span><br><span class="line">   <span class="meta">@Mock</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> $init(String name, CallbackHandler callback) &#123;</span><br><span class="line">      assertEquals(<span class="string">"test"</span>, name);</span><br><span class="line">      assertNotNull(callback);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="meta">@Mock</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Mock</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Subject <span class="title">getSubject</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">null</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当一个类的方法被伪造后，在实际调用过程中，真实类的这些方法将会被替换成伪造类的方法。</p>
-<p>注意@Mock标注的方法要和实际该类（或父类,不包括Object类）中的方法签名匹配：对于普通方法，需要名称和参数一致，对于构造函数，只需要构造函数一致，同时名字用”$init”。</p>
-<p>如果@Mock的方法在实际类中找不到，将会抛IllegalArgumentException异常。</p>
-<h2 id="使用伪造类"><a href="#使用伪造类" class="headerlink" title="使用伪造类"></a>使用伪造类</h2><p>伪造类可以作用于整个test类，或者一个test方法，@BeforeClass，@BeforeMethod，@Before，@BeforeEach也可以使用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">applyingAFakeClass</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">   <span class="comment">//直接新建了整个fake类，它就可以作用整个方法</span></span><br><span class="line">   <span class="keyword">new</span> FakeLoginContext());</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Inside an application class which creates a suitable CallbackHandler:</span></span><br><span class="line">   <span class="keyword">new</span> LoginContext(<span class="string">"test"</span>, callbackHandler).login();</span><br><span class="line"></span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Faking伪造能力"><a href="#Faking伪造能力" class="headerlink" title="Faking伪造能力"></a>Faking伪造能力</h3><p>private,protect,后者包private的类，静态方法，final方法，native方法都可以伪造。甚至 一个静态方法能够被实例方法伪造（伪造类中定义的非静态方法和静态放的签名相同）。需要注意的是抽象方法不能够被伪造。</p>
-<h2 id="伪造不确定的类"><a href="#伪造不确定的类" class="headerlink" title="伪造不确定的类"></a>伪造不确定的类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Service</span> </span>&#123; <span class="function"><span class="keyword">int</span> <span class="title">doSomething</span><span class="params">()</span></span>; &#125;</span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceImpl</span> <span class="keyword">implements</span> <span class="title">Service</span> </span>&#123; <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">TestedUnit</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="comment">//类实现了接口</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Service service1 = <span class="keyword">new</span> ServiceImpl();</span><br><span class="line">   <span class="comment">//这里使用了匿名内部类，是无法访问的</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Service service2 = <span class="keyword">new</span> Service() &#123; <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">2</span>; &#125; &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">businessOperation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> service1.doSomething() + service2.doSomething();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>给定一个基类，我们可以伪造其所有的实现类(不仅是已经存在，也包括后序创建的)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T extends Service&gt; <span class="function"><span class="keyword">void</span> <span class="title">fakingImplementationClassesFromAGivenBaseType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> MockUp&lt;T&gt;() &#123;</span><br><span class="line">      <span class="meta">@Mock</span> <span class="function"><span class="keyword">int</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">7</span>; &#125;</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">int</span> result = <span class="keyword">new</span> TestedUnit().businessOperation();</span><br><span class="line"></span><br><span class="line">   assertEquals(<span class="number">14</span>, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="伪造类初始化"><a href="#伪造类初始化" class="headerlink" title="伪造类初始化"></a>伪造类初始化</h2><p>下面的方法可以伪造静态初始化代码块，也包括静态属性：</p>
-<p>注意：运行时才有效的静态属性的赋值将会无效（jvm只初始化一次类）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fakingStaticInitializers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">new</span> MockUp&lt;ClassWithStaticInitializers&gt;() &#123;</span><br><span class="line">      <span class="meta">@Mock</span></span><br><span class="line">      <span class="keyword">void</span> $clinit() &#123;</span><br><span class="line">         <span class="comment">// Do nothing here (usually).</span></span><br><span class="line">      &#125;</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   ClassWithStaticInitializers.doSomething();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="访问调用上下文："><a href="#访问调用上下文：" class="headerlink" title="访问调用上下文："></a>访问调用上下文：</h2><p>伪造的方法可以有一个多余的Invocation参数,并且作为第一个参数，这个参数在调用的时候将会自动传入。调用的上下文将可以通过该方法获取。比如getInvokedInstance()将会访返回伪造的实例，如果返回null，表明这个方法是静态的。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accessingTheFakedInstanceInFakeMethods</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   Subject testSubject = <span class="keyword">new</span> Subject();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">new</span> MockUp&lt;LoginContext&gt;() &#123;</span><br><span class="line">      <span class="meta">@Mock</span></span><br><span class="line">      <span class="keyword">void</span> $init(Invocation invocation, String name, Subject subject) &#123;</span><br><span class="line">         assertNotNull(name);</span><br><span class="line">         assertSame(testSubject, subject);</span><br><span class="line"></span><br><span class="line">         <span class="comment">// Gets the invoked instance.</span></span><br><span class="line">         LoginContext loginContext = invocation.getInvokedInstance();</span><br><span class="line"></span><br><span class="line">         <span class="comment">// Verifies that this is the first invocation.</span></span><br><span class="line">         <span class="comment">// 获取伪造类的调用次数</span></span><br><span class="line">         assertEquals(<span class="number">1</span>, invocation.getInvocationCount());</span><br><span class="line"></span><br><span class="line">         <span class="comment">// Forces setting of private Subject field, since no setter is available.</span></span><br><span class="line">         Deencapsulation.setField(loginContext, subject);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="meta">@Mock</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">login</span><span class="params">(Invocation invocation)</span> </span>&#123;</span><br><span class="line">         <span class="comment">// Gets the invoked instance.</span></span><br><span class="line">         LoginContext loginContext = invocation.getInvokedInstance();</span><br><span class="line"></span><br><span class="line">         <span class="comment">// getSubject() returns null until the subject is authenticated.</span></span><br><span class="line">         assertNull(loginContext.getSubject());</span><br><span class="line"></span><br><span class="line">         <span class="comment">// Private field set to true when login succeeds.</span></span><br><span class="line">         Deencapsulation.setField(loginContext, <span class="string">"loginSucceeded"</span>, <span class="keyword">true</span>);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="meta">@Mock</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">logout</span><span class="params">(Invocation invocation)</span> </span>&#123;</span><br><span class="line">         <span class="comment">// Gets the invoked instance.</span></span><br><span class="line">         LoginContext loginContext = invocation.getInvokedInstance();</span><br><span class="line"></span><br><span class="line">         assertSame(testSubject, loginContext.getSubject());</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;;</span><br><span class="line"></span><br><span class="line">   LoginContext theFakedInstance = <span class="keyword">new</span> LoginContext(<span class="string">"test"</span>, testSubject);</span><br><span class="line">   theFakedInstance.login();</span><br><span class="line">   theFakedInstance.logout();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="伪造类中继续调用真实类的方法"><a href="#伪造类中继续调用真实类的方法" class="headerlink" title="伪造类中继续调用真实类的方法"></a>伪造类中继续调用真实类的方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">proceedIntoRealImplementationsOfFakedMethods</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">   <span class="comment">// Create objects used by the code under test:</span></span><br><span class="line">   LoginContext loginContext = <span class="keyword">new</span> LoginContext(<span class="string">"test"</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, configuration);</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Apply fakes:</span></span><br><span class="line">   ProceedingFakeLoginContext fakeInstance = <span class="keyword">new</span> ProceedingFakeLoginContext();</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Exercise the code under test:</span></span><br><span class="line">   assertNull(loginContext.getSubject());</span><br><span class="line">   loginContext.login();</span><br><span class="line">   assertNotNull(loginContext.getSubject());</span><br><span class="line">   assertTrue(fakeInstance.loggedIn);</span><br><span class="line"></span><br><span class="line">   fakeInstance.ignoreLogout = <span class="keyword">true</span>;</span><br><span class="line">   loginContext.logout(); <span class="comment">// first entry: do nothing</span></span><br><span class="line">   assertTrue(fakeInstance.loggedIn);</span><br><span class="line"></span><br><span class="line">   fakeInstance.ignoreLogout = <span class="keyword">false</span>;</span><br><span class="line">   loginContext.logout(); <span class="comment">// second entry: execute real implementation</span></span><br><span class="line">   assertFalse(fakeInstance.loggedIn);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ProceedingFakeLoginContext</span> <span class="keyword">extends</span> <span class="title">MockUp</span>&lt;<span class="title">LoginContext</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="keyword">boolean</span> ignoreLogout;</span><br><span class="line">   <span class="keyword">boolean</span> loggedIn;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Mock</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">login</span><span class="params">(Invocation inv)</span> <span class="keyword">throws</span> LoginException </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">         <span class="comment">//执行真实的方法</span></span><br><span class="line">         inv.proceed(); <span class="comment">// executes the real code of the faked method</span></span><br><span class="line">         loggedIn = <span class="keyword">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">finally</span> &#123;</span><br><span class="line">         <span class="comment">// This is here just to show that arbitrary actions can be taken inside the</span></span><br><span class="line">         <span class="comment">// fake, before and/or after the real method gets executed.</span></span><br><span class="line">         LoginContext lc = inv.getInvokedInstance();</span><br><span class="line">         System.out.println(<span class="string">"Login attempted for "</span> + lc.getSubject());</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Mock</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">logout</span><span class="params">(Invocation inv)</span> <span class="keyword">throws</span> LoginException </span>&#123;</span><br><span class="line">      <span class="comment">// We can choose to proceed into the real implementation or not.</span></span><br><span class="line">      <span class="keyword">if</span> (!ignoreLogout) &#123;</span><br><span class="line">         inv.proceed();</span><br><span class="line">         loggedIn = <span class="keyword">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="伪造的重复使用"><a href="#伪造的重复使用" class="headerlink" title="伪造的重复使用"></a>伪造的重复使用</h2><p>在Junit中可以使会用@Before注解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTestClass</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="meta">@BeforeClass</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">applySharedFakes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">new</span> MockUp&lt;LoginContext&gt;() &#123;</span><br><span class="line">         <span class="comment">// shared @Mock's here...</span></span><br><span class="line">      &#125;;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// test methods that will share the fakes applied above...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="全局伪造"><a href="#全局伪造" class="headerlink" title="全局伪造"></a>全局伪造</h2><p>使用JUnit的Suite方法，在MyFirstTest.class, MySecondTest.class将会有效</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(Suite.class)</span><br><span class="line"><span class="meta">@Suite</span>.SuiteClasses(&#123;MyFirstTest.class, MySecondTest.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSuite</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="meta">@BeforeClass</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">applyGlobalFake</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">new</span> FakeLogging();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="添加AOP的advice"><a href="#添加AOP的advice" class="headerlink" title="添加AOP的advice"></a>添加AOP的advice</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodTiming</span> <span class="keyword">extends</span> <span class="title">MockUp</span>&lt;<span class="title">Object</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Method, Long&gt; methodTimes = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">MethodTiming</span><span class="params">(Class&lt;?&gt; targetClass)</span> </span>&#123; <span class="keyword">super</span>(targetClass); &#125;</span><br><span class="line">   MethodTiming(String className) <span class="keyword">throws</span> ClassNotFoundException &#123; <span class="keyword">super</span>(Class.forName(className)); &#125;</span><br><span class="line">   <span class="comment">//这里并不是Mock，是AOP的advice，写法是固定的</span></span><br><span class="line">   <span class="comment">//用来统计所有方法的调用时间</span></span><br><span class="line">   <span class="meta">@Mock</span></span><br><span class="line">   <span class="keyword">public</span> Object $advice(Invocation invocation) &#123;</span><br><span class="line">      <span class="keyword">long</span> timeBefore = System.nanoTime();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">         <span class="keyword">return</span> invocation.proceed();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">finally</span> &#123;</span><br><span class="line">         <span class="keyword">long</span> timeAfter = System.nanoTime();</span><br><span class="line">         <span class="keyword">long</span> dt = timeAfter - timeBefore;</span><br><span class="line"></span><br><span class="line">         Method executedMethod = invocation.getInvokedMember();</span><br><span class="line">         Long dtUntilLastExecution = methodTimes.get(executedMethod);</span><br><span class="line">         Long dtUntilNow = dtUntilLastExecution == <span class="keyword">null</span> ? dt : dtUntilLastExecution + dt;</span><br><span class="line">         methodTimes.put(executedMethod, dtUntilNow);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onTearDown</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      System.out.println(<span class="string">"\nTotal timings for methods in "</span> + targetType + <span class="string">" (ms)"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (Entry&lt;Method, Long&gt; methodAndTime : methodTimes.entrySet()) &#123;</span><br><span class="line">         Method method = methodAndTime.getKey();</span><br><span class="line">         <span class="keyword">long</span> dtNanos = methodAndTime.getValue();</span><br><span class="line">         <span class="keyword">long</span> dtMillis = dtNanos / <span class="number">1000000L</span>;</span><br><span class="line">         System.out.println(<span class="string">"\t"</span> + method + <span class="string">" = "</span> + dtMillis);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mongo</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Java//" class="article-tag-list-link color5">Java</a>
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2017/12/27/Jmockit使用详解之Faking/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/01/23/mybatis笔记/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Mybatis官方文档阅读及使用简记
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/12/27/Jmockit/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Jmockit使用详解之Mocking</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Jmockit使用详解之Faking"><span class="toc-number">1.</span> <span class="toc-text">Jmockit使用详解之Faking</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伪造方法和类"><span class="toc-number">1.2.</span> <span class="toc-text">伪造方法和类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用伪造类"><span class="toc-number">1.3.</span> <span class="toc-text">使用伪造类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Faking伪造能力"><span class="toc-number">1.3.1.</span> <span class="toc-text">Faking伪造能力</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伪造不确定的类"><span class="toc-number">1.4.</span> <span class="toc-text">伪造不确定的类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伪造类初始化"><span class="toc-number">1.5.</span> <span class="toc-text">伪造类初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问调用上下文："><span class="toc-number">1.6.</span> <span class="toc-text">访问调用上下文：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伪造类中继续调用真实类的方法"><span class="toc-number">1.7.</span> <span class="toc-text">伪造类中继续调用真实类的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#伪造的重复使用"><span class="toc-number">1.8.</span> <span class="toc-text">伪造的重复使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#全局伪造"><span class="toc-number">1.9.</span> <span class="toc-text">全局伪造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加AOP的advice"><span class="toc-number">1.10.</span> <span class="toc-text">添加AOP的advice</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -391,9 +238,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

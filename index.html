@@ -485,6 +485,96 @@
 
 
   
+    <article id="post-MongoDB" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/27/MongoDB/">MongoDB之入门</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/27/MongoDB/" class="archive-article-date">
+  	<time datetime="2019-12-27T14:14:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="MongoDB之简单入门"><a href="#MongoDB之简单入门" class="headerlink" title="MongoDB之简单入门"></a>MongoDB之简单入门</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h3><p><a href="https://blog.csdn.net/qq_45297578/article/details/117930129?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-117930129-blog-125087380.pc_relevant_multi_platform_whitelistv1&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-117930129-blog-125087380.pc_relevant_multi_platform_whitelistv1&amp;utm_relevant_index=1" target="_blank" rel="noopener">参考链接</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo</span><br><span class="line"></span><br><span class="line">docker run --name mongodb -v /Users/guanhang/logs/mongo/db0:/data/db -p 27017:27017 -d mongo --wiredTigerCacheSizeGB 0.3</span><br></pre></td></tr></table></figure>
+<p>导入数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker cp /Users/guanhang/learning/geektime-mongodb-course-master/dump fa589a35a88d:dump</span><br><span class="line">➜  ~ docker <span class="built_in">exec</span> -it fa589a35a88d bash</span><br><span class="line">root@fa589a35a88d:/<span class="comment"># ls</span></span><br><span class="line">bin   data  docker-entrypoint-initdb.d	etc   js-yaml.js  lib32  libx32  mnt  proc  run   srv  tmp  var</span><br><span class="line">boot  dev   dump			home  lib	  lib64  media	 opt  root  sbin  sys  usr</span><br><span class="line">root@fa589a35a88d:/<span class="comment"># mongorestore </span></span><br><span class="line">2022-07-11T14:09:29.311+0000	using default <span class="string">'dump'</span> directory</span><br><span class="line">2022-07-11T14:09:29.311+0000	preparing collections to restore from</span><br><span class="line">2022-07-11T14:09:29.312+0000	don<span class="string">'t know what to do with file "dump/.DS_Store", skipping...</span></span><br><span class="line"><span class="string">2022-07-11T14:09:29.312+0000	reading metadata for mock.orders from dump/mock/orders.metadata.json</span></span><br><span class="line"><span class="string">2022-07-11T14:09:29.343+0000	restoring mock.orders from dump/mock/orders.bson</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.290+0000	[####################....]  mock.orders  96.3MB/115MB  (84.1%)</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.835+0000	[########################]  mock.orders  115MB/115MB  (100.0%)</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.837+0000	finished restoring mock.orders (100000 documents, 0 failures)</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.838+0000	no indexes to restore for collection mock.orders</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.838+0000	100000 document(s) restored successfully. 0 document(s) failed to restore.</span></span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2019/12/27/MongoDB/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Mongo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/27/MongoDB/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Eureka" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1648,97 +1738,10 @@
 
 
   
-    <article id="post-Jmockit" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/27/Jmockit/">Jmockit使用详解之Mocking</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/27/Jmockit/" class="archive-article-date">
-  	<time datetime="2017-12-27T14:14:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>翻译自官方文档</p>
-<p>Jmockit主要有两个部分组成：Mocking（也称“Expectation”）和Faking，Faking下一章会讲。实际上大部分测试中，Faking用的比Mocking要多。</p>
-<blockquote>
-<p>Mocking有一套流程：Exceptations， replay，和Verfications,Exceptations也就是期望，它会记录期望行为，常常就是我们希望伪造的部分；replay是回放，是调用我们想测试的代码的时候；Verfications是验证（可以使用各种assert），它的语法和Exceptations类似，是用来验证我们的最后的结果符不符合期望的逻辑。</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2017/12/27/Jmockit/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Java//" class="article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/27/Jmockit/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1833,6 +1836,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ES</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Mongo</a>
               </li>
              
               <li class="article-tag-list-item">
