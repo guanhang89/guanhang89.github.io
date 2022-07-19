@@ -53,7 +53,7 @@
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222700822.png">
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222728811.png">
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222754210.png">
-<meta property="og:updated_time" content="2022-07-19T09:25:18.060Z">
+<meta property="og:updated_time" content="2022-07-19T12:17:48.290Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB之入门">
 <meta name="twitter:description" content="MongoDB之简单入门安装Docker安装参考链接 123docker pull mongodocker run --name mongodb -v /Users/guanhang/logs/mongo/db0:/data/db -p 27017:27017 -d mongo --wiredTigerCacheSizeGB 0.3 导入数据： 12345678910111213141516➜">
@@ -254,42 +254,47 @@
 <p>BSON = Binary JSON， 是基于JSON基础上加了一些类型及元数据描述的格式。</p>
 </blockquote>
 <h3 id="1-2-使用相关"><a href="#1-2-使用相关" class="headerlink" title="1.2 使用相关"></a>1.2 使用相关</h3><ol>
-<li><p>mdb适合做数据仓库吗</p>
+<li>mdb适合做数据仓库吗</li>
+</ol>
 <blockquote>
-<p>如果是传统用来做星形schema或者雪花schema，不是太合适。如果是用来做现代数仓，类似于大数据那样做大宽表，mongodb可以作为一个选择。我在我自己的类似数仓的平台产品里就用了mongodb。 有一些比较不错的亮点是：横向扩展能力，多结构化数据支持，检索能力，元数据管理等</p>
+<p>果是传统用来做星形schema或者雪花schema，不是太合适。如果是用来做现代数仓，类似于大数据那样做大宽表，mongodb可以作为一个选择。我在我自己的类似数仓的平台产品里就用了mongodb。 有一些比较不错的亮点是：横向扩展能力，多结构化数据支持，检索能力，元数据管理等</p>
 </blockquote>
-</li>
-<li><p>目前我们游戏中存储的章节数据。一个章节包含多个关卡，一个关卡包含多个脚本数据。 现在的做法是建立三个表来存储章节、关卡和脚本，每个表都有多个字段，通过id建立关联。思考过怎么组合使用，但是存在单独访问某一个脚本或某一个关卡信息的情况，感觉如果组合使用获取这种信息会很麻烦，请问下老师是否应该组合使用？还是用多个表通过id关联更好用呢</p>
+<ol>
+<li>目前我们游戏中存储的章节数据。一个章节包含多个关卡，一个关卡包含多个脚本数据。 现在的做法是建立三个表来存储章节、关卡和脚本，每个表都有多个字段，通过id建立关联。思考过怎么组合使用，但是存在单独访问某一个脚本或某一个关卡信息的情况，感觉如果组合使用获取这种信息会很麻烦，请问下老师是否应该组合使用？还是用多个表通过id关联更好用呢</li>
+</ol>
 <blockquote>
 <p>如果你大部分的操作是基于脚本和关卡直接操作，那如果用组合的方法不一定是最优的。虽然，MongoDB对嵌套数组的操作支持还是很给力，你可以直接取出关卡或脚本，通过使用projection 过滤字段及不匹配的数组元素。对内嵌数组操作也是可以用到索引的，所以效率也不会太糟糕。</p>
 </blockquote>
-</li>
-<li><p>MongoDB 4.2 的新特性通配符索引（Wildcard Indexes）</p>
+<ol>
+<li>MongoDB 4.2 的新特性通配符索引（Wildcard Indexes）</li>
+</ol>
 <blockquote>
 <p>简单来说，wildcard index对于下面这样的结构： { “_id” : 1, “data” : {  “a” : 1728,  “b” : 6740,  “c” : 6481,  “d” : 2066,  “e” : 3173 } } 可以一条命令（一个索引）同时对a/b/c/d/e 5个字段做索引 db.wildcardIndex.createIndex({“data.$**”:1}); 甚至你将来在这个子文档里增加新的字段，也会自动索引。这样省去你单独创建很多个索引。 但是。。。性能上有人测试过，这种比单独建每个索引还是要更加耗资源，差不多是两倍。 所以方便的代价是资源的更多消耗</p>
 </blockquote>
-</li>
-<li><p>如果我有两个字段a和b，希望对每个文档增加一个字段c=a-b.  试了一下用find. forEach然后每个文档执行一个uodate的话速度非常慢。有什么比较高效的方法吗？</p>
+<ol>
+<li>如果我有两个字段a和b，希望对每个文档增加一个字段c=a-b.  试了一下用find. forEach然后每个文档执行一个uodate的话速度非常慢。有什么比较高效的方法吗？</li>
+</ol>
 <blockquote>
 <p>db.test.insert({a: 2, b: 3}) db.test.updateMany({}, [{    $set: {        c: {            $add: [“$a”, “$b”]        }    } }])</p>
 </blockquote>
-</li>
-<li><p>执行db.oplog.rs.findOne().ts 时，返回值是Timestamp(1574326231, 1)。而我的需求是指获取1574326231，如果想获取1574326231值，有现成的函数吗</p>
+<ol>
+<li>执行db.oplog.rs.findOne().ts 时，返回值是Timestamp(1574326231, 1)。而我的需求是指获取1574326231，如果想获取1574326231值，有现成的函数吗</li>
+</ol>
 <blockquote>
 <p>Timestamp(1574326231, 1).getTime()</p>
 </blockquote>
-</li>
-<li><p>MongoDB锁能否支持行级锁 2. 64G内存的虚拟机  能否设置大于50%的wiredTiger cacheSizeGB</p>
+<ol>
+<li>MongoDB锁能否支持行级锁 2. 64G内存的虚拟机  能否设置大于50%的wiredTiger cacheSizeGB</li>
+</ol>
 <blockquote>
 <p>1）MongoDB采用的是MVCC机制，实际效果和行级锁类似。 2）可以的，但是要考虑到mongodb除了缓存以外自身还需要额外内存，所以要适当给操作系统和mongo本身留一些</p>
 </blockquote>
-</li>
-<li><p>提前问个索引相关的问题，为何Mongo的索引用B树而不是B+树呢，我理解B+树的最大优点是范围查找，MySQL用的B+树，Mongo也有这个需求啊</p>
+<ol>
+<li>提前问个索引相关的问题，为何Mongo的索引用B树而不是B+树呢，我理解B+树的最大优点是范围查找，MySQL用的B+树，Mongo也有这个需求啊</li>
+</ol>
 <blockquote>
 <p>MongoDB用的是B+树。 <a href="http://source.wiredtiger.com/mongodb-3.4/tune_page_size_and_comp.html" target="_blank" rel="noopener">http://source.wiredtiger.com/mongodb-3.4/tune_page_size_and_comp.html</a></p>
 </blockquote>
-</li>
-</ol>
 <h3 id="1-3-分布式、高可用相关"><a href="#1-3-分布式、高可用相关" class="headerlink" title="1.3 分布式、高可用相关"></a>1.3 分布式、高可用相关</h3><ol>
 <li>为什么副本集说是5个9的高可用</li>
 </ol>
@@ -1281,11 +1286,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">ES</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Mongo</a>
+                <a href="javascript:void(0)" class="js-tag color3">ES</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1293,19 +1298,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Mongo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">微服务</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
