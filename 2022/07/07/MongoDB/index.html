@@ -53,7 +53,7 @@
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222700822.png">
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222728811.png">
 <meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222754210.png">
-<meta property="og:updated_time" content="2022-07-23T05:08:47.350Z">
+<meta property="og:updated_time" content="2022-07-24T08:26:50.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB之入门">
 <meta name="twitter:description" content="安装Docker安装参考链接 123docker pull mongodocker run --name mongodb -v /Users/guanhang/logs/mongo/db0:/data/db -p 27017:27017 -d mongo --wiredTigerCacheSizeGB 0.3">
@@ -235,17 +235,13 @@
 <p>导入数据：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker cp /Users/guanhang/learning/geektime-mongodb-course-master/dump fa589a35a88d:dump</span><br><span class="line">➜  ~ docker <span class="built_in">exec</span> -it fa589a35a88d bash</span><br><span class="line">root@fa589a35a88d:/<span class="comment"># ls</span></span><br><span class="line">bin   data  docker-entrypoint-initdb.d	etc   js-yaml.js  lib32  libx32  mnt  proc  run   srv  tmp  var</span><br><span class="line">boot  dev   dump			home  lib	  lib64  media	 opt  root  sbin  sys  usr</span><br><span class="line">root@fa589a35a88d:/<span class="comment"># mongorestore </span></span><br><span class="line">2022-07-11T14:09:29.311+0000	using default <span class="string">'dump'</span> directory</span><br><span class="line">2022-07-11T14:09:29.311+0000	preparing collections to restore from</span><br><span class="line">2022-07-11T14:09:29.312+0000	don<span class="string">'t know what to do with file "dump/.DS_Store", skipping...</span></span><br><span class="line"><span class="string">2022-07-11T14:09:29.312+0000	reading metadata for mock.orders from dump/mock/orders.metadata.json</span></span><br><span class="line"><span class="string">2022-07-11T14:09:29.343+0000	restoring mock.orders from dump/mock/orders.bson</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.290+0000	[####################....]  mock.orders  96.3MB/115MB  (84.1%)</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.835+0000	[########################]  mock.orders  115MB/115MB  (100.0%)</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.837+0000	finished restoring mock.orders (100000 documents, 0 failures)</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.838+0000	no indexes to restore for collection mock.orders</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.838+0000	100000 document(s) restored successfully. 0 document(s) failed to restore.</span></span><br></pre></td></tr></table></figure>
 <h3 id="普通安装"><a href="#普通安装" class="headerlink" title="普通安装"></a>普通安装</h3><ol>
-<li>官网创建Atlas共享集群</li>
-</ol>
+<li><p>官网创建Atlas共享集群</p>
 <ul>
-<li><p><a href="https://cloud.mongodb.com/v2/629a1bb9c03697663249610d#clusters/connect?clusterId=Cluster0" target="_blank" rel="noopener">创建集群</a></p>
-</li>
-<li><p><a href="https://www.mongodb.com/docs/mongodb-shell/install/" target="_blank" rel="noopener">安装mongosh</a></p>
-</li>
+<li><a href="https://cloud.mongodb.com/v2/629a1bb9c03697663249610d#clusters/connect?clusterId=Cluster0" target="_blank" rel="noopener">创建集群</a></li>
+<li><a href="https://www.mongodb.com/docs/mongodb-shell/install/" target="_blank" rel="noopener">安装mongosh</a></li>
 </ul>
-<ol>
-<li>本地安装community server</li>
-</ol>
+</li>
+<li><p>本地安装community server</p>
 <ul>
 <li><p><a href="https://www.mongodb.com/try/download/community" target="_blank" rel="noopener">comunity server download</a></p>
 </li>
@@ -253,13 +249,17 @@
 </li>
 <li><p>导入数据：<a href="https://gitee.com/geektime-geekbang/geektime-mongodb-course" target="_blank" rel="noopener">数据来源</a></p>
 <ul>
-<li>在dump的文件路径下mogorestore</li>
-<li>测试:</li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br><span class="line">mock    0.047GB</span><br><span class="line">&gt; use mock</span><br><span class="line">switched to db mock</span><br><span class="line">&gt; show collections</span><br><span class="line">orders</span><br></pre></td></tr></table></figure>
+<li><p>在dump的文件路径下执行mogorestore命令</p>
+</li>
+<li><p>测试</p>
 </li>
 </ul>
 </li>
 </ul>
+</li>
+</ol>
+<p>测试的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br><span class="line">mock    0.047GB</span><br><span class="line">&gt; use mock</span><br><span class="line">switched to db mock</span><br><span class="line">&gt; show collections</span><br><span class="line">orders</span><br></pre></td></tr></table></figure>
 <ol>
 <li>使用compass连接mongo</li>
 </ol>
@@ -1254,19 +1254,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">前端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">测试</a>
               </li>
              
               <li class="article-tag-list-item">
