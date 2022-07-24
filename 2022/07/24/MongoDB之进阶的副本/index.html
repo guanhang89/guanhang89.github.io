@@ -6,58 +6,81 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>MongoDB之入门 | 夜深人未眠</title>
+  <title>MongoDB之进阶 | 夜深人未眠</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="安装Docker安装参考链接 123docker pull mongodocker run --name mongodb -v /Users/guanhang/logs/mongo/db0:/data/db -p 27017:27017 -d mongo --wiredTigerCacheSizeGB 0.3">
+  <meta name="description" content="1. 模型设计基础1.1 数据模型数据模型是一组由符号、文本组成的集合，用以准确表达信息，达到有效交流、沟通的目的  Steve Hoberman 霍伯曼. 数据建模经典教程">
 <meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MongoDB之入门">
-<meta property="og:url" content="http://yoursite.com/2022/07/07/MongoDB/index.html">
+<meta property="og:title" content="MongoDB之进阶">
+<meta property="og:url" content="http://yoursite.com/2022/07/24/MongoDB之进阶的副本/index.html">
 <meta property="og:site_name" content="夜深人未眠">
-<meta property="og:description" content="安装Docker安装参考链接 123docker pull mongodocker run --name mongodb -v /Users/guanhang/logs/mongo/db0:/data/db -p 27017:27017 -d mongo --wiredTigerCacheSizeGB 0.3">
+<meta property="og:description" content="1. 模型设计基础1.1 数据模型数据模型是一组由符号、文本组成的集合，用以准确表达信息，达到有效交流、沟通的目的  Steve Hoberman 霍伯曼. 数据建模经典教程">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711221220816.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711213005862.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711234524567.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711234618848.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711234747181.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711234823589.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711234930079.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711235032649.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711235124100.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711235155079.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711235256010.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712002158992.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712002236992.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005528647.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005552355.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005622142.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005649298.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005708502.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005751878.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005811725.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712011242645.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712011302453.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712011319493.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220722210604116.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712210026492.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712212858698.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220719172234922.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220719172306728.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220719172317884.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712220142155.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712220259017.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712220316794.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222601597.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222632338.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222700822.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222728811.png">
-<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222754210.png">
-<meta property="og:updated_time" content="2022-07-23T05:08:47.350Z">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222957617.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712223050792.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712223347440.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712223322728.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712225526306.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712231457222.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712231521399.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712231543620.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712231719525.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712231822697.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712233502547.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712233552072.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712233653413.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712233726580.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712233743067.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220713003643138.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220713003844986.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717104003071.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717104304610.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162041882.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162151015.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162227240.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162440511.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162514342.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162536103.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162619255.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162700934.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162716556.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162729015.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162840205.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162855118.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162941992.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162949940.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717172105022.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717172132181.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717172154871.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717172401926.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717180101004.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717201102705.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717224519319.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723125356975.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723125416131.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723125545439.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723143147856.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723211137291.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723212233583.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723212326062.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723212438295.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723212601373.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724003714617.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724003958676.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724004455599.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724115935615.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724120236688.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724120405274.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724121218077.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724121311434.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724121344216.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724121521781.png">
+<meta property="og:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724122855132.png">
+<meta property="og:updated_time" content="2022-07-24T08:05:47.228Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MongoDB之入门">
-<meta name="twitter:description" content="安装Docker安装参考链接 123docker pull mongodocker run --name mongodb -v /Users/guanhang/logs/mongo/db0:/data/db -p 27017:27017 -d mongo --wiredTigerCacheSizeGB 0.3">
-<meta name="twitter:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711221220816.png">
+<meta name="twitter:title" content="MongoDB之进阶">
+<meta name="twitter:description" content="1. 模型设计基础1.1 数据模型数据模型是一组由符号、文本组成的集合，用以准确表达信息，达到有效交流、沟通的目的  Steve Hoberman 霍伯曼. 数据建模经典教程">
+<meta name="twitter:image" content="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222957617.png">
   
     <link rel="alternative" href="/atom.xml" title="夜深人未眠" type="application/atom+xml">
   
@@ -209,97 +232,301 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-MongoDB" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-MongoDB之进阶的副本" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      MongoDB之入门
+      MongoDB之进阶
     </h1>
   
 
         
-        <a href="/2022/07/07/MongoDB/" class="archive-article-date">
-  	<time datetime="2022-07-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-07</time>
+        <a href="/2022/07/24/MongoDB之进阶的副本/" class="archive-article-date">
+  	<time datetime="2022-07-23T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h3><p><a href="https://blog.csdn.net/qq_45297578/article/details/117930129?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-117930129-blog-125087380.pc_relevant_multi_platform_whitelistv1&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-117930129-blog-125087380.pc_relevant_multi_platform_whitelistv1&amp;utm_relevant_index=1" target="_blank" rel="noopener">参考链接</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo</span><br><span class="line"></span><br><span class="line">docker run --name mongodb -v /Users/guanhang/logs/mongo/db0:/data/db -p 27017:27017 -d mongo --wiredTigerCacheSizeGB 0.3</span><br></pre></td></tr></table></figure>
+        <h2 id="1-模型设计基础"><a href="#1-模型设计基础" class="headerlink" title="1. 模型设计基础"></a>1. 模型设计基础</h2><h3 id="1-1-数据模型"><a href="#1-1-数据模型" class="headerlink" title="1.1 数据模型"></a>1.1 数据模型</h3><p>数据模型是一组由符号、文本组成的集合，用以准确表达信息，达到有效交流、沟通的目的</p>
+<blockquote>
+<p>Steve Hoberman 霍伯曼. 数据建模经典教程</p>
+</blockquote>
 <a id="more"></a>
-<p>导入数据：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ docker cp /Users/guanhang/learning/geektime-mongodb-course-master/dump fa589a35a88d:dump</span><br><span class="line">➜  ~ docker <span class="built_in">exec</span> -it fa589a35a88d bash</span><br><span class="line">root@fa589a35a88d:/<span class="comment"># ls</span></span><br><span class="line">bin   data  docker-entrypoint-initdb.d	etc   js-yaml.js  lib32  libx32  mnt  proc  run   srv  tmp  var</span><br><span class="line">boot  dev   dump			home  lib	  lib64  media	 opt  root  sbin  sys  usr</span><br><span class="line">root@fa589a35a88d:/<span class="comment"># mongorestore </span></span><br><span class="line">2022-07-11T14:09:29.311+0000	using default <span class="string">'dump'</span> directory</span><br><span class="line">2022-07-11T14:09:29.311+0000	preparing collections to restore from</span><br><span class="line">2022-07-11T14:09:29.312+0000	don<span class="string">'t know what to do with file "dump/.DS_Store", skipping...</span></span><br><span class="line"><span class="string">2022-07-11T14:09:29.312+0000	reading metadata for mock.orders from dump/mock/orders.metadata.json</span></span><br><span class="line"><span class="string">2022-07-11T14:09:29.343+0000	restoring mock.orders from dump/mock/orders.bson</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.290+0000	[####################....]  mock.orders  96.3MB/115MB  (84.1%)</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.835+0000	[########################]  mock.orders  115MB/115MB  (100.0%)</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.837+0000	finished restoring mock.orders (100000 documents, 0 failures)</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.838+0000	no indexes to restore for collection mock.orders</span></span><br><span class="line"><span class="string">2022-07-11T14:09:32.838+0000	100000 document(s) restored successfully. 0 document(s) failed to restore.</span></span><br></pre></td></tr></table></figure>
-<h3 id="普通安装"><a href="#普通安装" class="headerlink" title="普通安装"></a>普通安装</h3><ol>
-<li>官网创建Atlas共享集群</li>
+<h4 id="数据模型设计的元素"><a href="#数据模型设计的元素" class="headerlink" title="数据模型设计的元素"></a>数据模型设计的元素</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222957617.png" alt="image-20220712222957617"></p>
+<h4 id="传统模型设计"><a href="#传统模型设计" class="headerlink" title="传统模型设计"></a>传统模型设计</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712223050792.png" alt="image-20220712223050792"></p>
+<p>概念模型：</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712223347440.png" alt="image-20220712223347440"></p>
+<p>逻辑模型：</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712223322728.png" alt="image-20220712223322728"></p>
+<p>第三范式下的物理模型：</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712225526306.png" alt="image-20220712225526306"></p>
+<p>数据模型的三要素:</p>
+<ul>
+<li>实体 </li>
+<li>属性</li>
+<li>关系</li>
+</ul>
+<h4 id="问答"><a href="#问答" class="headerlink" title="问答"></a>问答</h4><ol>
+<li>第三范式的理由是什么呢？是因为节省数据库空间吗？因为我感觉只有一个group的表然后有name, description和一组contact_id的数组也可以把？中间抽离一个contactGroup的意义何在呢</li>
+</ol>
+<blockquote>
+<p>第三范式是关系设计的实践。 节省空间是一个很大的驱动 - 关系型理论出来的时候，1GB硬盘需要10万美元的价格。 数据一致性也是第三范式的一个目标。 你说的那种方式就是MongoDB的设计模式了。内嵌数组</p>
+</blockquote>
+<h3 id="1-2-JSON文档模型设计特点"><a href="#1-2-JSON文档模型设计特点" class="headerlink" title="1.2 JSON文档模型设计特点"></a>1.2 JSON文档模型设计特点</h3><ol>
+<li>MongoDB 文档模型设计的三个误区：</li>
 </ol>
 <ul>
-<li><p><a href="https://cloud.mongodb.com/v2/629a1bb9c03697663249610d#clusters/connect?clusterId=Cluster0" target="_blank" rel="noopener">创建集群</a></p>
+<li><p>不需要模型设计</p>
 </li>
-<li><p><a href="https://www.mongodb.com/docs/mongodb-shell/install/" target="_blank" rel="noopener">安装mongosh</a></p>
+<li><p>MongoDB 应该用一个超级大文档来组织所有数据</p>
+</li>
+<li><p>MongoDB 不支持关联或者事务</p>
 </li>
 </ul>
 <ol>
-<li>本地安装community server</li>
+<li>关于 JSON 文档模型设计：</li>
 </ol>
 <ul>
-<li><p><a href="https://www.mongodb.com/try/download/community" target="_blank" rel="noopener">comunity server download</a></p>
+<li><p>文档模型设计处于是物理模型设计阶段 （PDM）</p>
 </li>
-<li><p><a href="https://www.mongodb.com/docs/v4.2/tutorial/install-mongodb-on-os-x-tarball/" target="_blank" rel="noopener">创建目录并添加命令</a></p>
+<li><p>JSON 文档模型通过内嵌数组或引用字段来表示关系</p>
 </li>
-<li><p>导入数据：<a href="https://gitee.com/geektime-geekbang/geektime-mongodb-course" target="_blank" rel="noopener">数据来源</a></p>
-<ul>
-<li>在dump的文件路径下mogorestore</li>
-<li>测试:</li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br><span class="line">mock    0.047GB</span><br><span class="line">&gt; use mock</span><br><span class="line">switched to db mock</span><br><span class="line">&gt; show collections</span><br><span class="line">orders</span><br></pre></td></tr></table></figure>
+<li><p>文档模型设计不遵从第三范式，允许冗余</p>
 </li>
 </ul>
-</li>
-</ul>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712231457222.png" alt="image-20220712231457222"></p>
 <ol>
-<li>使用compass连接mongo</li>
+<li>为什么人们都说 MongoDB 是无模式:</li>
 </ol>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711221220816.png" alt="image-20220711221220816"></p>
-<h2 id="一、问题收集"><a href="#一、问题收集" class="headerlink" title="一、问题收集"></a>一、问题收集</h2><h3 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1.1 概念"></a>1.1 概念</h3><ol>
-<li>什么是BSON</li>
+<p>严格来说，MongoDB 同样需要概念/逻辑建模，文档模型设计的物理层结构可以和逻辑层类似 MongoDB 无模式由来：可以省略物理建模的具体过程</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712231521399.png" alt="image-20220712231521399"></p>
+<p>逻辑模型 – JSON 模型：</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712231543620.png" alt="image-20220712231543620"></p>
+<p>文档模型的设计原则：性能和开发易用（没有类似于第三范式的原则）</p>
+<ol>
+<li>关系模型 vs 文档模型对比：</li>
 </ol>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712231719525.png" alt="image-20220712231719525"></p>
+<h4 id="问答-1"><a href="#问答-1" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>mongodb除了collection之外还有一个功能可以存附件，比如文件，视频，音频等。这个是和普通关系型数据库有区别的地方吧，还有就是以前面试的时候，面试官也拿mongodb和fastdfs提问，两者有什么区别，老师你可以用之前的项目经验解答下么</p>
 <blockquote>
-<p>BSON 是MongoDB用来在落盘存储时候或者网络传输时候的底层物理数据模型。如果你是存储引擎开发者或者mongodb驱动程序开发者，你需要从这个层面去了解。如果你是绝大部分的应用开发者或者数据库使用者，你只需要关心JSON</p>
-<p>BSON = Binary JSON， 是基于JSON基础上加了一些类型及元数据描述的格式。</p>
-</blockquote>
-<h3 id="1-2-使用相关"><a href="#1-2-使用相关" class="headerlink" title="1.2 使用相关"></a>1.2 使用相关</h3><ol>
-<li><p>mdb适合做数据仓库吗</p>
-<blockquote>
-<p>果是传统用来做星形schema或者雪花schema，不是太合适。如果是用来做现代数仓，类似于大数据那样做大宽表，mongodb可以作为一个选择。我在我自己的类似数仓的平台产品里就用了mongodb。 有一些比较不错的亮点是：横向扩展能力，多结构化数据支持，检索能力，元数据管理等</p>
+<p>MongoDB的GridFS 不是一个真正的filesystem。它其实是一个api sugarcoating。实现是在驱动端（不是mongodb服务器！），提供一个字节流的API， 允许你把二进制文件通过这个接口提交给MongoDB 驱动，或者从这个接口读取二进制文件流。然后驱动会把这个文件分块，每一块作为一个mongodb的文档插入到集合里。 当你需要的时候，mongodb驱动会把所有相关的切块读出来，拼成一整个文件，返回给应用程序。 所以这个不是真的文件系统，只是提供了一个虚拟的文件接口供应用进行文件存储和读取。优点是可以用到mongo的分布式能力，做海量的二进制文件管理和高可用等。</p>
 </blockquote>
 </li>
-<li><p>目前我们游戏中存储的章节数据。一个章节包含多个关卡，一个关卡包含多个脚本数据。 现在的做法是建立三个表来存储章节、关卡和脚本，每个表都有多个字段，通过id建立关联。思考过怎么组合使用，但是存在单独访问某一个脚本或某一个关卡信息的情况，感觉如果组合使用获取这种信息会很麻烦，请问下老师是否应该组合使用？还是用多个表通过id关联更好用呢</p>
+<li><p>数据冗余时，当有数据要更新时岂不是很麻烦？比如原来组A叫“同是”，但是后面发现“同是”错了，应该是“同事”。比如有很多这样的数据，岂不是要一个一个去改</p>
 <blockquote>
-<p>如果你大部分的操作是基于脚本和关卡直接操作，那如果用组合的方法不一定是最优的。虽然，MongoDB对嵌套数组的操作支持还是很给力，你可以直接取出关卡或脚本，通过使用projection 过滤字段及不匹配的数组元素。对内嵌数组操作也是可以用到索引的，所以效率也不会太糟糕。</p>
+<p>不用一个个改，可以是一个update语句，更新所有匹配项</p>
 </blockquote>
 </li>
-<li><p>MongoDB 4.2 的新特性通配符索引（Wildcard Indexes）</p>
+<li><p>我这边有个疑问，MongoDB默认生成的 _id 类型是 ObjectId，在做查询时，经常需要考虑做类型转换处理，不然会碰到查不到数据的问题。 虽然ORM框架可以处理这个问题，但我想确认一个问题就是如果每次插入数据的时候都提前 new ObjectID，然后设置一个 string 类型的主键，和原生 ObjectID 相比是否有什么不好的地方，比如说性能是否会差一些</p>
 <blockquote>
-<p>简单来说，wildcard index对于下面这样的结构： { “_id” : 1, “data” : {  “a” : 1728,  “b” : 6740,  “c” : 6481,  “d” : 2066,  “e” : 3173 } } 可以一条命令（一个索引）同时对a/b/c/d/e 5个字段做索引 db.wildcardIndex.createIndex({“data.$**”:1}); 甚至你将来在这个子文档里增加新的字段，也会自动索引。这样省去你单独创建很多个索引。 但是。。。性能上有人测试过，这种比单独建每个索引还是要更加耗资源，差不多是两倍。 所以方便的代价是资源的更多消耗</p>
+<p>没有太大区别，性能上也不会有什么差别，除了你自己要保证这个_id的唯一性</p>
 </blockquote>
 </li>
-<li><p>如果我有两个字段a和b，希望对每个文档增加一个字段c=a-b.  试了一下用find. forEach然后每个文档执行一个uodate的话速度非常慢。有什么比较高效的方法吗？</p>
+<li><p>在学习过程中遇到一个概念Tailable Cursor，这个应该怎么理解呢</p>
 <blockquote>
-<p>db.test.insert({a: 2, b: 3}) db.test.updateMany({}, [{    $set: {        c: {            $add: [“$a”, “$b”]        }    } }])</p>
+<p>Linux 有个命令叫tail，如果你理解那个的用法，就知道这个名词的由来了。 tail -f  debug.log 这个命令会打印debug.log 的内容，然后不会退出，会在那里监听debug.log文件是否有新的日志写入，一旦有新的，就会马上在控制台打印出来。 使用tailable cursor, 你的程序不会退出，读完cursor最后一条以后会block，等待下一条数据过来后继续。很多时候可以用来做一些类似Java里面 observer pattern的事情或者传统数据库里触发器的事情。</p>
 </blockquote>
 </li>
-<li><p>执行db.oplog.rs.findOne().ts 时，返回值是Timestamp(1574326231, 1)。而我的需求是指获取1574326231，如果想获取1574326231值，有现成的函数吗</p>
+</ol>
+<h3 id="1-3-文档模型设计之一：基础设计"><a href="#1-3-文档模型设计之一：基础设计" class="headerlink" title="1.3 文档模型设计之一：基础设计"></a>1.3 文档模型设计之一：基础设计</h3><h4 id="文档模型设计三部曲"><a href="#文档模型设计三部曲" class="headerlink" title="文档模型设计三部曲"></a>文档模型设计三部曲</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712231822697.png" alt="image-20220712231822697"></p>
+<h4 id="建立基础文档模型"><a href="#建立基础文档模型" class="headerlink" title="建立基础文档模型"></a>建立基础文档模型</h4><ul>
+<li><p>根据概念模型或者业务需求推导出逻辑模型 – 找到对象</p>
+</li>
+<li><p>列出实体之间的关系（及基数） - 明确关系</p>
+</li>
+<li><p>套用逻辑设计原则来决定内嵌方式 – 进行建模</p>
+</li>
+<li><p>完成基础模型构建</p>
+</li>
+</ul>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712233502547.png" alt="image-20220712233502547"></p>
+<h5 id="联系人管理应用的案例："><a href="#联系人管理应用的案例：" class="headerlink" title="联系人管理应用的案例："></a>联系人管理应用的案例：</h5><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712233552072.png" alt="image-20220712233552072"></p>
+<p>1-1 关系建模： portraits</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712233653413.png" alt="image-20220712233653413"></p>
+<p>1-N 关系建模： Addresses</p>
 <blockquote>
-<p>Timestamp(1574326231, 1).getTime()</p>
+<p> 一个文档最大16MB</p>
+</blockquote>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712233726580.png" alt="image-20220712233726580"></p>
+<p>N-N 关系建模：内嵌数组模式</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712233743067.png" alt="image-20220712233743067"></p>
+<p>总结：</p>
+<ul>
+<li><p>90:10 规则： 大部分时候你会使用内嵌来表示 1-1，1-N，N-N</p>
+</li>
+<li><p>内嵌类似于预先聚合（关联）</p>
+</li>
+<li><p>内嵌后对读操作通常有优势（减少关联）</p>
+</li>
+</ul>
+<h4 id="问答-2"><a href="#问答-2" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>感觉多对多这样做并不科学把，如果修改其中一个属性，那么就会有好多写的操作，性能不会有问题吗</p>
+<blockquote>
+<p>要看这种操作是否频繁。比如说，部门和人员之间的多对多，修改部门是很少见的操作，就可以接受。因为大部分时候是在读，那我们就是优化了读操作</p>
 </blockquote>
 </li>
-<li><p>MongoDB锁能否支持行级锁 2. 64G内存的虚拟机  能否设置大于50%的wiredTiger cacheSizeGB</p>
+<li><p>在N-N时，当我要需要频繁查询某个组内的所有成员时，应该怎么设计呢？我自己的想法是加一张组到联系人id的表，不知道这样对不对</p>
 <blockquote>
-<p>1）MongoDB采用的是MVCC机制，实际效果和行级锁类似。 2）可以的，但是要考虑到mongodb除了缓存以外自身还需要额外内存，所以要适当给操作系统和mongo本身留一些</p>
+<p>一般不需要。可以直接在联系人表里面有一个 groups 字段： {  _id:xxx,  contact_name: ‘tj’,  group_ids:[1, 2, 5]  } 对groups字段加个索引就可以快速的根据groupid快速检索该group 的所有成员了</p>
+</blockquote>
+</li>
+<li><p>我使用的mongo是4.0.11版本的，架构是分片集群，现在问题是，默认的最大连接数不够用的，819，怎么调优最大连接数</p>
+<blockquote>
+<p>有可能是和ulimits相关。你看下这个 <a href="https://docs.mongodb.com/manual/reference/ulimit/" target="_blank" rel="noopener">https://docs.mongodb.com/manual/reference/ulimit/</a></p>
+</blockquote>
+</li>
+<li><p>按照嵌套的方式 如果只建立一张联系人表，其他附属信息都通过嵌套的方式，这样是不是不太好呢</p>
+<blockquote>
+<p>不是所有的信息都可以嵌套，比如联系人的一些activity/事件。但是联系人的静态属性（相对变化不频繁），则基本都可以内嵌</p>
+</blockquote>
+</li>
+<li><p>在mongo里，把数据和数据关系都存到一起，一是会产生数据冗余。数据的紧凑性能保证吗？以例子说明，比如开始没有头像信息和联系人，稍后再进行更新。这样在存储是会存储在多个位置吧</p>
+<blockquote>
+<p>可以使用multi-update， 一次更新多条相关语句。mongo 有事务可以支持这个场景。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="1-4-文档模型设计之二：工况细化"><a href="#1-4-文档模型设计之二：工况细化" class="headerlink" title="1.4 文档模型设计之二：工况细化"></a>1.4 文档模型设计之二：工况细化</h3><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220713003643138.png" alt="image-20220713003643138"></p>
+<h4 id="联系人管理应用的分组需求"><a href="#联系人管理应用的分组需求" class="headerlink" title="联系人管理应用的分组需求:"></a>联系人管理应用的分组需求:</h4><ol>
+<li><p>用于客户营销</p>
+</li>
+<li><p>有千万级联系人</p>
+</li>
+<li><p>需要频繁变动分组（group）的信息，如增加分组及修改名称及描述以及营销状态</p>
+</li>
+<li><p>一个分组可以有百万级联系人</p>
+<blockquote>
+<p>一个分组信息的改动意味着 百万级的 DB 操作</p>
+</blockquote>
+</li>
+</ol>
+<p>解决方案：</p>
+<ol>
+<li>类似于关系型设计 </li>
+<li>用 id 或者唯一键关联</li>
+<li>使用 $lookup 来提供一次查询多表的能力（类似关联）</li>
+</ol>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220713003844986.png" alt="image-20220713003844986"></p>
+<h4 id="引用模式下的关联查询"><a href="#引用模式下的关联查询" class="headerlink" title="引用模式下的关联查询"></a>引用模式下的关联查询</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717104003071.png" alt="image-20220717104003071"></p>
+<p>另一个案例：联系人的头像采用引用模式</p>
+<ol>
+<li>头像使用高保真，大小在 5MB10MB</li>
+<li>头像一旦上传，一个月不可更换</li>
+<li>基础信息查询（不含头像）和 头 像查询的比例为 9 ：1</li>
+<li>建议： 使用引用方式，把头像数 据放到另外一个集合，可以显著提 升 90% 的查询效率</li>
+</ol>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717104304610.png" alt="image-20220717104304610"></p>
+<h4 id="什么时候该使用引用方式"><a href="#什么时候该使用引用方式" class="headerlink" title="什么时候该使用引用方式"></a>什么时候该使用引用方式</h4><ul>
+<li><p>内嵌文档太大，数MB 或者超过 16MB（比如头像）</p>
+</li>
+<li><p>内嵌文档或数组元素会频繁修改</p>
+</li>
+<li><p>内嵌数组元素会持续增长并且没有封顶</p>
+</li>
+</ul>
+<p>MongoDB 引用设计的限制：</p>
+<ul>
+<li><p>MongoDB 对使用引用的集合之间并无主外键检查</p>
+</li>
+<li><p>MongoDB 使用聚合框架的 $lookup 来模仿关联查询</p>
+</li>
+<li><p>$lookup只支持 left outer join</p>
+</li>
+<li><p>$lookup的关联目标（from）不能是分片表（不能两个表都是分片表）</p>
+</li>
+</ul>
+<h4 id="问答-3"><a href="#问答-3" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>如果被$lookup关联的表分片了，是不是只查询和主表在一个分区的数据了</p>
+<blockquote>
+<p>无法工作了</p>
+</blockquote>
+</li>
+<li><p>想问下头像图片文件，不是应该直接文件系统，数据库中只存链接吗</p>
+<blockquote>
+<p>头像图片文件，如果只是几十KB那样，完全可以直接放在JSON里面。除非是大到数个MB，就建议分开存放了。 至于是否文件系统，有别的考量了。文件系统不容易扩展，量达到亿/十亿级别管理会很麻烦</p>
+</blockquote>
+</li>
+<li><p>关于这一节我想请教下，在开发中我们的需求或者模型是变化的。比如这一节的group_ids对象类型，刚开始的时候是 json对象的数组，后面把这个抽出来使用单独的集合时候，group_ids对象类型变成了 整形数组. 这个变化会有一个开发和上线的一个过程，这里有没有什么好的最佳实践，谢谢老师. 这个变化，在上线的时候， 1：是需要再单独写一个脚本去清洗数据的吗？  2.  在清洗的时候, mongodb使用的是raft，是CP模型吗？这样的话，服务会暂时的对外不可用吗？？是否会存在像mysql5.6之前的版本处理DML时进行锁表的问题</p>
+<blockquote>
+<p>如果我是你，我会选择的是保留JSON格式，但是只留group_id字段。这样的话你只需要更新业务代码，不用停服务更新数据库。然后你可以写个语句把JSON字段里面的其他字段删除掉。整个过程都是线上操作，也不会有不一致数据问题。 如果是你的方案，就是彻底改变一个内嵌字段的类型，那就必须要写个脚本，然后最好是停止业务的访问，进行对数据库数据的修改</p>
+</blockquote>
+</li>
+<li><p>假如需求是联系人的属性是动态的，这种要怎么设计。关系型肯定更不好操作吧，比如说页面上有增删联系人属性的功能，这个模型怎么处理，尤其是作为面向对象开发，以Java为例，那这个联系人的属性对应的实体类属性就完全不知道怎么入手了，老师有什么建议吗，我是感觉这种功能好像是mongo数据库比较合适</p>
+<blockquote>
+<p>对这个动态模型就是MongoDB的特色。如果是非强类型语言如python / nodejs 会更加简单，直接JSON入库，JSON可以增加属性。 模型处理mongodb端并不需要做任何工作，主要是你Java里面要能够给一个对象动态增加属性，然后把新对象交给Mongo就可以了</p>
+</blockquote>
+</li>
+<li><p>文档内嵌的层级基于性能考虑有没有限制，举个例子，比如实际业务中也可能内嵌5层这样的情况出现</p>
+<blockquote>
+<p>之前的版本嵌套超过2层就会导致无法in place update, 需要把整个子文档读到应用端整体修改更新。新版本使用arryFilter可以更新任意深度了，从这个角度上来讲还好</p>
+</blockquote>
+</li>
+<li><p>当数据量非常大的情况下，内嵌文档被频繁修改要遍历所有的顶层文档，如果改为引用设计也只能建立一个关系表对多对多的情况优化的好些，如果是一对多的，除了修改从表的数据外，对从表的增删还是要在主表操作</p>
+<blockquote>
+<p>对的，频繁修改是一个设计的考量，通常这个时候要考虑分出去另外一个集合，通过引用来表示关系</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="1-5-文档模型设计之三：模式套用"><a href="#1-5-文档模型设计之三：模式套用" class="headerlink" title="1.5 文档模型设计之三：模式套用"></a>1.5 文档模型设计之三：模式套用</h3><p>文档模型： 无范式，无思维定式，充分发挥想象力</p>
+<p>设计模式：实战过屡试不爽的设计技巧，快速应用</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162041882.png" alt="image-20220717162041882"></p>
+<p>举例：一个 IoT 场景的分桶设计模式，可以帮助把存储空间降低 10 倍并且查询效率提升数十倍.</p>
+<p>问题假设: 物联网场景下的海量数据处理 – 飞机监控数据，格式如下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"_id"</span> : <span class="string">"20160101050000:CA2790"</span>,</span><br><span class="line">    <span class="attr">"icao"</span> : <span class="string">"CA2790"</span>,</span><br><span class="line">    <span class="attr">"callsign"</span> : <span class="string">"CA2790"</span>,</span><br><span class="line">    <span class="attr">"ts"</span> : ISODate(<span class="string">"2016-01-01T05:00:00.000+0000"</span>),</span><br><span class="line">    <span class="attr">"events"</span> : &#123;</span><br><span class="line">        <span class="attr">"a"</span> : <span class="number">31418</span>,</span><br><span class="line">        <span class="attr">"b"</span> : <span class="number">173</span>,</span><br><span class="line">        <span class="attr">"p"</span> : [<span class="number">115</span>, <span class="number">-134</span>],</span><br><span class="line">        <span class="attr">"s"</span> : <span class="number">91</span>,</span><br><span class="line">        <span class="attr">"v"</span> : <span class="number">80</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>则大概需要的数据量如下：<br><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162151015.png" alt="image-20220717162151015"></p>
+<h4 id="分桶设计"><a href="#分桶设计" class="headerlink" title="分桶设计"></a>分桶设计</h4><p>解决办法：即每分钟一个文档改成每一个小时一个文档</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162227240.png" alt="image-20220717162227240"></p>
+<p>分桶模式小结：</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162440511.png" alt="image-20220717162440511"></p>
+<p>一个好的设计模式可以显著地：</p>
+<p>• 提升数据读写的效率</p>
+<p>• 降低资源的需求</p>
+<p>更多的 MongoDB 设计模式：</p>
+<h4 id="问答-4"><a href="#问答-4" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>这个索引需要的 存储空间大小，是怎么计算出来的啊</p>
+<blockquote>
+<p>db.collection.stats() 的结果里面有索引大小。</p>
+</blockquote>
+</li>
+<li><p>分桶优势是减少读的次数及空间的占用，那劣势是什么呢</p>
+<blockquote>
+<p>如果一个查询正好要跨越两个或多个桶，可能会略麻烦。比如说，我们每个小时的数据放在一个文档内，从00分到59分。但是如果你想要从15分到下个小时15分之间的数据来统计分析，就没那么直观了</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="1-6-设计模式集锦"><a href="#1-6-设计模式集锦" class="headerlink" title="1.6 设计模式集锦"></a>1.6 设计模式集锦</h3><h4 id="列转行"><a href="#列转行" class="headerlink" title="列转行"></a>列转行</h4><p>问题: 大文档，很多字段，很多索引</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162514342.png" alt="image-20220717162514342"></p>
+<p>解决办法，列转行，索引为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.movies.createIndex(&#123;“releases.country”:1, “releases.date”:1&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162536103.png" alt="image-20220717162536103"></p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162619255.png" alt="image-20220717162619255"></p>
+<h4 id="版本字段"><a href="#版本字段" class="headerlink" title="版本字段"></a>版本字段</h4><p>问题: 模型灵活了，如何管理文档不同版本解决方案: 增加一个版本字段，可以在需要的时候再出现</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162700934.png" alt="image-20220717162700934"></p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162716556.png" alt="image-20220717162716556"></p>
+<h4 id="近似计算"><a href="#近似计算" class="headerlink" title="近似计算"></a>近似计算</h4><p>问题: 统计网页点击流量</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162729015.png" alt="image-20220717162729015"></p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162840205.png" alt="image-20220717162840205"></p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162855118.png" alt="image-20220717162855118"></p>
+<h4 id="预聚合"><a href="#预聚合" class="headerlink" title="预聚合"></a>预聚合</h4><p>问题: 业绩排名，游戏排名，商品统计等精确统计：</p>
+<blockquote>
+<p>热销榜：某个商品今天卖了多少，这个星期卖了多少，这个月卖了多少？</p>
+<p>电影排行：观影者，场次统计</p>
+<p>传统解决方案：通过聚合计算</p>
+<p>痛点：消耗资源多，聚合计算时间长</p>
+</blockquote>
+<p>解决方案: 用预聚合字段</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162941992.png" alt="image-20220717162941992"></p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717162949940.png" alt="image-20220717162949940"></p>
+<h4 id="问答-5"><a href="#问答-5" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>请问下预聚合场景下，提前设计好需要统计的字段这一部分我听懂了。但是针对于统计日销量、周销量和月销量，每一个文档是否需要时间戳，文档具体该如何划分，来配合业务逻辑，保证可以精准切分时间段，从而支持查询。比如说查询的时候经常是分为月份来查。那么是不是每个文档中还需要month_num这个字段。按照周来查，就是需要week_num这个字段</p>
+<blockquote>
+<p>通常这种就是典型的维度数据设计，在分析库里常用。如果你的数据分析类型没有达到数十数百，只是针对少数几个数据类型，那么可以采用这种方式，在文档里通过一个月统计数组，周统计数组，每个数组元素增加mongo_num字段的方式来做</p>
 </blockquote>
 </li>
 <li><p>提前问个索引相关的问题，为何Mongo的索引用B树而不是B+树呢，我理解B+树的最大优点是范围查找，MySQL用的B+树，Mongo也有这个需求啊</p>
@@ -308,687 +535,627 @@
 </blockquote>
 </li>
 </ol>
-<h3 id="1-3-分布式、高可用相关"><a href="#1-3-分布式、高可用相关" class="headerlink" title="1.3 分布式、高可用相关"></a>1.3 分布式、高可用相关</h3><ol>
-<li><p>为什么副本集说是5个9的高可用</p>
+<h2 id="2-事务开发"><a href="#2-事务开发" class="headerlink" title="2. 事务开发"></a>2. 事务开发</h2><h3 id="2-1-写操作事务"><a href="#2-1-写操作事务" class="headerlink" title="2.1 写操作事务"></a>2.1 写操作事务</h3><h4 id="writeConcern"><a href="#writeConcern" class="headerlink" title="writeConcern"></a>writeConcern</h4><p>writeConcern 决定一个写操作落到多少个节点上才算成功。writeConcern 的取值包括：</p>
+<p>• 0：发起写操作，不关心是否成功；</p>
+<p>• 1~集群最大数据节点数：写操作需要被复制到指定节点数才算成功；</p>
+<p>• majority：写操作需要被复制到大多数节点上才算成功。</p>
+<p>发起写操作的程序将阻塞到写操作到达指定的节点数为止</p>
+<p>3节点复制集不作任何特别设定（默认值）：会存在丢数据的情况</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717172105022.png" alt="image-20220717172105022"></p>
+<p>majority（参数 w:”majority”）:大多数节点确认模式（2/3）</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717172132181.png" alt="image-20220717172132181"></p>
+<p>all（参数 w:”all”）:全部节点确认模式</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717172154871.png" alt="image-20220717172154871"></p>
+<p>对于5个节点的复制集来说，写操作落到多少个节点上才算是安全的？</p>
 <blockquote>
-<p>MongoDB复制集在从节点故障时候是不会影响到可用性。在主节点故障，进行选举的时候需要数秒到十几秒，这期间会影响写入。一年有365天x86640秒 ~=  3000多万秒。假设你每个月发生一次主节点故障或者其他问题导致选举，每次影响15秒，那么可用率就是：就是（3000w-12x15） / 3000w ~= 99.9994%</p>
+<p>3 4 5 majority</p>
 </blockquote>
-</li>
-<li><p>MongoDB 支持multi-master，所有节点可以同时读写数据库吗</p>
-<blockquote>
-<p>在一个复制集群里没有multi-master，但是一个分片集群可以有多个master (primary), 每个分片一个primary这种方式</p>
-</blockquote>
-</li>
-<li><p>MongoDB这种复制集模式，在不同的数据中心，这中间的网络延迟比较严重吧，不会影响做复制集的效果吗</p>
-<blockquote>
-<p>在多中心部署的时候要考虑网络延迟，所以一般多活中心只是建议能够接受一定数据延迟的情况下才建议</p>
-</blockquote>
-</li>
-<li><p>数据规模达到多大级别需要使用分片机制</p>
-<blockquote>
-<p>分片有3个触发条件：数据量，并发量，以及热数据大小（内存需求）。理论上，任意一个都会触发分片需求。如果只看数据量，单分片一般可以到1-2TB</p>
-</blockquote>
-</li>
-<li><p>请问分片集群的chunk分裂阈值有哪些？shard key与chunk的分裂阈值是什么关系？如何避免按shard key做chunk分裂时出现超出chunkSize的chunk块？</p>
-<blockquote>
-<p>这个阈值应该是在80%（64MB * 80%）的时候，就会把块一分为二。</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="1-4-运维相关"><a href="#1-4-运维相关" class="headerlink" title="1.4 运维相关"></a>1.4 运维相关</h3><ol>
-<li><p>MongoDB支持跨版本升级吗 例如2.x升级到4.x</p>
-<blockquote>
-<p>mongodump / mongorestore的方式可以跨版本，但是跨这么多也要试试才行。</p>
-</blockquote>
-</li>
-<li><p>分片集群mongorestore -h  一个数据模板，应该使用mongos连接还是 随便一个复制集的主节点就行</p>
-<blockquote>
-<p>使用mongos</p>
-</blockquote>
-</li>
-<li><p>如果在docker容器中布署mongodb，一般容器内存与heap内存的比例大概是个什么比例？</p>
-<blockquote>
-<p>MongoDB 默认会使用60%的系统内存，一般至少也要用到1GB缓存，所以容器至少要给个2GB。</p>
-</blockquote>
-</li>
-<li><p>mongodump的时候会给collection加lock吗?</p>
-<blockquote>
-<p>不会加lock。所以mongodump出来的不是一个一致的backup。通常可以加上 –oplog参数来获取一个某个时间点的快照类的备份</p>
-</blockquote>
-</li>
-<li><p>对于mongo副本集，如果有多个库，由于单集群达到瓶颈了，我想把一个库迁移出去，有什么方法吗，能达到像mysql主从实现吗？并且切换到新集群控制在切换ip的时间吗？</p>
-<blockquote>
-<p>如果可以停服务，可以用 mongodump -d xxx 方式 如果不能停服，需要用一些工具： 如果在阿里云，可以考虑mongoshake 工具 MongoDB官方有mongomirror工具 我们Tapdata也有一个工具，有免费3个月的使用期，如果只是一次性迁移够用了</p>
-</blockquote>
-</li>
-<li><p>使用mongodump去备份db，备份过程中会阻塞insert写入吗？是不是如果不想要一致性备份集，就不上锁，如果想要一致性的备份集，加–oplog参数，也不阻塞insert写入</p>
-<blockquote>
-<p>备份不阻塞，除非你用fsyncLock（）</p>
-<p>不上锁的话，就用 –oplog</p>
-</blockquote>
-</li>
-<li><p>我以前用的mssql，如果一个服务器上有多个数据库，想迁移数据库的时候直接考走对应的数据库文件就好。如果是mongodb，发现没有对应的文件，请问除了把数据导出还有别的办法吗</p>
-<blockquote>
-<p>mongodb 不能这么玩，只能用mongodump 或者 mongoexport，或者用迁移工具</p>
-</blockquote>
-</li>
-<li><p>老师好，请问下，想删除多行数据，得对多行数据进行备份，有什么工具可以生成反向语句insert进行备份吗</p>
-<blockquote>
-<p>换一个思路。使用MongoDB Ops Manager可以实现任意时间点恢复 - 比如你3：00执行删除动作，4：00发现有问题想回滚，那么可以使用ops manager 把数据库回到3：00的时候。 类似的事情可以用命令行方式做，但是就不是小项目了。 反向生成insert的没有见过，但是自己实现应该很简单</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="1-5-对比"><a href="#1-5-对比" class="headerlink" title="1.5 对比"></a>1.5 对比</h3><ol>
-<li><p>和mysql比的写入性能方面优势</p>
-<blockquote>
-<p>按照我个人经验是有明显的优势的。有好几家大厂的兄弟，包括百度，网易，字节都有分享类似的经验。 稍微网络搜一下，都有十倍或者更多的数字。原因：1）MongoDB默认的事务级别比MySQL低2）MongoDB支持的batch 写入模式可以大幅度提升写入速度3）MongoDB默认写到内存就返回，不等落盘</p>
-</blockquote>
-</li>
-<li><p>mongodb的动态特性有缺点嘛</p>
-<blockquote>
-<p>schema 管理会复杂， 你不能一下确定这个集合到底是什么结构。解决方案是使用Schema Validation 或者 JSON Schema来定义这个集合的严格结构。 JSON Schema类似于关系数据库的schema，但是不同的是如果你需要修改这个schema的话可以随时更改，理论上也不需要对已有数据做更新或者迁移。</p>
-</blockquote>
-</li>
-<li><p>比如在mysql批量插入，一次3000条左右比较合适，性能也不错，如果是mongodb,一次插多少条比较高效</p>
-<blockquote>
-<p>这个没有绝对值，通常和文档大小有关。如果在1KB以内的话，我会推荐用1000左右的batch size</p>
-</blockquote>
-</li>
-<li><p>你的DEMO 中，很多数据基本上都是冗余存储到一个collection上面，比如订单中的商品或国家直接存储的是对应的名称，而我们使用MySql 时通常存储的是对应的ID，这样mysql 的查询往往需要join 多张表才能满足用户的查询需求，mongo 这样的冗余存储则不需要，但是这也带来一个问题，就是数据一致性问题，当我需要修改某个商品的名称时对应该商品的所有关联数据都要修改，如果像关系型数据库那样主外键设计，那可能还是需要先设计好对应表之间的关系，并且查询同样要聚合查询，那岂不又失去了MongoDb 的文档灵活性，相比mysql还有那么大的优势吗</p>
-<blockquote>
-<p>你可以打破常规思维考虑。国家的名称你多长时间需要改一次呢？当然，商品名称修改频率会略高一些，但也是低频动作。MongoDB已经提供多表多行事务来保证修改的一致性。另外如果是经常要改的内容，也还是可以按照关系设计，并不是绝对要放到一张表里面。</p>
-</blockquote>
-</li>
-<li><p>请问mongdb的使用场景，能否替代mysql，在新增，更新，删除，查询操作上与mysql的效率有什么不一样</p>
-<blockquote>
-<p>mongodb在大部分场景是是和mysql可以互换的，作为一个应用的后台数据库的时候。两者更多是使用习惯上的区别。一个是基于大家比较熟悉的常规的SQL，另一个是基于比较非常规的JSON API。做的事情都是增删改查。效率上如果同样不做任何优化的话，MongoDB一般来说会有更高的并发执行能力。原因一个是基于内存的数据更新+异步落盘，另一个是采用的MVCC 乐观锁。</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="1-6-小技巧"><a href="#1-6-小技巧" class="headerlink" title="1.6 小技巧"></a>1.6 小技巧</h3><ol>
-<li>Mongo Compass官方的就是好用，大而全，我们还在用Mongo Booster，Mongo Compass中的Export To Language，帮我解决了大问题，在Mysql聚合查询语句翻译成MQL，再转换成Java 方式，快速高效，不用去翻MongoaTemplate API了</li>
-</ol>
-<h2 id="二、入门"><a href="#二、入门" class="headerlink" title="二、入门"></a>二、入门</h2><h3 id="2-1-介绍"><a href="#2-1-介绍" class="headerlink" title="2.1 介绍"></a>2.1 介绍</h3><ol>
-<li>重新定义OLTP数据库</li>
-</ol>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711213005862.png" alt="image-20220711213005862"></p>
-<ol>
-<li>版本变迁：</li>
-</ol>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711234524567.png" alt="image-20220711234524567"></p>
-<ol>
-<li>和关系型数据库对比</li>
-</ol>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711234618848.png" alt="image-20220711234618848"></p>
-<h4 id="mongodb特色："><a href="#mongodb特色：" class="headerlink" title="mongodb特色："></a>mongodb特色：</h4><ol>
-<li>一目了然的对象模型</li>
-</ol>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711234747181.png" alt="image-20220711234747181"></p>
-<ol>
-<li>字段灵活多变</li>
-</ol>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711234823589.png" alt="image-20220711234823589"></p>
-<ol>
-<li>快速开发</li>
-</ol>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711234930079.png" alt="image-20220711234930079"></p>
-<ol>
-<li>代码简单</li>
-</ol>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711235032649.png" alt="image-20220711235032649"></p>
-<ol>
-<li>原生的高可用和横向扩展能力</li>
-</ol>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711235124100.png" alt="image-20220711235124100"></p>
-<p>横向扩展能力：</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711235155079.png" alt="image-20220711235155079"></p>
-<p>总结：</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220711235256010.png" alt="image-20220711235256010"></p>
-<h3 id="2-2-增删改查"><a href="#2-2-增删改查" class="headerlink" title="2.2 增删改查"></a>2.2 增删改查</h3><h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><blockquote>
-<p>db.&lt;集合&gt;.insertOne(<json对象>)</json对象></p>
-<p>db.&lt;集合&gt;.insertMany([<json 1="">, <json 2="">, …<json n="">])</json></json></json></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.fruit.insertOne(&#123;name:&quot;apple&quot;&#125;);</span><br><span class="line">&#123;</span><br><span class="line">        &quot;acknowledged&quot; : true,</span><br><span class="line">        &quot;insertedId&quot; : ObjectId(&quot;629b43c6ad806a71b721e0fb&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; db.fruit.insertMany([</span><br><span class="line">... &#123;name: &quot;apple&quot;&#125;,</span><br><span class="line">... &#123;name: &quot;pear&quot;&#125;,</span><br><span class="line">... &#123;name: &quot;orange&quot;&#125;</span><br><span class="line">... ])</span><br><span class="line">&#123;</span><br><span class="line">        &quot;acknowledged&quot; : true,</span><br><span class="line">        &quot;insertedIds&quot; : [</span><br><span class="line">                ObjectId(&quot;629b440ead806a71b721e0fd&quot;),</span><br><span class="line">                ObjectId(&quot;629b440ead806a71b721e0fe&quot;),</span><br><span class="line">                ObjectId(&quot;629b440ead806a71b721e0ff&quot;)</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><h5 id="关于-find"><a href="#关于-find" class="headerlink" title="关于 find"></a>关于 find</h5><p>• find 是 MongoDB 中查询数据的基本指令，相当于 SQL 中的 SELECT 。</p>
-<p>• find 返回的是游标。</p>
-<p>find示例：</p>
-<blockquote>
-<p>db.movies.find( { “year” : 1975 } ) //单条件查询</p>
-<p>db.movies.find( { “year” : 1989, “title” : “Batman” } ) //多条件and查询</p>
-<p>db.movies.find( { $and : [ {“title” : “Batman”}, { “category” : “action” }] } ) // and的另一种形式</p>
-<p>db.movies.find( { $or: [{“year” : 1989}, {“title” : “Batman”}] } ) //多条件or查询</p>
-<p>db.movies.find( { “title” : /^B/} ) //按正则表达式查找</p>
-</blockquote>
-<p>条件查询：</p>
-<blockquote>
-<p>$lt: 存在并小于</p>
-<p>$lte: 存在并小于等于</p>
-<p>$gt: 存在并大于</p>
-<p>$gte: 存在并大于等于</p>
-<p>$ne: 不存在或存在但不等于</p>
-<p>$in: 存在并在指定数组中</p>
-<p>$nin: 不存在或不在指定数组中</p>
-<p>$or: 匹配两个或多个条件中的一个</p>
-<p>$and: 匹配全部条件</p>
-</blockquote>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712002158992.png" alt="image-20220712002158992"></p>
-<h5 id="查询子文档："><a href="#查询子文档：" class="headerlink" title="查询子文档："></a><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712002236992.png" alt="image-20220712002236992">查询子文档：</h5><p>find 支持使用“field.sub_field”的形式查询子文档。假设有一个文档</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">db.fruit.insertOne(&#123;</span><br><span class="line">name: &quot;apple&quot;,</span><br><span class="line">from: &#123;</span><br><span class="line">country: &quot;China&quot;,</span><br><span class="line">province: &quot;Guangdon&quot;</span><br><span class="line">&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 表示查找子文档</span><br><span class="line">&gt; db.fruit.find(&#123;&quot;from.country&quot;:&quot;China&quot;&#125;)</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;629b4cc5ad806a71b721e100&quot;), &quot;name&quot; : &quot;apple&quot;, &quot;from&quot; : &#123; &quot;country&quot; : &quot;China&quot;, &quot;province&quot; : &quot;Guangdon&quot; &#125; &#125;</span><br><span class="line"></span><br><span class="line">// 查询from字段，内容为country:&quot;China&quot;,所以没查出来结果</span><br><span class="line">&gt; db.fruit.find(&#123;&quot;from&quot;:&#123;country: &quot;China&quot;&#125;&#125;)</span><br></pre></td></tr></table></figure>
-<h5 id="查询数组："><a href="#查询数组：" class="headerlink" title="查询数组："></a>查询数组：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// 插入数据</span><br><span class="line">&gt; db.fruit.insert([</span><br><span class="line">... &#123; &quot;name&quot; : &quot;Apple&quot;, color: [&quot;red&quot;, &quot;green&quot; ] &#125;,</span><br><span class="line">... &#123; &quot;name&quot; : &quot;Mango&quot;, color: [&quot;yellow&quot;, &quot;green&quot;] &#125;</span><br><span class="line">... ])</span><br><span class="line">BulkWriteResult(&#123;</span><br><span class="line">        &quot;writeErrors&quot; : [ ],</span><br><span class="line">        &quot;writeConcernErrors&quot; : [ ],</span><br><span class="line">        &quot;nInserted&quot; : 2,</span><br><span class="line">        &quot;nUpserted&quot; : 0,</span><br><span class="line">        &quot;nMatched&quot; : 0,</span><br><span class="line">        &quot;nModified&quot; : 0,</span><br><span class="line">        &quot;nRemoved&quot; : 0,</span><br><span class="line">        &quot;upserted&quot; : [ ]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 匹配一个条件,使用db.fruit.find(&#123;&quot;color&quot;: &quot;red&quot;&#125;)效果一样</span><br><span class="line">&gt; db.fruit.find(&#123;color: &quot;red&quot;&#125;)</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;629b4d76ad806a71b721e101&quot;), &quot;name&quot; : &quot;Apple&quot;, &quot;color&quot; : [ &quot;red&quot;, &quot;green&quot; ] &#125;</span><br><span class="line"></span><br><span class="line">// 或者查询</span><br><span class="line">&gt; db.fruit.find(&#123;$or: [&#123;color: &quot;red&quot;&#125;, &#123;color: &quot;yellow&quot;&#125;]&#125; )</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;629b4d76ad806a71b721e101&quot;), &quot;name&quot; : &quot;Apple&quot;, &quot;color&quot; : [ &quot;red&quot;, &quot;green&quot; ] &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;629b4d76ad806a71b721e102&quot;), &quot;name&quot; : &quot;Mango&quot;, &quot;color&quot; : [ &quot;yellow&quot;, &quot;green&quot; ] &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<h5 id="查询数组中的对象"><a href="#查询数组中的对象" class="headerlink" title="查询数组中的对象"></a>查询数组中的对象</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.movies.insertOne( &#123;</span><br><span class="line">... &quot;title&quot; : &quot;Raiders of the Lost Ark&quot;,</span><br><span class="line">... &quot;filming_locations&quot; : [</span><br><span class="line">... &#123; &quot;city&quot; : &quot;Los Angeles&quot;, &quot;state&quot; : &quot;CA&quot;, &quot;country&quot; :</span><br><span class="line">... &quot;USA&quot; &#125;,</span><br><span class="line">... &#123; &quot;city&quot; : &quot;Rome&quot;, &quot;state&quot; : &quot;Lazio&quot;, &quot;country&quot; : &quot;Italy&quot; &#125;,</span><br><span class="line">... &#123; &quot;city&quot; : &quot;Florence&quot;, &quot;state&quot; : &quot;SC&quot;, &quot;country&quot; : &quot;USA&quot; &#125;</span><br><span class="line">... ]</span><br><span class="line">... &#125;)</span><br><span class="line">&#123;</span><br><span class="line">        &quot;acknowledged&quot; : true,</span><br><span class="line">        &quot;insertedId&quot; : ObjectId(&quot;629b4e93cfc6cb695c89d0a6&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; db.movies.find(&#123;&quot;filming_locations.city&quot;: &quot;Rome&quot;&#125;)</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;629b4e93cfc6cb695c89d0a6&quot;), &quot;title&quot; : &quot;Raiders of the Lost Ark&quot;, &quot;filming_locations&quot; : [ &#123; &quot;city&quot; : &quot;Los Angeles&quot;, &quot;state&quot; : &quot;CA&quot;, &quot;country&quot; : &quot;USA&quot; &#125;, &#123; &quot;city&quot; : &quot;Rome&quot;, &quot;state&quot; : &quot;Lazio&quot;, &quot;country&quot; : &quot;Italy&quot; &#125;, &#123; &quot;city&quot; : &quot;Florence&quot;, &quot;state&quot; : &quot;SC&quot;, &quot;country&quot; : &quot;USA&quot; &#125; ] &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<h5 id="使用find搜索数组中的对象"><a href="#使用find搜索数组中的对象" class="headerlink" title="使用find搜索数组中的对象"></a>使用find搜索数组中的对象</h5><p>在数组中搜索子对象的多个字段时，如果使用 $elemMatch，它表示必须是同一个子对象满足多个条件。考虑以下两个查询：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.getCollection(&apos;movies&apos;).find(&#123;</span><br><span class="line">... &quot;filming_locations.city&quot;: &quot;Rome&quot;,</span><br><span class="line">... &quot;filming_locations.country&quot;: &quot;USA&quot;</span><br><span class="line">... &#125;)</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;629b4e93cfc6cb695c89d0a6&quot;), &quot;title&quot; : &quot;Raiders of the Lost Ark&quot;, &quot;filming_locations&quot; : [ &#123; &quot;city&quot; : &quot;Los Angeles&quot;, &quot;state&quot; : &quot;CA&quot;, &quot;country&quot; : &quot;USA&quot; &#125;, &#123; &quot;city&quot; : &quot;Rome&quot;, &quot;state&quot; : &quot;Lazio&quot;, &quot;country&quot; : &quot;Italy&quot; &#125;, &#123; &quot;city&quot; : &quot;Florence&quot;, &quot;state&quot; : &quot;SC&quot;, &quot;country&quot; : &quot;USA&quot; &#125; ] &#125;</span><br><span class="line"></span><br><span class="line">// 表示两个条件都要满足</span><br><span class="line">&gt; db.getCollection(&apos;movies&apos;).find(&#123;</span><br><span class="line">... &quot;filming_locations&quot;: &#123;</span><br><span class="line">... $elemMatch:&#123;&quot;city&quot;:&quot;Rome&quot;, &quot;country&quot;: &quot;USA&quot;&#125;</span><br><span class="line">... &#125;</span><br><span class="line">... &#125;)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<h5 id="控制find返回的字段"><a href="#控制find返回的字段" class="headerlink" title="控制find返回的字段"></a>控制find返回的字段</h5><ul>
-<li><p>find 可以指定只返回指定的字段；</p>
-</li>
-<li><p>_id字段必须明确指明不返回，否则默认返回；</p>
-</li>
-<li><p>在 MongoDB 中我们称这为投影（projection）；</p>
-</li>
-<li><p>db.movies.find({“category”: “action”},{“_id”:0, title:1})</p>
-</li>
-</ul>
-<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p>remove 命令需要配合查询条件使用；</p>
+<h4 id="writeConcern-实验"><a href="#writeConcern-实验" class="headerlink" title="writeConcern 实验"></a>writeConcern 实验</h4><p>在复制集测试writeConcern参数</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.test.insert( &#123;count: 1&#125;, &#123;writeConcern: &#123;w: "majority"&#125;&#125;)</span><br><span class="line">db.test.insert( &#123;count: 1&#125;, &#123;writeConcern: &#123;w: 3 &#125;&#125;)</span><br><span class="line">db.test.insert( &#123;count: 1&#125;, &#123;writeConcern: &#123;w: 4 &#125;&#125;)</span><br></pre></td></tr></table></figure>
+<p>配置延迟节点，模拟网络延迟（复制延迟）</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">conf=rs.conf()</span><br><span class="line">// 设置为delay节点</span><br><span class="line">conf.members[2].slaveDelay = 5</span><br><span class="line">// 不参与选举</span><br><span class="line">conf.members[2].priority = 0</span><br><span class="line">rs.reconfig(conf)</span><br></pre></td></tr></table></figure>
+<p>观察复制延迟下的写入，以及timeout参数</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.test.insert( &#123;count: 1&#125;, &#123;writeConcern: &#123;w: 3&#125;&#125;)</span><br><span class="line">db.test.insert( &#123;count: 1&#125;, &#123;writeConcern: &#123;w: 3, wtimeout:3000 &#125;&#125;)</span><br></pre></td></tr></table></figure>
+<p>注意事项</p>
 <ul>
-<li><p>匹配查询条件的的文档会被删除；</p>
+<li><p>虽然多于半数的 writeConcern 都是安全的，但通常只会设置 majority，因为这是 等待写入延迟时间最短的选择；</p>
 </li>
-<li><p>指定一个空文档条件会删除所有文档；</p>
+<li><p>不要设置 writeConcern 等于总节点数，因为一旦有一个节点故障，所有写操作都将失败</p>
 </li>
-</ul>
-<p>以下示例：</p>
-<blockquote>
-<p>db.testcol.remove( { a : 1 } ) // 删除a 等于1的记录</p>
-<p>db.testcol.remove( { a : { $lt : 5 } } ) // 删除a 小于5的记录</p>
-<p>db.testcol.remove( { } ) // 删除所有记录</p>
-<p>db.testcol.remove() //报错</p>
-</blockquote>
-<h4 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h4><p>update 操作执行格式：db.&lt;集合&gt;.update(&lt;查询条件&gt;, &lt;更新字段&gt;)</p>
-<p>以以下数据为例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.fruit.insertMany([</span><br><span class="line">... &#123;name: &quot;apple&quot;&#125;,</span><br><span class="line">... &#123;name: &quot;pear&quot;&#125;,</span><br><span class="line">... &#123;name: &quot;orange&quot;&#125;</span><br><span class="line">... ])</span><br><span class="line">&#123;</span><br><span class="line">        &quot;acknowledged&quot; : true,</span><br><span class="line">        &quot;insertedIds&quot; : [</span><br><span class="line">                ObjectId(&quot;629b5349cfc6cb695c89d0a7&quot;),</span><br><span class="line">                ObjectId(&quot;629b5349cfc6cb695c89d0a8&quot;),</span><br><span class="line">                ObjectId(&quot;629b5349cfc6cb695c89d0a9&quot;)</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br><span class="line">// 使用(&#123;&quot;name&quot;: &quot;apple&quot;&#125;, &#123;$set: &#123;&quot;from&quot;: &quot;China&quot;&#125;&#125;)也可以</span><br><span class="line">&gt; db.fruit.updateOne(&#123;name: &quot;apple&quot;&#125;, &#123;$set: &#123;from: &quot;China&quot;&#125;&#125;)</span><br><span class="line">&#123; &quot;acknowledged&quot; : true, &quot;matchedCount&quot; : 1, &quot;modifiedCount&quot; : 1 &#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>使用 updateOne 表示无论条件匹配多少条记录，始终只更新第一条</p>
+<li><p>writeConcern 虽然会增加写操作延迟时间，但并不会显著增加集群压力，因此无论是否等待，写操作最终都会复制到所有节点上。设置 writeConcern 只是让写操作等待复制后再返回而已；</p>
 </li>
-<li><p>使用 updateMany 表示条件匹配多少条就更新多少条；</p>
-</li>
-<li><p>updateOne/updateMany 方法要求更新条件部分必须具有以下之一，否则将报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$set/$unset</span><br><span class="line">$push/$pushAll/$pop</span><br><span class="line">$pull/$pullAll</span><br><span class="line">$addToSet</span><br></pre></td></tr></table></figure>
+<li><p>应对重要数据应用 {w: “majority”}，普通数据可以应用 {w: 1} 以确保最佳性能</p>
 </li>
 </ul>
-<h5 id="更新数组："><a href="#更新数组：" class="headerlink" title="更新数组："></a>更新数组：</h5><blockquote>
-<p>$push: 增加一个对象到数组底部</p>
-<p>$pushAll: 增加多个对象到数组底部</p>
-<p>$pop: 从数组底部删除一个对象</p>
-<p>$pull: 如果匹配指定的值，从数组中删除相应的对象</p>
-<p>$pullAll: 如果匹配任意的值，从数据中删除相应的对象</p>
-<p>$addToSet: 如果不存在则增加一个值到数组</p>
-</blockquote>
-<h4 id="drop：删除集合"><a href="#drop：删除集合" class="headerlink" title="drop：删除集合"></a>drop：删除集合</h4><p>使用 db.&lt;集合&gt;.drop() 来删除一个集合</p>
-<p>集合中的全部文档都会被删除</p>
-<p>集合相关的索引也会被删除</p>
+<h4 id="journal（参数-j-true-）"><a href="#journal（参数-j-true-）" class="headerlink" title="journal（参数 j: true ）"></a>journal（参数 j: true ）</h4><p>writeConcern 可以决定写操作到达多少个节点才算成功，journal 则定义如何才算成功。取值包括：</p>
+<p>• true: 写操作落到 journal 文件中才算成功</p>
+<p>• false: 写操作到达内存即算作成功</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717172401926.png" alt="image-20220717172401926"></p>
+<h4 id="问答-6"><a href="#问答-6" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>请问一下：日志、journal、oplog 这三个有什么联系与区别呢？感觉这三者的概念很混淆</p>
 <blockquote>
-<p>db.colToBeDropped.drop()</p>
-</blockquote>
-<h4 id="dropDatabase：删除数据库"><a href="#dropDatabase：删除数据库" class="headerlink" title="dropDatabase：删除数据库"></a>dropDatabase：删除数据库</h4><p>数据库相应文件也会被删除，磁盘空间将被释放</p>
-<blockquote>
-<p>use tempDB</p>
-<p>db.dropDatabase()</p>
-<p>show collections // No collections</p>
-<p>show dbs // The db is gone</p>
-</blockquote>
-<h4 id="问答"><a href="#问答" class="headerlink" title="问答"></a>问答</h4><ol>
-<li><p>看3.6的官方文档，删除是用deleteOne, deleteMany，这跟remove有什么区分吗</p>
-<blockquote>
-<p> remove是mongo shell下的命令。deleteOne deleteMany是程序语言下的API。做的是类似的事情。</p>
+<p>日志：  这个是一个比较通用的概念，可以包括你说的所有（journal,oplog,以及server日志）。 具体一点来说， journal日志是数据库的crash recovery手段。通常的做法是把数据库内的数据块修改，提前用文件顺序写方式刷到盘上，然后再去真正的提交数据的修改。这样的目的是在服务器宕机的时候，内存中被丢失的数据可以在恢复过程中从journal 日志文件中读回来。 Oplog也是记录的数据库的操作日志，但是记的是逻辑操作命令。主要的目的是用于节点之间复制数据，而不是上面journal主要是用来recover crash。 还有一种就是mongod.log，这个就是一个文本文件，记录数据库系统的正常运行和错误信息等等。</p>
 </blockquote>
 </li>
-<li><p>elematch和分开写有什么区别？</p>
+<li><p>mongo是否可以在服务器端配置 majority write concern ，跟 j : true ？  如果在sql层面每条语句加 w:majority , j : true 有点麻烦，开发也不一定按照规范来操作。   如果可以在服务器直接配置，该如何配置</p>
 <blockquote>
-<p>$elemMatch表示一个数组元素同时满足两个条件 分开写表示一个元素满足一个条件，另一个元素满足另一个条件也算数 举例来说： db.test.insert({array: [{a: 1, b: 1}, {a: 2, b: 2}]}) db.test.find({“array.a”: 1, “array.b”: 2}); // 有结果，因为一个元素满足了a=1，另一个元素满足了b=2 db.test.find({array: {$elemMatch: {a: 1, b: 2}}}); // 没有结果，因为没有一个元素同时满足a=1并且b=2</p>
+<p>服务器端无法配置。你可以在Connection String上设置，这个一般是全局统一的设置</p>
+<p>例子：mongodb://db0.example.com,db1.example.com,db2.example.com/?replicaSet=myRepl&amp;w=majority&amp;wtimeoutMS=5000</p>
+<p><a href="https://docs.mongodb.com/manual/reference/connection-string" target="_blank" rel="noopener">https://docs.mongodb.com/manual/reference/connection-string</a></p>
 </blockquote>
 </li>
-<li><p>投影（projection）里面是不是可以对某个属性的表示形式做变换呢？比如将一个整数属性（保存的为1970年1月1日开始的毫秒数）转为日期格式表示</p>
+<li><p>就是一主二从的模式，writeConcern 为 majority，刚好写入一条数据时主节点宕机，此时两个从节点一个有数据，一个没有这条数据，有数据的一个作为主节点。此时，没有数据的一个还是从节点，它的同步是去监听新的主节点的日志变化，但是刚刚写的那条数据是在它监听之前写入新的主节点的日志的，那么这个从节点不就丢失了这条写的数据了吗？mongodb还有其他什么机制保证吗</p>
 <blockquote>
-<p>数据格式转换是4.0才开始支持的功能，本质上所有的转换都可以用<code>$convert</code>完成，但是转换为不同的数据类型时又有不同的简化版本。例如<code>$toInt</code>，<code>$toBool</code>，<code>$toDate</code>等。以下以使用最<code>$toDate</code>为例举例说明使用方式： // 测试数据 db.convertTest.insertMany([{    date: new Date().getTime() }, {    date: new Date().getTime() - 3600000 }, {    date: new Date().getTime() - 7200000 }]); 在<code>$project</code>中直接使用<code>$toDate</code>即可将epoch时间转换为日期类型： db.convertTest.aggregate([{    $project: {        date: {            $toDate: “$date”        }    } }]);</p>
+<p>最后一个从节点通过比较自己的oplog和新主的oplog来确定是否要同步新数据。两者的oplog肯定会差一条（新的数据），就会从新主那里复制</p>
 </blockquote>
 </li>
-<li><p>db.fruit.find( { “from” : {country: “China”} } )，这个到底是在查什么呢？查一个json对象字段from的值是“{country: “China”}”吗？好像不是这样的。</p>
+<li><p>Mongo 落盘的时候，有用到文件系统的 Page Cache 机制吗？当有一条数据更新的时候是先写到内存，然后是Page Cache 最后是硬盘吗。j 这个参数是代表写到 Page Cache 还是硬盘呢</p>
 <blockquote>
-<p>这个表示查找一个JSON文档，这个文档有一个字段叫做 from， 并且 from字段的内容就是  {country: “China”} ，不多也不少。</p>
+<p>j:1 表示Journal 日志刷盘，所以就是要写文件到硬盘。 正常数据只是写到内存的Cache（不是操作系统的cache，而是WiredTiger自己管理的Cache），然后异步刷盘。</p>
 </blockquote>
 </li>
-<li><p>mongodb删除了数据、表、数据库是没法恢复的么，有没有类似mysql有个日志记录的机制去回滚的？</p>
+<li><p>mongodb事务的默认隔离级别是什么？听说是相当于read uncommitted，这样似乎存在问题啊</p>
 <blockquote>
-<p>mongodb有类似的oplog。但是那个要求你对全量的oplog都要保存，才能够从oplog里完全恢复被误删的表。</p>
+<p>默认是read uncommitted。正常情况都不会有问题，除了发生宕机的时候，这个可能会有问题 - 你读到的一条数据可能会在宕机的时候被回滚掉。这种事情概率很小，发生了可能问题也不算特别严重，很多场景可以接受。如果要求比较高，那么需要用 readConcern: majority 来提高隔离级别</p>
 </blockquote>
 </li>
-<li><p>我在使用Robo 3T这个工具的过程中，对集合右键执行了  Drup Collection，执行之后，show collections 已经看不到那个集合，但是此前占用的存储空间没有变化。 请问下这个集合是否还存在？ 如果存在是否可以恢复？  如果不存在，如何释放存储空间</p>
+<li><p>请问一下，oplog是在内存中还是在磁盘上呢？ 每一次写操作都会事务的记录oplog对吧</p>
 <blockquote>
-<p>在使用MMAP引擎的时候删除集合不会回收存储空间。在WiredTiger引擎是直接回收存储空间的。 你可以在shell下面再尝试下这个操作看看是否robo 3t相关。</p>
+<p>oplog和就是一个MongoDB的collection ，都是存储在磁盘上的。 对oplog的操作只是顺序追加写入，所以效率相对来说会高不少，相比于普通collection 的随机读写。 每一次增删改都会记录相应的oplog，并且对oplog的操作和数据表的写入是同一个原子事务的</p>
 </blockquote>
 </li>
-<li><p>从mongo库里的一个大集合（100多个G，6000万文档，每个文档有100多个字段）中通过聚合筛选出符合筛选条件（条件里有两个字段有索引，是机构和月份，不过索引可能不太好，重复值多 ）的临时集合（几万-几十万），一般需要5分钟以上才能执行完。这种聚合操作有时候会在同一时间段执行二三十个，导致mongo库的CPU和内存会瞬间达到100%，并且会持续到这些查询执行完 才会释放资源。是否能有什么优化方法，降低CPU的消耗和提高查询速度？给其他字段加索引可能不行，因为每个查询的字段除了机构和月份外都可能不同。</p>
+<li><p>怎么就确定重新启动的主节点是同步x=1的节点呢.也可能是还没同步x=1节点</p>
 <blockquote>
-<p>机构和月份是否有做复合索引？ 能否给更多的内存保证索引+用到的数据都在内存中？ 使用readPreference 分散到多个节点去做</p>
+<p>按照mongodb复制集选举规则，有最新数据的会第一优先被选为主节点</p>
 </blockquote>
 </li>
-<li><p>mongodb $in子句有长度限制吗？另外mongodb的 findMany返回的游标，会不会有内存溢出的问题呢？</p>
+<li><p>请问个问题呀，一条数据在某个特定的业务场景，我需要把它写入 es 与 mongo(先写入mongo，然后在写入es)，写入mongo是ok的，但是由于某些原因写入es失败。这个时候我需要回滚 mongo 里面的数据，怎么处理呢</p>
 <blockquote>
-<p>理论上没有，只有bson 大小限制（16MB）。但实际上我用到1000的时候查询就很慢了。</p>
+<p>跨系统事务（XA）目前在MongoDB/ES上并无实现。Tough luck, 搜索下Saga Pattern，自己做事务补偿吧</p>
+</blockquote>
+</li>
+<li><p>w=majority时，写入成功会数据一定不会丢吧？比如副本集有5个节点，某一次更新录录记为r，更新成功。主和另一从节点宕机，剩下A，B，C三个节点，且满足 1. A与B，C能通信，但B和C之间无法通信 2. A比B和C有更高优先级 3. A的opIog比B和C旧，少一个修改记录r 这种情况下，A是不是有可能成为主节点呢？如果是，B和C同步A的数据后，会回滚那个记录r吧？数据不就丢了吗</p>
+<blockquote>
+<p>你这个是Triple Failure - 三重错误。 如果按照这种假设，极端点的话就像是3个硬盘同时坏掉，你全部写入都没用。数据还是丢了。 然后，你的描述确实有可能发生</p>
+</blockquote>
+</li>
+<li><p>请问怎样限制 MongoDB 使用的总内存大小。将 mongod.cfg 中storage.wiredTiger.engineConfig.cacheSizeGB 设置为 32 之后，在任务管理器中发现，MongoDB Server 占用的内存还是达到了 45 GB</p>
+<blockquote>
+<p>32GB只是控制数据的缓存空间大小。MongoDB服务器本身还需要内存来进行工作，如管理TCP连接，聚合、排序运算等</p>
+</blockquote>
+</li>
+<li><p>请问一下 j:true 是保证主节点的日志写入成功，还是保证writeConcern配置的参数对应的节点的日志写入成功才返回呢</p>
+<blockquote>
+<p>后者。对应于 w:N 里面N个节点的日志落盘</p>
 </blockquote>
 </li>
 </ol>
-<h3 id="2-4-聚合"><a href="#2-4-聚合" class="headerlink" title="2.4 聚合"></a>2.4 聚合</h3><p>MongoDB 聚合框架（Aggregation Framework）是一个计算框架，它可以：</p>
-<p>• 作用在一个或几个集合上；</p>
-<p>• 对集合中的数据进行的一系列运算；</p>
-<p>• 将这些数据转化为期望的形式；</p>
-<p>从效果而言，聚合框架相当于 SQL 查询中的：</p>
-<p>• GROUP BY</p>
-<p>• LEFT OUTER JOIN</p>
-<p>• AS等</p>
-<h4 id="管道和步骤"><a href="#管道和步骤" class="headerlink" title="管道和步骤"></a>管道和步骤</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005528647.png" alt="image-20220712005528647"></p>
-<p>聚合的基本格式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pipeline = [$stage1, $stage2, ...$stageN];</span><br><span class="line">db.&lt;COLLECTION&gt;.aggregate(</span><br><span class="line">pipeline,</span><br><span class="line">&#123; options &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<p>常见步骤：</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005552355.png" alt="image-20220712005552355"></p>
-<p>常见步骤中的运算符</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005622142.png" alt="image-20220712005622142"></p>
-<p>常见步骤：</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005649298.png" alt="image-20220712005649298"></p>
-<h4 id="聚合运算的使用场景"><a href="#聚合运算的使用场景" class="headerlink" title="聚合运算的使用场景"></a>聚合运算的使用场景</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005708502.png" alt="image-20220712005708502"></p>
-<h4 id="MQL常用步骤和SQL对比"><a href="#MQL常用步骤和SQL对比" class="headerlink" title="MQL常用步骤和SQL对比"></a>MQL常用步骤和SQL对比</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005751878.png" alt="image-20220712005751878"></p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712005811725.png" alt="image-20220712005811725"></p>
-<p>MQL中特有的步骤$unwind</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712011242645.png" alt="image-20220712011242645"></p>
-<p>MQL中特有的步骤$bucket</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712011302453.png" alt="image-20220712011302453"></p>
-<p>MQL中特有的步骤$facet</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712011319493.png" alt="image-20220712011319493"></p>
-<h4 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h4><p>数据模型:</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220722210604116.png" alt="image-20220722210604116"></p>
-<ol>
-<li>求所有订单的总销售额</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.orders.aggregate([</span><br><span class="line">... &#123;$group:</span><br><span class="line">... &#123;_id: null, total:&#123;$sum:&quot;$total&quot;&#125;&#125;</span><br><span class="line">... &#125;</span><br><span class="line">... ])</span><br><span class="line">&#123; &quot;_id&quot; : null, &quot;total&quot; : NumberDecimal(&quot;44019609&quot;) &#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>查询2019年第一季度（1月1日~3月31日）已完成订单（completed）的订单总金额和订单总数</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.orders.aggregate([</span><br><span class="line">... &#123; $match: &#123; status: &quot;completed&quot;, orderDate: &#123;$gte: ISODate(&quot;2019-01-01&quot;),$lt: ISODate(&quot;2019-04-01&quot;) &#125;&#125;&#125;,</span><br><span class="line">... &#123; $group: &#123;_id: null,total: &#123; $sum: &quot;$total&quot; &#125;,shippingFee: &#123; $sum: &quot;$shippingFee&quot; &#125;,count: &#123; $sum: 1&#125;&#125;&#125;,</span><br><span class="line">... &#123; $project: &#123;grandTotal: &#123; $add: [&quot;$total&quot;, &quot;$shippingFee&quot;] &#125;,count: 1,_id: 0&#125;&#125;</span><br><span class="line">... ])</span><br><span class="line">// 上面count为1表示包括，为0表示不包括</span><br><span class="line">&#123; &quot;count&quot; : 5875, &quot;grandTotal&quot; : NumberDecimal(&quot;2636376.00&quot;) &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-读操作事务"><a href="#2-2-读操作事务" class="headerlink" title="2.2 读操作事务"></a>2.2 读操作事务</h3><p>在读取数据的过程中我们需要关注以下两个问题：</p>
+<p>• 从哪里读？</p>
+<p>• 什么样的数据可以读？</p>
+<p>第一个问题是是由 readPreference 来解决；第二个问题则是由 readConcern 来解决</p>
+<h4 id="什么是-readPreference"><a href="#什么是-readPreference" class="headerlink" title="什么是 readPreference"></a>什么是 readPreference</h4><p>readPreference 决定使用哪一个节点来满足正在发起的读请求。可选值包括：</p>
+<p>• primary: 只选择主节点；</p>
+<p>• primaryPreferred：优先选择主节点，如如果不可用则选择从节点；</p>
+<p>• secondary：只选择从节点；</p>
+<p>• secondaryPreferred：优先选择从节点，如果从节点不可用则选择主节点；</p>
+<p>• nearest：选择最近的节点</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717180101004.png" alt="image-20220717180101004"></p>
+<h4 id="readPreference-场景举例"><a href="#readPreference-场景举例" class="headerlink" title="readPreference 场景举例"></a>readPreference 场景举例</h4><ul>
+<li>用户下订单后马上将用户转到订单详情页——primary/primaryPreferred。因为此 时从节点可能还没复制到新订单； </li>
+<li>用户查询自己下过的订单——secondary/secondaryPreferred。查询历史订单对 时效性通常没有太高要求； </li>
+<li>生成报表——secondary。报表对时效性要求不高，但资源需求大，可以在从节点 单独处理，避免对线上用户造成影响； </li>
+<li>将用户上传的图片分发到全世界，让各地用户能够就近读取——nearest。每个地区 的应用选择最近的节点读取数据。</li>
+</ul>
+<h4 id="readPreference-与-Tag"><a href="#readPreference-与-Tag" class="headerlink" title="readPreference 与 Tag"></a>readPreference 与 Tag</h4><p>readPreference 只能控制使用一类节点。Tag 则可以将节点选择控制 到一个或几个节点。考虑以下场景：</p>
 <ul>
-<li><p>聚合框架可以帮助我们完成常见的分析应用类需求</p>
+<li>一个 5 个节点的复制集</li>
+<li>3 个节点硬件较好，专用于服务线上客户</li>
+<li>2 个节点硬件较差，专用于生成报表</li>
+</ul>
+<p>可以使用 Tag 来达到这样的控制目的：</p>
+<ul>
+<li>3 个较好的节点打上 {purpose: “online”}；</li>
+<li>为 2 个较差的节点打上 {purpose: “analyse”}；</li>
+<li>在线应用读取时指定 online，报表读取时指定 reporting。</li>
+</ul>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717201102705.png" alt="image-20220717201102705"></p>
+<h4 id="readPreference-配置"><a href="#readPreference-配置" class="headerlink" title="readPreference 配置"></a>readPreference 配置</h4><ul>
+<li><p>通过 MongoDB 的连接串参数：</p>
+<blockquote>
+<p>mongodb://host1:27107,host2:27107,host3:27017/?replicaSet=rs&amp;readPreference=secondary</p>
+</blockquote>
 </li>
-<li><p>MongoDB 聚合框架支持丰富的步骤运算符</p>
+<li><p>通过 MongoDB 驱动程序 API：</p>
+<blockquote>
+<p>MongoCollection.withReadPreference(ReadPreference readPref)</p>
+</blockquote>
 </li>
-<li><p>通过 Compass 可以更加直观的来创建复杂的聚合计算管道</p>
+<li><p>Mongo Shell：</p>
+<blockquote>
+<p>db.collection.find({}).readPref( “secondary” )</p>
+</blockquote>
 </li>
 </ul>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712210026492.png" alt="image-20220712210026492"></p>
-<h4 id="问答-1"><a href="#问答-1" class="headerlink" title="问答"></a>问答</h4><ol>
-<li><p>复杂的聚合查询 一定要尽可能把所有的match放在在project投影之前，如果match出现在project之后 就无法享受索引加速了。 当然 还需要根据match字段 创建对应的联合索引。 我刚刚把一个复杂查询优化了 就是把几个match提前了 然后建索引，查询耗时从5秒降到1秒</p>
+<h4 id="readPreference-实验-从节点读"><a href="#readPreference-实验-从节点读" class="headerlink" title="readPreference 实验: 从节点读"></a>readPreference 实验: 从节点读</h4><ul>
+<li>主节点写入 {x:1}, 观察该条数据在各个节点均可见</li>
+<li>在两个从节点分别执行 db.fsyncLock() 来锁定写入（同步）</li>
+<li>主节点写入 {x:2} <ul>
+<li>db.test.find({a: 123}) </li>
+<li>db.test.find({a: 123}).readPref(“secondary”) </li>
+</ul>
 </li>
-<li><p>请问mongo查询用explain分析查询语句，winningPlan选中的索引并非最优索引，用hint强制执行winningplan，执行是分钟以上，然后选择自己认为最有的索引执行，只需要几十秒。然而不用hint，直接执行也是几十秒，说明explain没有显示真正最优索引，请问这是什么情况</p>
+<li>解除从节点锁定 db.fsyncUnlock() <ul>
+<li>db.test.find({a: 123}).readPref(“secondary”)</li>
+</ul>
+</li>
+</ul>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
+<li>指定 readPreference 时也应注意高可用问题。例如将 readPreference 指定 primary，则发生故障转移不存在 primary 期间将没有节点可读。如果业务允许，则应选择 primaryPreferred； </li>
+<li>使用 Tag 时也会遇到同样的问题，如果只有一个节点拥有一个特定 Tag，则在这个节点失效时 将无节点可读。这在有时候是期望的结果，有时候不是。例如： <ul>
+<li>如果报表使用的节点失效，即使不生成报表，通常也不希望将报表负载转移到其他节点上，此时只有一个 节点有报表 Tag 是合理的选择； </li>
+<li>如果线上节点失效，通常希望有替代节点，所以应该保持多个节点有同样的 Tag； </li>
+</ul>
+</li>
+<li>Tag 有时需要与优先级、选举权综合考虑。例如做报表的节点通常不会希望它成为主节点，则优先级应为 0。</li>
+</ul>
+<h4 id="问答-7"><a href="#问答-7" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>我印象中有版本的mongodb，做读写分离的时候会导致主库时不时出现写入慢的情况</p>
 <blockquote>
-<p>queryPlanner并不能保证100%找到最优的索引，所以才在必要的时候使用hint来强制指定。当你自己选了合适的索引执行以后，这个计划就会被cache，所以下次不用hint，可能也就是用了你这个cached的（最佳）索引</p>
-<p>这个是我的一个推断。你可以清除下query plan cache再重新跑一下，看看是否还是能默认用到最佳索引</p>
+<p>4.0 之前从节点可能会阻塞，在写入很大的情况下</p>
 </blockquote>
 </li>
-<li><p>请教一下如果单表数据量有3亿，进行聚合统计比如count，效率怎么样</p>
+<li><p>聚合操作语句如果设置readpreference 为从节点，聚合中再’$out生成新的集合，这样能插入到从节点吗？</p>
 <blockquote>
-<p>如果是无条件全表count，这个很快因为是实时计数的</p>
-<p>带条件count取决于：1） 是否用到索引  2）你的数据是否都在内存  3）你的存储IO是否够快 - SSD vs SAS vs SATA 有很大差别</p>
-<p>通常来说这种操作会需要几十秒到分钟级如果没有优化。</p>
+<p>不能。写入必须是主节点</p>
 </blockquote>
 </li>
-<li><p>MongoDB的这种聚合功能，对数据量很大的时候，性能会不会很差，仍然有很好的性能表现吗</p>
+<li><p>两个从节点都锁住了，但是主节点执行db.test.find().readPref(“secondary”)是两条数据</p>
 <blockquote>
-<p>聚合功能的性能是比较差的</p>
-<p>量大的时候要注意调优了 - 聚合操作也有explain功能，看是否用到合适的索引，以及执行计划是否合理等。关于explain我们在后续章节会详细介绍。</p>
-<p>有一种常见的优化手段，Oracle/MySQL不太做得到的就是可以使用微分片（一个机器上部署多个分片）来提高聚合计算的并行能力。本来你只有一个数据库处理引擎来计算1亿条记录，我用10个微分片的话，我可以有10个处理引擎每个同时处理1000万，然后汇总结果数据。这个可以达到不错的性能提升效果。</p>
-</blockquote>
-</li>
-<li><p>lookup做join查询，两个集合的文档都大于10万条时，几乎就查不出来了，怎么优化呢</p>
-<blockquote>
-<p>用于lookup 的字段，特别是 foreignField 在被lookup 表里面，必须要有索引。多半是因为这个</p>
-</blockquote>
-</li>
-<li><p>为什么在project里面，first_name前要加美元符号，在一般find里面不需要加</p>
-<blockquote>
-<p>first_name要加美元符号，可以理解那是个变量, 实际的值要通过替换 first_name在文档中的具体值</p>
-<p>find()操作里面的用到的first_name只是个key</p>
-</blockquote>
-</li>
-<li><p>两个match的区别，另外emp_qty的sum设为1，是要做sum操作还是每次增加1, 如果设为2那统计出来的是人数的两倍吗</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.users.aggregate([</span><br><span class="line">&#123;$match: &#123;gender: &apos;女&apos;&#125;&#125;,</span><br><span class="line">&#123;$group: &#123;</span><br><span class="line">_id: &apos;$DEPARTMENT’,</span><br><span class="line">emp_qty: &#123;$sum: 1&#125;</span><br><span class="line">&#125;&#125;,</span><br><span class="line">&#123;$match: &#123;emp_qty: &#123;$lt: 10&#125;&#125;&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>第一个match是过滤原始集合的数据。第二个是针对group之后的结果再次过滤掉员工数量大于等于10的，只保留小于10个员工的部门。 第二个match没法放到前面，因为emp_qty在原始集合里不存在，必须等group之后才可以。</p>
-<p>emp_qty: {$sum: 1}的意思是对group里面的每一条数据，值加1。 如果加2，自然结果就是两倍</p>
-</blockquote>
-</li>
-<li><p>有没有类似sumif的聚合</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">没有sumif这个keyword，但是可以实现类似的事情，下面这个例子是只把&gt;=10 的$a字段的值相加求和：</span><br><span class="line"></span><br><span class="line">db.collection.aggregate([&#123;</span><br><span class="line">  $group: &#123;</span><br><span class="line">    _id: null,</span><br><span class="line">    total: &#123;</span><br><span class="line">      $sum: &#123;</span><br><span class="line">        $cond: [&#123;  $gte: [&quot;$a&quot;, 10] &#125;,  </span><br><span class="line">          &quot;$a&quot;,</span><br><span class="line">          0</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;])</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>请问 collection.mapReduce 与 collection.aggregate 的区别是？各自适用于哪些应用场景？</p>
-<blockquote>
-<p>mapReduce已经是deprecated，基本不维护。Aggregation 是替代产品，用C++写，性能比较保证。但是mapReduce很灵活，可以写JS脚本。Aggregation要按照指定的语法，有些场景可能难以实现。 所以，如果能用agg做的，尽量用agg如果逻辑太复杂，就用MR</p>
-</blockquote>
-</li>
-<li><p>请教一下聚合查询的性能问题，能否结合您的业务场景自己数据量说明一下 </p>
-<blockquote>
-<p>这个范围很广。我们的客户中最大的有100TB的数据量上做聚合的（Amadeus）。当然那个是32台物理服务器和288个微分片的架构，比较复杂了。 通常来说MongoDB有可以在内存做计算的特性，如果你可以把你的数据都放在内存，那么聚合运算的性能大概率可以不错。 如果你有数千万数亿以上的行数要做扫描性汇聚，又是跑在机械盘，索引又没有优化，那么有可能是分钟级的聚合计算性能。</p>
-</blockquote>
-</li>
-<li><p>地区销量top1, 只取每个区域销量最大的那个返回该怎么写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//假设数据结构</span><br><span class="line">&#123;</span><br><span class="line">    areaCode: &quot;Shanghai&quot;,</span><br><span class="line">    sales: 100</span><br><span class="line">&#125;</span><br><span class="line">db.testData.aggregate([&#123;</span><br><span class="line">    $sort: &#123;</span><br><span class="line">        areaCode: 1,</span><br><span class="line">        sales: -1</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">    $group: &#123;</span><br><span class="line">        _id: &quot;$areaCode&quot;,</span><br><span class="line">        topSales: &#123;</span><br><span class="line">            $first: &quot;$sales&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>数据结构和要求如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;group&quot;:&quot;A&quot;,</span><br><span class="line">    &quot;status&quot;:&quot;SUCCESS&quot;</span><br><span class="line"> &#125;</span><br><span class="line">// 聚合期望结果</span><br><span class="line">[&#123;</span><br><span class="line">        group:&quot;A&quot;,</span><br><span class="line">        SUCCESS:3</span><br><span class="line">        FAILURE:1</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">        group:&quot;B&quot;,</span><br><span class="line">        SUCCESS:1,</span><br><span class="line">        FAILURE:1</span><br><span class="line">&#125;</span><br><span class="line">]</span><br><span class="line">// 执行</span><br><span class="line">db.test.aggregate([</span><br><span class="line">&#123; </span><br><span class="line">    $group: &#123;</span><br><span class="line">        _id: &quot;$group&quot;, </span><br><span class="line">        success:  &#123; $sum:  </span><br><span class="line">            &#123; </span><br><span class="line">                $cond: &#123; if: &#123; $eq: [ &quot;$status&quot;, &quot;SUCCESS&quot; ] &#125;, then: 1, else: 0 &#125;</span><br><span class="line">            &#125;   </span><br><span class="line">        &#125;,</span><br><span class="line">        failure: &#123; $sum:  </span><br><span class="line">            &#123; </span><br><span class="line">                $cond: &#123; if: &#123; $eq: [ &quot;$status&quot;, &quot;FAILURE&quot; ] &#125;, then: 1, else: 0 &#125;</span><br><span class="line">            &#125;   </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果我有若干年的毫秒级的价格数据，我想对每条数据增加一个字段，字段内容为当前时间到接下来1000毫秒之间的数据的价格字段的最大值，怎么实现</p>
-<blockquote>
-<p>MongoDB里面貌似实现不了这么高级的计算，可能只能拉到内存里。这么大的量的话，要用到spark来做并发计算然后再把结果写回去mongodb。</p>
-</blockquote>
-</li>
-<li><p>接口需要给前端返回每日00:00:00 ~ 23:59:59这一天内，字段messageType分别为01 02 03 04 ，四种业务意义的请求数量，请老师明示怎么动态取每天的date，然后返回的结果分条显示当天24小时之内，不同值messageType得请求数量count(messageType)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">// 数据模型</span><br><span class="line"> &#123;</span><br><span class="line">    messageType: &apos;01&apos;,</span><br><span class="line">    date: ISODate(&quot;2019-01-01T01:15:42Z&quot;)</span><br><span class="line">    // 其他字段</span><br><span class="line">&#125;</span><br><span class="line">1. 从日期中提取日期和小时。这里如果有必要，需要考虑时区问题。如果考虑时区问题，则需要3.6以上版本支持；</span><br><span class="line">2. 按日期、小时分组聚合</span><br><span class="line"></span><br><span class="line">db.test.aggregate([</span><br><span class="line">    // 过滤条件（如果有）</span><br><span class="line">    &#123;</span><br><span class="line">        $match: &#123;...&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    // 映射出日期和小时</span><br><span class="line">    &#123;</span><br><span class="line">        $project: &#123;</span><br><span class="line">            date: &#123;</span><br><span class="line">                $dateToString: &#123;</span><br><span class="line">                    date: &quot;$date&quot;,</span><br><span class="line">                    format: &quot;%Y-%m-%d&quot;,</span><br><span class="line">                    timezone: &quot;+08:00&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            hour: &#123;</span><br><span class="line">                $hour: &quot;$date&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            messageType: 1</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        // 按日期、小时、messageType分组计数</span><br><span class="line">        $group: &#123;</span><br><span class="line">            _id: &#123;</span><br><span class="line">                date: &quot;$date&quot;,</span><br><span class="line">                hour: &quot;$hour&quot;,</span><br><span class="line">                messageType: &quot;$messageType&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            count: &#123;</span><br><span class="line">                $sum: 1</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>我的数据库某张表有2.2M的数据，我需要从这些数据里面计算出想要的数据，比如某个产品的销售额度。这个用聚合会把数据库查崩么</p>
-<blockquote>
-<p>如果计算的结果太大， 超过16MB，或者需要在内存进行排序或其他计算的时候超过100MB，聚合操作会失败。通常的做法是避免对非索引字段进行排序，或者使用allowDiskUse选项来突破100MB的限制。 另外，考虑在从节点上进行这样的聚合操作。否则会影响其他的数据库操作业务。</p>
-</blockquote>
-</li>
-<li><p>做聚合查询，希望把多个文档的同一字段合并在一起，这样使用第三方工具（matlab）读取时速度会明显加快，聚合过程中出现了BufBuilder attempted to grow() to 67108868 bytes, past the 64MB limit.’ 在网上查了下说是mongodb单个文档的大小限制。一般遇到这个问题该这么处理呢？感觉分成多个文档虽然可行但违背想方便的读取数据这个使用初衷了呢</p>
-<blockquote>
-<p>这个是MongoDB的物理限制，目前除了分文档之外没有别的解决方案</p>
+<p>mongo mongodb://root1:123456@10.0.0.29:28017,10.0.0.30:28017,10.0.0.31:28017/?replicaSet=my_repl  使用此方式链接</p>
 </blockquote>
 </li>
 </ol>
-<h3 id="2-5-复制集"><a href="#2-5-复制集" class="headerlink" title="2.5 复制集"></a>2.5 复制集</h3><h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>MongoDB 复制集的主要意义在于实现服务高可用</p>
-<p>它的现实依赖于两个方面的功能：</p>
+<h3 id="2-3-读操作事务2"><a href="#2-3-读操作事务2" class="headerlink" title="2.3 读操作事务2"></a>2.3 读操作事务2</h3><h4 id="什么是-readConcern"><a href="#什么是-readConcern" class="headerlink" title="什么是 readConcern"></a>什么是 readConcern</h4><p>在 readPreference 选择了指定的节点后，readConcern决定这个节点上的数据哪些是可读的，类似于关系数据库的隔离级别。</p>
+<p>可选值包括：</p>
 <ul>
-<li><p>数据写入时将数据迅速复制到另一个独立节点上</p>
-</li>
-<li><p>在接受写入的节点发生故障时自动选举出一个新的替代节点</p>
-</li>
+<li>available：读取所有可用的数据; </li>
+<li>local：读取所有可用且属于当前分片的数据; </li>
+<li>majority：读取在大多数节点上提交完成的数据; </li>
+<li>linearizable：可线性化读取文档; </li>
+<li>snapshot：读取最近快照中的数据</li>
 </ul>
-<p>在实现高可用的同时，复制集实现了其他几个附加作用:</p>
+<h4 id="readConcern-local-和-available"><a href="#readConcern-local-和-available" class="headerlink" title="readConcern: local 和 available"></a>readConcern: local 和 available</h4><p>在复制集中 local 和 available 是没有区别的。两者的区别主要体现在分片集上。考虑以下场景：</p>
 <ul>
-<li><p>数据分发：将数据从一个区域复制到另一个区域，减少另一个区域的读延迟</p>
+<li>一个 chunk x 正在从 shard1 向 shard2 迁移；</li>
+<li>整个迁移过程中 chunk x 中的部分数据会在 shard1 和 shard2 中同时存在，但源分片 shard1仍然是 chunk x 的负责方： <ul>
+<li>所有对 chunk x 的读写操作仍然进入 shard1； </li>
+<li>config 中记录的信息 chunk x 仍然属于 shard1； </li>
+</ul>
 </li>
-<li><p>读写分离：不同类型的压力分别在不同的节点上执行</p>
-</li>
-<li><p>异地容灾：在数据中心故障时候快速切换到异地</p>
+<li>此时如果读 shard2，则会体现出 local 和 available 的区别： <ul>
+<li>local：只取应该由 shard2 负责的数据（不包括 x）； </li>
+<li>available：shard2 上有什么就读什么（包括 x）；</li>
+</ul>
 </li>
 </ul>
-<h4 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h4><p>一个典型的复制集由3个以上具有投票权的节点组成，包括：</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220717224519319.png" alt="image-20220717224519319"></p>
+<p>注意事项：</p>
 <ul>
-<li><p>一个主节点（PRIMARY）：接受写入操作和选举时投票</p>
-</li>
-<li><p>两个（或多个）从节点（SECONDARY）：复制主节点上的新数据和选举时投票</p>
-</li>
-<li><p>不推荐使用 Arbiter（投票节点）</p>
-</li>
+<li>虽然看上去总是应该选择 local，但毕竟对结果集进行过滤会造成额外消耗。在一些 无关紧要的场景（例如统计）下，也可以考虑 available；</li>
+<li>MongoDB &lt;=3.6 不支持对从节点使用 {readConcern: “local”}； </li>
+<li>从主节点读取数据时默认 readConcern 是 local，从从节点读取数据时默认 readConcern 是 available（向前兼容原因</li>
 </ul>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712212858698.png" alt="image-20220712212858698"></p>
-<h4 id="数据是如何复制的"><a href="#数据是如何复制的" class="headerlink" title="数据是如何复制的"></a>数据是如何复制的</h4><p>当一个修改操作，无论是插入、更新或删除，到达主节点时，它对数据的操作将被记录下来（经过一些必要的转换），这些记录称为 oplog</p>
-<p>从节点通过在主节点上打开一个 tailable 游标不断获取新进入主节点的 oplog，并在自己的数据上回放，以此保持跟主节点的数据一致</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220719172234922.png" alt="image-20220719172234922"></p>
-<h4 id="故障恢复"><a href="#故障恢复" class="headerlink" title="故障恢复"></a>故障恢复</h4><ul>
-<li><p>具有投票权的节点之间两两互相发送心跳；</p>
-</li>
-<li><p>当5次心跳未收到时判断为节点失联；</p>
-</li>
-<li><p>如果失联的是主节点，从节点会发起选举，选出新的主节点；</p>
-</li>
-<li><p>如果失联的是从节点则不会产生新的选举；</p>
-</li>
-<li><p>选举基于 RAFT一致性算法 实现，选举成功的必要条件是大多数投票节点存活；</p>
-</li>
-<li><p>复制集中最多可以有50个节点，但具有投票权的节点最多7个</p>
-</li>
-</ul>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220719172306728.png" alt="image-20220719172306728"></p>
-<p>影响选举的因素：</p>
+<h4 id="readConcern-majority"><a href="#readConcern-majority" class="headerlink" title="readConcern: majority"></a>readConcern: majority</h4><p>只读取大多数据节点上都提交了的数据。考虑如下场景：</p>
+<blockquote>
+<p>集合中原有文档 {x: 0}；</p>
+<p>t0时间点 将x值更新为 1；</p>
+<p>t1时间点复制到sencondary1</p>
+<p>t2时间点复制到secondary2</p>
+</blockquote>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723125356975.png" alt="image-20220723125356975"></p>
+<p>如果在各节点上应用 {readConcern: “majority”} 来读取数据：</p>
+<blockquote>
+<p>t3的时候primary已经知道在多数节点能查到</p>
+<p>t5的时候s1也知道primary和s1都有数据了</p>
+</blockquote>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723125416131.png" alt="image-20220723125416131"></p>
+<p>majority 的实现方式: 考虑 t3 时刻的 Secondary1，此时：</p>
 <ul>
-<li><p>整个集群必须有大多数节点存活；</p>
-</li>
-<li><p>被选举为主节点的节点必须：</p>
+<li>对于要求 majority 的读操作，它将返回 x=0；</li>
+<li>对于不要求 majority 的读操作，它将返回 x=1;</li>
+</ul>
+<p>如何实现？节点上维护多个 x 版本，MVCC 机制 MongoDB 通过维护多个快照来链接不同的版本：</p>
 <ul>
-<li>能够与多数节点建立连接</li>
-<li>具有较新的 oplog</li>
-<li>具有较高的优先级（如果有配置）</li>
+<li>每个被大多数节点确认过的版本都将是一个快照；</li>
+<li>快照持续到没有人使用为止才被删除；</li>
 </ul>
-</li>
-</ul>
-<h4 id="常见选项"><a href="#常见选项" class="headerlink" title="常见选项"></a>常见选项</h4><p>复制集节点有以下常见的选配项：</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723125545439.png" alt="image-20220723125545439"></p>
+<h5 id="实验-”majority”-vs-“local”"><a href="#实验-”majority”-vs-“local”" class="headerlink" title="实验 : ”majority” vs “local”"></a>实验 : ”majority” vs “local”</h5><blockquote>
+<p>安装 3 节点复制集。</p>
+<p>注意配置文件内 server 参数 enableMajorityReadConcern</p>
+<p>将复制集中的两个从节点使用 db.fsyncLock() 锁住写入（模拟同步延迟）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.test.save(&#123;“A”:1&#125;) </span><br><span class="line">db.test.find().readConcern(“local”) </span><br><span class="line">db.test.find().readConcern(“majority”)</span><br></pre></td></tr></table></figure>
+<p>在某一个从节点上执行 db.fsyncUnlock() ，结论：</p>
+<blockquote>
+<p>使用 local 参数，则可以直接查询到写入数据 </p>
+<p>使用 majority，只能查询到已经被多数节点确认过的数据 </p>
+<p>update 与 remove 与上同理</p>
+</blockquote>
+<h5 id="majority-与脏读"><a href="#majority-与脏读" class="headerlink" title="majority 与脏读"></a>majority 与脏读</h5><p>MongoDB 中的回滚：</p>
 <ul>
-<li><p>是否具有投票权（v 参数）：有则参与投票；</p>
-</li>
-<li><p>优先级（priority 参数）：优先级越高的节点越优先成为主节点。优先级为0的节点无法成为主节点；</p>
-</li>
-<li><p>隐藏（hidden 参数）：复制数据，但对应用不可见。隐藏节点可以具有投票仅，但优先级必须为0；</p>
-</li>
-<li><p>延迟（slaveDelay 参数）：复制 n 秒之前的数据，保持与主节点的时间差</p>
-</li>
+<li>写操作到达大多数节点之前都是不安全的，一旦主节点崩溃，而从节还没复制到该次操作，刚才的写操作就丢失了； </li>
+<li>把一次写操作视为一个事务，从事务的角度，可以认为事务被回滚了。</li>
 </ul>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220719172317884.png" alt="image-20220719172317884"></p>
-<h4 id="复制集注意事项"><a href="#复制集注意事项" class="headerlink" title="复制集注意事项"></a>复制集注意事项</h4><ul>
-<li><p>关于硬件：</p>
+<p>所以从分布式系统的角度来看，事务的提交被提升到了分布式集群的多个节点级别的 “提交”，而不再是单个节点上的“提交”。在可能发生回滚的前提下考虑脏读问题：</p>
 <ul>
-<li>因为正常的复制集节点都有可能成为主节点，它们的地位是一样的，因此硬件配置上必须一致；</li>
-<li>为了保证节点不会同时宕机，各节点使用的硬件必须具有独立性。</li>
+<li>如果在一次写操作到达大多数节点前读取了这个写操作，然后因为系统故障该操作 回滚了，则发生了脏读问题；</li>
 </ul>
-</li>
-<li><p>关于软件：</p>
+<p>使用 {readConcern: “majority”} 可以有效避免脏读</p>
+<h5 id="readConcern-如何实现安全的读写分离"><a href="#readConcern-如何实现安全的读写分离" class="headerlink" title="readConcern: 如何实现安全的读写分离"></a>readConcern: 如何实现安全的读写分离</h5><p>考虑如下场景：</p>
+<blockquote>
+<p>向主节点写入一条数据；</p>
+<p>立即从从节点读取这条数据。</p>
+</blockquote>
+<p>如何保证自己能够读到刚刚写入的数据？下述方式有可能读不到刚写入的订单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.orders.insert(&#123; oid: 101, sku: ”kite&quot;, q: 1&#125;)</span><br><span class="line">db.orders.find(&#123;oid:101&#125;).readPref(&quot;secondary&quot;)</span><br></pre></td></tr></table></figure>
+<p>使用 writeConcern + readConcern majority 来解决:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.orders.insert(&#123; oid: 101, sku: &quot;kiteboar&quot;, q: 1&#125;, &#123;writeConcern:&#123;w: &quot;majority”&#125;&#125;)</span><br><span class="line">db.orders.find(&#123;oid:101&#125;).readPref(“secondary”).readConcern(&quot;majority&quot;)</span><br></pre></td></tr></table></figure>
+<p>readConcern 主要关注读的隔离性， ACID 中的 Isolation， 但是是分布式数据库里特有的概念。readCocnern： majority 对应于事务中隔离级别中的哪一级？答案：<strong>Read Committed</strong></p>
+<h4 id="readConcern-linearizable"><a href="#readConcern-linearizable" class="headerlink" title="readConcern: linearizable"></a>readConcern: linearizable</h4><p>只读取大多数节点确认过的数据。和 majority 最大差别是保证绝对的操作线性顺序 – 在写操作自然时间后面的发生的读，一定可以读到之前的写</p>
 <ul>
-<li>复制集各节点软件版本必须一致，以避免出现不可预知的问题。</li>
-</ul>
+<li><p>只对读取单个文档时有效；</p>
 </li>
-<li><p>增加节点不会增加系统写性能</p>
+<li><p>可能导致非常慢的读，因此总是建议配合使用 maxTimeMS；</p>
 </li>
 </ul>
-<h4 id="搭建复制集"><a href="#搭建复制集" class="headerlink" title="搭建复制集"></a>搭建复制集</h4><p>创建数据目录：</p>
+<blockquote>
+<p>主节点和其他节点网络断开</p>
+</blockquote>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723143147856.png" alt="image-20220723143147856"></p>
+<h4 id="readConcern-snapshot"><a href="#readConcern-snapshot" class="headerlink" title="readConcern: snapshot"></a>readConcern: snapshot</h4><p>{readConcern: “snapshot”} 只在多文档事务中生效。将一个事务的 readConcern 设置为 snapshot，将保证在事务中的读：</p>
 <ul>
-<li><p>MongoDB 启动时将使用一个数据目录存放所有数据文件。我们将为3个复制集节 点创建各自的数据目录。</p>
-</li>
-<li><p>Linux/MacOS: mkdir -p /data/db{1,2,3}</p>
-</li>
-<li><p>Windows: </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">md c:\data\db1 </span><br><span class="line">md c:\data\db2 </span><br><span class="line">md c:\data\db3</span><br></pre></td></tr></table></figure>
-</li>
+<li>不出现脏读；</li>
+<li>不出现不可重复读</li>
+<li>不出现幻读</li>
 </ul>
-<p>准备配置文件：</p>
-<p>复制集的每个mongod进程应该位于不同的服务器。我们现在在一台机器上运行3个进程，因此要 为它们各自配置：</p>
-<ul>
-<li><p>不同的端口。示例中将使用28017/28018/28019</p>
-</li>
-<li><p>不同的数据目录。示例中将使用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/data/db1或c:\data\db1</span><br><span class="line">/data/db2或c:\data\db2</span><br><span class="line">/data/db3或c:\data\db3</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>不同日志文件路径。示例中将使用:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/data/db1/mongod.log或c:\data\db1\mongod.log</span><br><span class="line">/data/db2/mongod.log或c:\data\db2\mongod.log</span><br><span class="line">/data/db3/mongod.log或c:\data\db3\mongod.log</span><br></pre></td></tr></table></figure>
-</li>
+<p>因为所有的读都将使用同一个快照，直到事务提交为止该快照才被释放</p>
+<h4 id="readConcern-小结"><a href="#readConcern-小结" class="headerlink" title="readConcern: 小结"></a>readConcern: 小结</h4><ul>
+<li>available：读取所有可用的数据</li>
+<li>local：读取所有可用且属于当前分片的数据，默认设置</li>
+<li>majority：数据读一致性的充分保证，可能你最需要关注的</li>
+<li>linearizable：增强处理 majority 情况下主节点失联时候的例外情况</li>
+<li>snapshot：最高隔离级别，接近于 Seriazable</li>
 </ul>
-<p>下面每个db的配置需要改#标注的部分</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712220142155.png" alt="image-20220712220142155"></p>
-<p>启动进程：</p>
-<ul>
-<li><p>Linux/Mac:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mongod -f /data/db1/mongod.conf</span><br><span class="line">mongod -f /data/db2/mongod.conf</span><br><span class="line">mongod -f /data/db3/mongod.conf</span><br><span class="line">注意：如果启用了 SELinux，可能阻止上述进程启动。简单起见请关闭 SELinux。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Windows:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mongod -f c:\data1\mongod.conf</span><br><span class="line">mongod -f c:\data2\mongod.conf</span><br><span class="line">mongod -f c:\data3\mongod.conf</span><br><span class="line">因为 Windows 不支持 fork，以上命令需要在3个不同的窗口执行，执行后不可关闭窗口否则</span><br><span class="line">进程将直接结束</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>启动后，三个mongodb 还不是集群，是独立的db</p>
-<p>配置复制集：</p>
-<ol>
-<li><p>通过hostname -f 查看hostname是否正常</p>
-</li>
-<li><p>执行rs.initiat() 会变成SECONDARY，表示进入复制集的状态，再次从SECONDARY 变成PRIMARY</p>
-</li>
-<li>rs.status()用来查看复制集的信息</li>
-<li>rs.add 添加其他的节点</li>
-</ol>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712220259017.png" alt="image-20220712220259017"></p>
-<p>验证：</p>
-<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712220316794.png" alt="image-20220712220316794"></p>
-<p>总结：</p>
-<p>● MongoDB 的生产环境要求搭建复制集 </p>
-<p>● MongoDB 复制集的搭建非常简单 </p>
-<p>● 实际环境要分三个物理（虚拟机）节点 （或以上）</p>
-<h4 id="问答-2"><a href="#问答-2" class="headerlink" title="问答"></a>问答</h4><ol>
-<li><p>MongoDB官方好像是建议1主1从1arbiter。如果是1主2从，主节点挂掉后，两个从节点都投票给自己，这样僵持，不是会没法产生新的master吗？</p>
+<h4 id="问答-8"><a href="#问答-8" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>有个问题想请教，本节中的{readConcern:”majority”}的例子，所有节点的数据达到共识的时间，与复制集的应该不一样吧？复制集的情况应该会简单点，就是当primary节点把数据复制给secondary时，顺便把x=1写入P成功的信息告诉S1和S2，这样S1和S2只需要告诉P他们也写入成功就完事了，没必要到t5、t6吧？只有在writeConcern时才像例子中说的？</p>
 <blockquote>
-<p>“MongoDB官方好像是建议1主1从1arbiter” 请提供相应的文章。</p>
-<p>主节点挂了以后，两个从节点的投票算法会防止你说的现象发生。具体来说，如果两个从节点条件完全一样，那么第一个主张的节点就获胜。如果两个从节点同时主张自己，那么两个人同时放弃，并用一个随机值等待一小段时间（数秒），然后重试。所以总有一个节点会在另一个之前选为主节点</p>
+<p>一个读线程，使用 readConcern:majority，在t1 的时候读S1节点，S1是否要返回最新的一个写入 x=1 还是要等到t5？</p>
+<p>首先理解，这个读线程只能读 一个被大多数节点确认的写入(满足write majority)，这才可以满足readConcern: majority的条件</p>
+<p>在t1的时候，x=1实际上已经到达两个节点（majority），但是判断这个事实的是主节点。在主节点没有知道并确认x=1这个操作已经被多数节点写入的时候，这条数据是不够资格被发给 readConcern: majority 读线程的</p>
+<p>这个是3个节点，想象一下5个节点 - 那S1是肯定不知道数据已经写入到多数节点，只能等primary 告诉他</p>
 </blockquote>
 </li>
-<li><p>通常怎样提高写性能</p>
+<li><p>我用readConcern和writeConcern就是想基于Quorum原理来解决一致性问题的， 但是我看官网说“readConcern设置为majority时，能保证读到的数据『不会发生回滚』，但并不能保证读到的数据是最新的“。这句话指的是我刚才写的数据提交后，在发起读操作并没法马上读到刚才提交的数据吗</p>
 <blockquote>
-<p>升级存储是最直接的方案，如PCIE + SSD，注意索引的数量：索引越多写入越慢；分片： 增加写的节点来提供并发</p>
+<p>如果你的writeConcern是默认，比如说你写 x:1 到主节点, ,它会立即返回。如果你马上再去用majority readConcern去读这条数据，这条数据有可能没被复制到多数节点，你就读不到它。如果在同一个线程内，一般这个是不可以接受的</p>
+<p>正解是，在读写操作是同一个应用发起时，你要配合使用 writeConcern:majority 来保证你的写已经被提交到大多数节点，这样你马上再用readConcern: majority 就可以读到你刚才的写入了</p>
 </blockquote>
 </li>
-<li><p>如果是奇数节点，那么主节点挂掉，不就变成偶数节点了</p>
+<li><p>mysql单节点时仍然是事务型的。我觉得事务最核心的标志是 begin; xxx; commit|rollback;  当xxx中出问题或者业务程序里出问题可以rollback，保证整个过程是完整的原子的</p>
 <blockquote>
-<p>总数是看最初的配置，如你部署并配置了3个，虽然坏了一个，但是你的拓扑还是3节点， 按3节点的规则，剩下2个存活就可以正常工作。</p>
-</blockquote>
-</li>
-<li><p>复制集主从读写分离看起来很美好，但是如果对主从同步延时要求高，使用就很受限。 比如某些业务会写操作多，实时要求高的读场景多，这样主节点压力就很大，而从节点可以分担的业务场景非常有限</p>
-<blockquote>
-<p>对。读写分离的读一般指的是对时效性要求不高的读场景。如果要求高一般都建议读主节点。如果主节点性能扛不住，这个时候就要采用分片集群来分担压力(读和写)。</p>
-</blockquote>
-</li>
-<li><p>建立3个独立的单机库，然后导入同一份数据，然后将3个节点设置为复制集模式，那么被设置为从节点的数据库里面的数据会被清空，然后再从主节点再同步回来吗？ 2.如果3个节点通过公网ip地址互连，那么这中间的数据通信需要做安全防护吗？也就是这个时候节点间的通信数据被窃取，是否有泄露数据的风险</p>
-<blockquote>
-<p>1）是的会重新同步。节点之间判断是否需要同步是根据local库里的元数据决定的。里面记录了节点同步的状态信息，并不是看你实际存储的数据</p>
-<p>2）建议用SSL/TLS 加密链路就可以有效防止数据被窃取</p>
-</blockquote>
-</li>
-<li><p>主从复制是否会产生延迟，如果有延迟，那么常见有哪些因素会导致延迟，该如何避免或者降低延迟</p>
-<blockquote>
-<p>主从复制会有延迟。常见因素： 1） 网络抖动 （没办法） 2）网络拥挤  （评估数据增量需求，给予足够的带宽） 3）节点之间延迟太长 4）主节点压力过大  （注意监控，压力过大要扩容） 5）从节点配置不均衡，低于主节点配置（尽量均衡）</p>
-</blockquote>
-</li>
-<li><p>太多的slave 数据节点。都从主节点拉oplog 是否反而增加了主节点的压力？反而让主节点性能变差了？ 写主 读取从的这种配置是否还被推荐？什么场景适合这种</p>
-<blockquote>
-<p>太多从节点会增加主节点的压力，大概是每增加一个节点会有10%左右的性能影响</p>
-<p>主从读写分离还是比较常见的。所有读操作对数据时效（如报表型，或者历史数据）不高的都可以用从节点</p>
-</blockquote>
-</li>
-<li><p>请问 mongodb 的复制线程是主节点上的线程还是从节点上的线程？复制是主节点通知从节点还是从节点定时拉去呢</p>
-<blockquote>
-<p>主从复制是由从节点的线程发起的。通过监听主节点的oplog表的变化，并把oplog的entries pull到从节点进行回放</p>
-<p>oplog变化通知的方式类似于你在linux 下执行一个tail -f 命令，一旦你tail的文件（oplog）有变化，马上就会打印出来。或者在java里是类似于observable pattern</p>
-</blockquote>
-</li>
-<li><p>Mongodb2.4主从架构，从库复制从主库复制数据时会清空本地所有数据库吗？然后再同步？包括admin库</p>
-<blockquote>
-<p>如果是因为同步滞后，超过oplog window大小，或者是数据库损坏，或者是刚加入主库，都需要执行initial syn的操作，这个就会清空本地库再同步</p>
-</blockquote>
-</li>
-<li><p>选举是发生在主节点故障时，那么它也会参与投票么</p>
-<blockquote>
-<p>主节点故障如果是进程crash或者server crash，那么它当然无法进行选举。</p>
-<p>如果故障是因为节点之间网络不通，那失联的主节点会自动降级为从节点。</p>
-<p>如果是短暂故障马上恢复后，主节点（这个时候已经是从节点了）会重新加入选举，但是有个30秒的等待期</p>
-</blockquote>
-</li>
-<li><p>我们想使用此方式来提高mongodb的查询性能， 复制集采用一主两从，主节点使用memeory，从节点wiredtiger。  这样是否能够提供查询效率</p>
-<blockquote>
-<p>这样做是OKAY的，当然要注意InMemory Engine是商业版产品需要付费</p>
-<p>之前有人用RAMDISK方式来模拟InMemory，但是由于代码还是WT，所以和真正的InMemory Engine还是有些差别</p>
-</blockquote>
-</li>
-<li><p>复制集能基于数据库粒度吗?  公司项目数据库服务实例有多个数据库,但是只想迁移部分数据库.   dump oplog选项也不支持数据库粒度, 但是阿里云DTS和tapData又能基于oplog做数据库粒度的毫秒级同步增量迁移,怎么做到的呢</p>
-<blockquote>
-<p>复制集的设计原理是基于3个节点是完全等同的基础上（因为会主从切换）。当然，对于某些指定的非主节点（第4个以上，priority为0)， 技术上实现库级/选择性同步是可以的的，只不过这个优先级不高，没有在mongo产品路线图里实现而已</p>
-</blockquote>
-</li>
-<li><p>投票节点为什么不建议用？我看有的书上，如果是偶数的时候，又增加一个投票节点，这样就变成奇数了，比如3个数据节点，2个投票节点。mongo为什么要设计投票节点；1 从节点之间出现心跳不通，但是都和主节点是通的，这个会出现问题么？是不是网络结构部署有问题？</p>
-<blockquote>
-<p>1）投票节点的最早设计初衷：需要奇数节点满足一致性协议，但同时又想节省资源。为何不建议用？降低的可用性（丢一个数据节点后风险很高），无法使用更高的writeConcern（后续章节会讲）来保证在主从切换的时候保证不丢失数据</p>
-<p>2） 这种现象出现的可能性不大，你可以尝试下画下网络拓扑，具体到物理层链路。如果真的出现了，应该是可以继续工作的。</p>
-</blockquote>
-</li>
-<li><p>请教一下采用多副本集后，主节点写，其他复制集读，但有时候主会切换成其他副节点，导致访问mongodb的端口变化，调用程序无法连接上之前主节点进行写入操作，前端调用程序该如何处理</p>
-<blockquote>
-<p>“但有时候主会切换成其他副节点” 你是在同一台服务器上起了几个不同端口的实例？这样的复制集/副本集是没有意义的。 这种场景是常见的，在mongo世界里。你的连接串要同时包含3个节点的IP：PORT，这样在切主的时候mongo的驱动会自动连到下一个主节点，你的应用程序无需处理。</p>
-</blockquote>
-</li>
-<li><p>oplog 类似mysql row格式log mongo   rs.printSlaveReplicationInfo()总能监控到几秒的延时， 读写分离的架构对于mongo如何使用呢</p>
-<blockquote>
-<p>那个命令可能不是太合适，用来做精确判断。考虑用个脚本，来做比较准确的判断会好一点，基于change stream或者oplog</p>
-</blockquote>
-</li>
-<li><p>第一个问题：关于复制集这块的secondary是怎么从主库来来取oplog的，实现的细节是什么？想了解这块的出发点就是作为dba的话，会经常遇到一些生产问题，需要从原理上解决问题？ 第二个问题：我有一个副本集，现在对一个secondary进行了物理的热备，之后，想把这个节点加入现有集群,是只需要配置参数文件，add加入副本集就可以吗？如果可以加入副本集的话，他是通过哪个集合来判断从哪个时间点开始来取oplog的</p>
-<blockquote>
-<p>第一个问题你可以先看下这篇博客： <a href="https://www.cnblogs.com/Joans/p/7723554.html" target="_blank" rel="noopener">https://www.cnblogs.com/Joans/p/7723554.html</a> 第二个问题：可以的，但是要通过对local库下面的一些表做个手脚。如果你用MongoDB的Ops Manager的话，它就提供这种方法来快速恢复一个从节点。 <a href="https://docs.opsmanager.mongodb.com/v1.4/tutorial/use-restore-to-seed-secondary/" target="_blank" rel="noopener">https://docs.opsmanager.mongodb.com/v1.4/tutorial/use-restore-to-seed-secondary/</a> 其中关键的集合是system.replset 以及oplog.rs。 system.replset必须包含对应的配置（和其他节点一致）和时间戳。oplog.rs必须包含至少一条和主节点oplog一样的记录用来匹配同步点。</p>
-</blockquote>
-</li>
-<li><p>我们的生产环境只有一台服务器，但有2个硬盘。做一主一从副本集，有意义吗</p>
-<blockquote>
-<p>意义不是很大，你crash了一个进程，另一个进程也是没法正常服务（需要3个节点才可以有HA）。硬盘的容错直接用RAID就可以</p>
-</blockquote>
-</li>
-<li><p>从节点是主动监听主节点的op log并拉取吗？ mongo 选举的时候，怎么知道集群中一共有多少节点？还有就是自己是和大多数节点互通的</p>
-<blockquote>
-<p>1: 是的。 2: 配置。开始搭建集群时候就要配置一下（或者通过add方法增加节点）</p>
-</blockquote>
-</li>
-<li><p>复制集和分片机制有什么区别？我们可以对数据分片到不同机器上的同时保留复制集吗？部署配置方式有区别吗</p>
-<blockquote>
-<p>复制集提供高可用，分片集在此基础上横向扩充，增加系统对数据量/并发量的支持。分片集由2个或多个复制集组成</p>
-</blockquote>
-</li>
-<li><p>如果要在 10 亿数据中查找摘要包含 MongoDB 的记录，{summary:/MongoDB/}，要求 1000 毫秒内返回结果，应该怎么玩？一定要单机配置很好的集群吗？单机配置一般，个数可以无限增加可以玩吗？分片是为了解决这类问题吗</p>
-<blockquote>
-<p>这里面最关键的是内存大小。 考虑为summary建一个covered index，然后保证你的索引能够装在内存里 （所有索引大小加起来要小于物理内存的一半那样）。 如果你用分片的话，比如说4个分片，那每个分片只需要处理2.5亿（在2.5亿里寻找，4个分片同时进行），理论上肯定更快了。但是最终还是要看你总的内存的数量</p>
-</blockquote>
-</li>
-<li><p>之前试过用mysql 做读写分离，开了binlog做主从同步。遇到一种情况，主库写太频繁(load file操作，没有事务)，从库同步延迟越来越大。oplog的原理是否也是记录成文件之后传输到从节点，由专门线程回放？mongodb是否也会出现这种问题</p>
-<blockquote>
-<p>oplog 和 binlog类似。并且在压力超大的时候，也有可能在从节点造成一些延迟。当然mongodb可以用多线程同时来回放</p>
-</blockquote>
-</li>
-<li><p>我在搭建集群的过程中遇到一个问题。 如果我集群中的所有节点都设置了密码，在使用rs.add(“host:port”)时会报没有权限。此时我该如何解决呢</p>
-<blockquote>
-<p>没有为各个节点配置KeyFile，或者 2. 启用认证之后没有创建管理员账户。rs.add()需要权限才能执行</p>
-</blockquote>
-</li>
-<li><p>请问一下，我按照你的操作是没有问题的。但是在复制集搭建成功后做如下操作，从节点却获取不到数据时怎么回事呀</p>
-<blockquote>
-<p>不能用local 库。那个是系统保留的。用任意其他库都可以。如 use test</p>
-</blockquote>
-</li>
-<li><p>如果在从节点强制执行副本集reconfig，force：true，会引发副本集的全量同步吗</p>
-<blockquote>
-<p>reconfig 原则上不会触发全量同步，除非是加入新的节点</p>
+<p>完整的事务包括ACID。你的理解和大部分程序员一样，更加关注的是里面的A: Atomicty。 就是几个操作要group为一个原子操作，要么全部成功，要么回滚所有操作。</p>
 </blockquote>
 </li>
 </ol>
-<h3 id="2-6-MongoDB全家桶"><a href="#2-6-MongoDB全家桶" class="headerlink" title="2.6 MongoDB全家桶"></a>2.6 MongoDB全家桶</h3><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222601597.png" alt="image-20220712222601597"></p>
-<h4 id="mongodump-mongorestore"><a href="#mongodump-mongorestore" class="headerlink" title="mongodump / mongorestore"></a>mongodump / mongorestore</h4><ul>
-<li><p>类似于 MySQL 的 dump/restore 工具</p>
+<h3 id="2-4-事务开发：多文档事务"><a href="#2-4-事务开发：多文档事务" class="headerlink" title="2.4 事务开发：多文档事务"></a>2.4 事务开发：多文档事务</h3><p>MongoDB 虽然已经在 4.2 开始全面支持了多文档事务，但并不代表大家应该毫无节制 地使用它。相反，对事务的使用原则应该是：能不用尽量不用, 事务 = 锁，节点协调，额外开销，性能影响</p>
+<p>MongoDB 多文档事务的使用方式与关系数据库非常相似：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try (ClientSession clientSession = client.startSession()) &#123;</span><br><span class="line">  clientSession.startTransaction();</span><br><span class="line">  collection.insertOne(clientSession, docOne);</span><br><span class="line">  collection.insertOne(clientSession, docTwo);</span><br><span class="line">  clientSession.commitTransaction();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723211137291.png" alt="image-20220723211137291"></p>
+<p>事务的隔离级别:</p>
+<ul>
+<li>事务完成前，事务外的操作对该事务所做的修改不可访问</li>
+<li>如果事务内使用 {readConcern: “snapshot”}，则可以达到可重复读 Repeatable Read</li>
+</ul>
+<p>实验：启用事务后的隔离性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.tx.insertMany([&#123; x: 1 &#125;, &#123; x: 2 &#125;]);</span><br><span class="line">var session = db.getMongo().startSession();</span><br><span class="line">session.startTransaction();</span><br><span class="line">var coll = session.getDatabase(&apos;test&apos;).getCollection(&quot;tx&quot;);</span><br><span class="line">coll.updateOne(&#123;x: 1&#125;, &#123;$set: &#123;y: 1&#125;&#125;);</span><br><span class="line">coll.findOne(&#123;x: 1&#125;);</span><br><span class="line">db.tx.findOne(&#123;x: 1&#125;); // 事务外的操作</span><br><span class="line">session.abortTransaction();</span><br></pre></td></tr></table></figure>
+<p>实验：可重复读 Repeatable Read</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var session = db.getMongo().startSession();</span><br><span class="line">session.startTransaction(&#123;</span><br><span class="line">readConcern: &#123;level: &quot;snapshot&quot;&#125;,</span><br><span class="line">writeConcern: &#123;w: &quot;majority&quot;&#125;&#125;);</span><br><span class="line">var coll = session.getDatabase(&apos;test&apos;).getCollection(&quot;tx&quot;);</span><br><span class="line">coll.findOne(&#123;x: 1&#125;); // 返回：&#123;x: 1&#125;</span><br><span class="line">db.tx.updateOne(&#123;x: 1&#125;, &#123;$set: &#123;y: 1&#125;&#125;);</span><br><span class="line">db.tx.findOne(&#123;x: 1&#125;); // 返回：&#123;x: 1, y: 1&#125;</span><br><span class="line">coll.findOne(&#123;x: 1&#125;); // 返回：&#123;x: 1&#125; 达到了可重复读的作用</span><br><span class="line">session.abortTransaction();</span><br></pre></td></tr></table></figure>
+<p>事务写机制：MongoDB 的事务错误处理机制不同于关系数据库：</p>
+<ul>
+<li>当一个事务开始后，如果事务要修改的文档在事务外部被修改过，则事务修改这个 文档时会触发 Abort 错误，因为此时的修改冲突了；</li>
+<li>这种情况下，只需要简单地重做事务就可以了；</li>
+<li>如果一个事务已经开始修改一个文档，在事务以外尝试修改同一个文档，则事务以 外的修改会等待事务完成才能继续进行（write-wait.md实验）。</li>
+</ul>
+<p>实验：写冲突， 继续使用上个实验的tx集合 开两个 mongo shell 均执行下述语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var session = db.getMongo().startSession();</span><br><span class="line">session.startTransaction(&#123; readConcern: &#123;level: &quot;snapshot&quot;&#125;,</span><br><span class="line">writeConcern: &#123;w: &quot;majority&quot;&#125;&#125;);</span><br><span class="line">var coll = session.getDatabase(&apos;test&apos;).getCollection(&quot;tx&quot;);</span><br><span class="line"></span><br><span class="line">窗口1：</span><br><span class="line">coll.updateOne(&#123;x: 1&#125;, &#123;$set: &#123;y: 1&#125;&#125;); // 正常结束</span><br><span class="line"></span><br><span class="line">窗口2：</span><br><span class="line">coll.updateOne(&#123;x: 1&#125;, &#123;$set: &#123;y: 2&#125;&#125;); // 异常 – 解决方案：重启事务</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">窗口1：第一个事务，正常提交</span><br><span class="line">coll.updateOne(&#123;x: 1&#125;, &#123;$set: &#123;y: 1&#125;&#125;);</span><br><span class="line">窗口2：另一个事务更新同一条数据，异常</span><br><span class="line">coll.updateOne(&#123;x: 1&#125;, &#123;$set: &#123;y: 2&#125;&#125;);</span><br><span class="line">窗口3：事务外更新，需等待</span><br><span class="line">db.tx.updateOne(&#123;x: 1&#125;, &#123;$set: &#123;y: 3&#125;&#125;);</span><br></pre></td></tr></table></figure>
+<p>注意事项：</p>
+<ul>
+<li>可以实现和关系型数据库类似的事务场景 </li>
+<li>必须使用与 MongoDB 4.2 兼容的驱动； </li>
+<li>事务默认必须在 60 秒（可调）内完成，否则将被取消； </li>
+<li>涉及事务的分片不能使用仲裁节点； </li>
+<li>事务会影响 chunk 迁移效率。正在迁移的 chunk 也可能造成事务提交失败（重试 即可）； </li>
+<li>多文档事务中的读操作必须使用主节点读；</li>
+<li>readConcern 只应该在事务级别设置，不能设置在每次读写操作上</li>
+</ul>
+<h4 id="问答-9"><a href="#问答-9" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>MongoDB还是很厉害的，一开始就支持单文档事务，4.0支持多文档事务，4.2支持有分片的分布式事务。不过，单文档事务这叫法有点鸡肋，虽然也的确是事务，但一般我们讲事务时，默认是指多文档的，对比MySQL就是多行。如果我用两条更新语句更新一个文档，那应该也不是事务吧？单文档事务这叫法，给人感觉在一个文档上执行多条DML，使用的一个事务，但其实不是。另外，MongoDB在没有显式使用事务语句时，应该就是自动提交吧</p>
+<blockquote>
+<p>这个单文档事务叫法背后的逻辑： 关系型里面，用户表和用户电话是分开在两张表。当你需要新增一个新用户，你需要：   insert into USER  </p>
+<p> insert into PHONE </p>
+<p>这两个DML需要放在事务范围内，保证两条数据（其实是一条，用户数据）要么一起成功写入，要么回滚。 </p>
+<p>在MongoDB里面，类似的操作变成了一个单文档操作：    </p>
+<p>db.user.insert({ name: “TJ”，phone: [“1234”]}) </p>
+<p>这个操作里面其实相当于做了两个事情：1） 添加用户  2） 添加电话号码。</p>
+<p>这两个事情是有原子事务性的-要么一起成功，要么一起失败。 这个是mongo单文档事务的由来。</p>
+</blockquote>
 </li>
-<li><p>可以完成全库 dump：不加条件</p>
+<li><p>chunk过程中各个分片上的oplog是会变化的吗？这时候oplog跟分片上的数据能对应起来吗？这部分日志是不是无用的日志啊</p>
+<blockquote>
+<p>会产生日志。日志里有个特殊字段会标记出来是来自于chunk migration</p>
+</blockquote>
 </li>
-<li><p>也可以根据条件 dump 部分数据：-q 参数</p>
+<li><p>我想请教一下mongodb有分布式事务锁吗？我想实现某一字段int值自增生成唯一主键</p>
+<blockquote>
+<p>你这个不用分布式事务吧，用  findAndModify就可以实现了。</p>
+</blockquote>
 </li>
-<li><p>Dump 的同时跟踪数据就更：–oplog</p>
+</ol>
+<h3 id="2-5-Change-Stream"><a href="#2-5-Change-Stream" class="headerlink" title="2.5 Change Stream"></a>2.5 Change Stream</h3><p>Change Stream 是 MongoDB 用于实现变更追踪的解决方案，类似于关系数据库的触发器，但原理不完全相同：</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723212233583.png" alt="image-20220723212233583"></p>
+<p>Change Stream 是基于 oplog 实现的。它在 oplog 上开启一个 tailable cursor 来追踪所有复制集上的变更操作，最终调用应用中定义的回调函数。 被追踪的变更事件主要包括：</p>
+<ul>
+<li>insert/update/delete：插入、更新、删除</li>
+<li>drop：集合被删除；</li>
+<li>rename：集合被重命名；</li>
+<li>dropDatabase：数据库被删除；</li>
+<li>invalidate：drop/rename/dropDatabase 将导致 invalidate 被触发， 并关闭 change stream；</li>
+</ul>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723212326062.png" alt="image-20220723212326062"></p>
+<p>Change Stream 只推送已经在大多数节点上提交的变更操作。即“可重复读”的变更。 这个验证是通过 {readConcern: “majority”} 实现的。因此：</p>
+<ul>
+<li>未开启 majority readConcern 的集群无法使用 Change Stream</li>
+<li>当集群无法满足 {w: “majority”} 时，不会触发 Change Stream（例如 PSA 架构 中的 S 因故障宕机）。</li>
+</ul>
+<p>变更过滤: 如果只对某些类型的变更事件感兴趣，可以使用使用聚合管道的过滤步骤过滤事件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var cs = db.collection.watch([&#123;</span><br><span class="line">  $match: &#123;</span><br><span class="line">  operationType: &#123;</span><br><span class="line">    	$in: [&apos;insert&apos;, &apos;delete&apos;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;])</span><br></pre></td></tr></table></figure>
+<p>故障恢复:假设在一系列写入操作的过程中，订阅 Change Stream 的应用在接收到“写3”之后 于 t0 时刻崩溃，重启后后续的变更怎么办？</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723212438295.png" alt="image-20220723212438295"></p>
+<p>想要从上次中断的地方继续获取变更流，只需要保留上次变更通知中的id即可。 右侧所示是一次 Change Stream 回调所返回的数据。每 条这样的数据都带有一个 id，这个 id 可以用于断点恢 复。例如： var cs = db.collection.watch([], {resumeAfter: <_id>}) 即可从上一条通知中断处继续获取后续的变更通知。</_id></p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220723212601373.png" alt="image-20220723212601373"></p>
+<p>Change Stream 使用场景:</p>
+<blockquote>
+<p>跨集群的变更复制——在源集群中订阅 Change Stream，一旦得到任何变更立即写入目标集群</p>
+<p>微服务联动——当一个微服务变更数据库时，其他微服务得到通知并做出相应的变更</p>
+<p>其他任何需要系统联动的场景</p>
+</blockquote>
+<p>注意事项:</p>
+<ul>
+<li>Change Stream 依赖于 oplog，因此中断时间不可超过oplog 回收的最大时间窗</li>
+<li>在执行 update 操作时，如果只更新了部分数据，那么 Change Stream 通知的也是增量部分</li>
+<li>同理，删除数据时通知的仅是删除数据的 _id</li>
+</ul>
+<h4 id="问答-10"><a href="#问答-10" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>事务内的写冲突在高并发下会造成大量的错误，那岂不是很鸡肋</p>
+<blockquote>
+<p>除非你是计数器计数那种对同一个字段并发修改。高并发很多是各自用户修改各自的信息，比如说摩拜单车，每辆自行车都在不断修改GPS轨迹，导致高并发访问。但是每辆车只是修改自己的那条文档。这种不会有冲突。</p>
+</blockquote>
 </li>
-<li><p>Restore 是反操作，把 mongodump 的输出导入到 mongodb</p>
+<li><p>我想咨询change stream是如何触发微服务的。比如库存低于一定阈值后，触发Java服务发送邮件。</p>
+<blockquote>
+<p>可以看这个例子： <a href="https://github.com/spring-projects/spring-data-examples/tree/master/mongodb/change-streams" target="_blank" rel="noopener">https://github.com/spring-projects/spring-data-examples/tree/master/mongodb/change-streams</a></p>
+</blockquote>
+</li>
+<li><p>事务的可见性必须在“复制集”模式下才有 local和majority（readConcern）， 单主节点模式下可见性是不是只有local</p>
+<blockquote>
+<p>单主节点的majority就是1 所以你用local还是majority没有区别</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="3-开发最佳实践"><a href="#3-开发最佳实践" class="headerlink" title="3. 开发最佳实践"></a>3. 开发最佳实践</h2><h3 id="3-1-连接到-MongoDB"><a href="#3-1-连接到-MongoDB" class="headerlink" title="3.1 连接到 MongoDB"></a>3.1 连接到 MongoDB</h3><p>关于驱动程序：总是选择与所用之 MongoDB 相兼容的驱动程序。这可以很容易地从驱动 兼容对照表中查到, 如果使用第三方框架（如 Spring Data），则还需要考虑框架版本与驱动的兼容性；</p>
+<p>关于连接对象 MongoClient：使用 MongoClient 对象连接到 MongoDB 实例时总是应该 保证它单例，并且在整个生命周期中都从它获取其他操作对象。 </p>
+<p>关于连接字符串：连接字符串中可以配置大部分连接选项，建议总是在连接字符串中配置 这些选项；</p>
+<blockquote>
+<p>// 连接到复制集 </p>
+<p>mongodb://节点1,节点2,节点3…/database?[options] </p>
+<p>// 连接到分片集 </p>
+<p>mongodb://mongos1,mongos2,mongos3…/database?[options]</p>
+</blockquote>
+<h4 id="常见连接字符串参数"><a href="#常见连接字符串参数" class="headerlink" title="常见连接字符串参数"></a>常见连接字符串参数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">maxPoolSize //连接池大小</span><br><span class="line">Max Wait Time // 建议设置，自动杀掉太慢的查询</span><br><span class="line">Write Concern // 建议 majority 保证数据安全</span><br><span class="line">Read Concern // 对于数据一致性要求高的场景适当使用</span><br></pre></td></tr></table></figure>
+<h4 id="连接字符串节点和地址"><a href="#连接字符串节点和地址" class="headerlink" title="连接字符串节点和地址"></a>连接字符串节点和地址</h4><p>无论对于复制集或分片集，连接字符串中都应尽可能多地提供节点地址，建议全部 列出：</p>
+<ul>
+<li>复制集利用这些地址可以更有效地发现集群成员；</li>
+<li>分片集利用这些地址可以更有效地分散负载</li>
+</ul>
+<p>连接字符串中尽可能使用与复制集内部配置相同的域名或 IP；</p>
+<h4 id="使用域名连接集群"><a href="#使用域名连接集群" class="headerlink" title="使用域名连接集群"></a>使用域名连接集群</h4><p>在配置集群时使用域名可以为集群变更时提供一层额外的保护。例如需要将集群整体 迁移到新网段，直接修改域名解析即可</p>
+<p>另外，MongoDB 提供的 mongodb+srv:// 协议可以提供额外一层的保护。该协议允 许通过域名解析得到所有 mongos 或节点的地址，而不是写在连接字符串中</p>
+<blockquote>
+<p>mongodb+srv://server.example.com/ Record TTL Class Priority Weight Port Target _mongodb._tcp.server.example.com. 86400 IN SRV 0 5 27317 mongodb1.example.com. _mongodb._tcp.server.example.com. 86400 IN SRV 0 5 27017 mongodb2.example.com</p>
+</blockquote>
+<h4 id="不要在-mongos-前面使用负载均衡"><a href="#不要在-mongos-前面使用负载均衡" class="headerlink" title="不要在 mongos 前面使用负载均衡"></a>不要在 mongos 前面使用负载均衡</h4><p>基于前面提到的原因，驱动已经知晓在不同的 mongos 之间实现负载均衡，而复制集则需要根据节点的角色来选择发送请求的目标。如果在 mongos 或复制集上层部署负 载均衡：</p>
+<ul>
+<li>驱动会无法探测具体哪个节点存活，从而无法完成自动故障恢复</li>
+<li>驱动会无法判断游标是在哪个节点创建的，从而遍历游标时出错</li>
+</ul>
+<p>结论：不要在 mongos 或复制集上层放置负载均衡器，让驱动处理负载均衡和自动故障恢复。</p>
+<h4 id="游标使用"><a href="#游标使用" class="headerlink" title="游标使用"></a>游标使用</h4><p>如果一个游标已经遍历完，则会自动关闭；如果没有遍历完，则需要手动调用 close() 方法，否则该游标将在服务器上存在 10 分钟（默认值）后超时释放，造成不必要的资源浪费。 但是，如果不能遍历完一个游标，通常意味着查询条件太宽泛，更应该考虑的问题是 如何将条件收紧。</p>
+<h4 id="关于查询及索引"><a href="#关于查询及索引" class="headerlink" title="关于查询及索引"></a>关于查询及索引</h4><ul>
+<li>每一个查询都必须要有对应的索引</li>
+<li>尽量使用覆盖索引 Covered Indexes （可以避免读数据文件）</li>
+<li>使用 projection 来减少返回到客户端的的文档的内容</li>
+</ul>
+<h4 id="关于写入"><a href="#关于写入" class="headerlink" title="关于写入"></a>关于写入</h4><ul>
+<li>在 update 语句里只包括需要更新的字段</li>
+<li>尽可能使用批量插入来提升写入性能</li>
+<li>使用TTL自动过期日志类型的数据</li>
+</ul>
+<h4 id="关于文档结构"><a href="#关于文档结构" class="headerlink" title="关于文档结构"></a>关于文档结构</h4><ul>
+<li>防止使用太长的字段名（浪费空间）</li>
+<li>防止使用太深的数组嵌套（超过2层操作比较复杂）</li>
+<li>不使用中文，标点符号等非拉丁字母作为字段名</li>
+</ul>
+<h4 id="处理分页问题-–-避免使用-count"><a href="#处理分页问题-–-避免使用-count" class="headerlink" title="处理分页问题 – 避免使用 count"></a>处理分页问题 – 避免使用 count</h4><p>尽可能不要计算总页数，特别是数据量大和查询条件不能完整命中索引时。 考虑以下场景：假设集合总共有 1000w 条数据，在没有索引的情况下考虑以下查询:</p>
+<blockquote>
+<p>db.coll.find({x: 100}).limit(50); </p>
+<p>db.coll.count({x: 100});</p>
+</blockquote>
+<p>前者只需要遍历前 n 条，直到找到 50 条队伍 x=100 的文档即可结束；后者需要遍历完 1000w 条找到所有符合要求的文档才能得到结果。为了计算总页数而进行的 count() 往往是拖慢页面整体加载速度的原因</p>
+<h4 id="处理分页问题-–-巧分页"><a href="#处理分页问题-–-巧分页" class="headerlink" title="处理分页问题 – 巧分页"></a>处理分页问题 – 巧分页</h4><p>避免使用skip/limit形式的分页，特别是数据量大的时候； 替代方案：使用查询条件+唯一排序条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">第一页：db.posts.find(&#123;&#125;).sort(&#123;_id: 1&#125;).limit(20);</span><br><span class="line">第二页：db.posts.find(&#123;_id: &#123;$gt: &lt;第一页最后一个_id&gt;&#125;&#125;).sort(&#123;_id: 1&#125;).limit(20);</span><br><span class="line">第三页：db.posts.find(&#123;_id: &#123;$gt: &lt;第二页最后一个_id&gt;&#125;&#125;).sort(&#123;_id: 1&#125;).limit(20);</span><br></pre></td></tr></table></figure>
+<h4 id="关于事务"><a href="#关于事务" class="headerlink" title="关于事务"></a>关于事务</h4><p>使用事务的原则:</p>
+<ul>
+<li>无论何时，事务的使用总是能避免则避免</li>
+<li>模型设计先于事务，尽可能用模型设计规避事务</li>
+<li>不要使用过大的事务（尽量控制在 1000 个文档更新以内）</li>
+<li>当必须使用事务时，尽可能让涉及事务的文档分布在同一个分片上，这 将有效地提高效率</li>
+</ul>
+<h3 id="问答-11"><a href="#问答-11" class="headerlink" title="问答"></a>问答</h3><ol>
+<li><p>分页可以用skip吗？ 如果每页50个，那skip(n*50).limit(50)?</p>
+<blockquote>
+<p>简单的skip功能okay，但是skip多的时候有性能问题。因为在服务端mongo如果你skip 10万条，它真的会load 10万条到内存一条条跳过直到10万条开始返回数据。</p>
+</blockquote>
+</li>
+<li><p>MongoDB适合存储车辆GPS信息吗？比如十万辆车，每辆车每十秒上传一次GPS信息（时间，坐标，方向，位置，速度等），MongoDB可以支持这种量级的数据吗？还要考虑车辆位置实时监控，历史时间段轨迹查询等应用</p>
+<blockquote>
+<p>这个有非常多的案例。比较著名的是有最大的一个共享单车，国内最大的汽车制造厂之一，以及最著名的电动车厂都是用mongo来记录车辆GPS位置。放心去用吧</p>
+</blockquote>
+</li>
+<li><p>请问MongoDB复制集的连接数 和机器的配置应该怎么换算？怎么样达到合理的连接数</p>
+<blockquote>
+<p>可以参考下这个文档： <a href="https://docs.atlas.mongodb.com/connection-limits/index.html" target="_blank" rel="noopener">https://docs.atlas.mongodb.com/connection-limits/index.html</a> </p>
+<p>mongodb atlas云服务里面的规格和AWS机器规格对应： M30 m4.large M40 m4.xlarge M50 m4.2xlarge M60 m4.4xlarge</p>
+</blockquote>
+</li>
+<li><p>使用MongoClient对象连接到MongoDB实例时总是应该保证它单例，并且在整个生命周期中都从它获取其他操作对象。老师 这块为什么一定要是单例</p>
+<blockquote>
+<p>MongoClient本身设计就是个Singleton 类，自己维护了连接池（java默认100个）。如果你用10个MongoClient实例，就是100x10个连接，对mongo服务器压力会太大</p>
+</blockquote>
+</li>
+<li><p>目前我们公司物联网准备用mongodb或hbase ，有一些聚合计算，更倾向用mongodb，可是目前遇到问题20亿2个分片，16核32G内存，现在总是分片均衡特别慢，6000个分片，一个2000多，一个3000多，所有服务都停了，均衡一周了还没均衡完，还差好几百个分片没均衡，找了好多看了监控一直找不到原因</p>
+<blockquote>
+<p>4.0以后在均衡方面性能有不错的提升</p>
+</blockquote>
+</li>
+<li><p>请问一下我默认只连接主节点，不知道为什么主节点变成从节点了，这样最终导致程序只能读不能写了，这种情况怎么处理呢？我现在是手动把原来连的节点重新配置成主节点来解决的</p>
+<blockquote>
+<p>你应该用replicaset的模式连，这样换主也可以继续工作。 mongodb://host1:27017,host2:27017,host3:27017/mydb?replicaSet=myset</p>
+</blockquote>
+</li>
+<li><p>关于那个count计数的问题，我想请教一下，前端要count数量来做分页显示，这个没法不使用count，还是另外一个集合记录其他集合的count数量，每次需要count的时候去记录集合取</p>
+<blockquote>
+<p>这个没有太好的办法，在mongo里面，就是要去库里查一下。 除非你的count是不带任何条件，只是全表count，那个是没有性能影响的</p>
+</blockquote>
+</li>
+<li><p>请问MongoDB的用户是在库上来配置的吗，还是只是在admin库里配置的</p>
+<blockquote>
+<p>理论上都可以 - 用户可以在admin库里，也可以在用户库里。我们一般建议建在admin库里方便统一管理</p>
+</blockquote>
+</li>
+<li><p>MongoDB集群分片数据分配不均衡，怎么办</p>
+<blockquote>
+<p>少数不均衡不是问题（比如说5-10% 的差别）。多了不均衡，要看看是不是有下面问题？ </p>
+<p>1） Jumbo chunk  </p>
+<p>2） balancer 是不是停了？ sh.getBalancerState() </p>
+<p>3)   写入太频繁，超过IO能力</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="4-MongoDB索引"><a href="#4-MongoDB索引" class="headerlink" title="4. MongoDB索引"></a>4. MongoDB索引</h2><h3 id="4-1-MongoDB索引机制一"><a href="#4-1-MongoDB索引机制一" class="headerlink" title="4.1 MongoDB索引机制一"></a>4.1 MongoDB索引机制一</h3><h4 id="相关概念：Index、Key、DataPage"><a href="#相关概念：Index、Key、DataPage" class="headerlink" title="相关概念：Index、Key、DataPage"></a>相关概念：Index、Key、DataPage</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724003714617.png" alt="image-20220724003714617"></p>
+<h4 id="Covered-Query-FETCH："><a href="#Covered-Query-FETCH：" class="headerlink" title="Covered Query/FETCH："></a>Covered Query/FETCH：</h4><p>表示查询覆盖/抓取, 如果所有需要的字段都在索引中，不需要额外的字段，就可 以不再需要从数据页加载数据，这就是查询覆盖。 </p>
+<blockquote>
+<p>db.human.createIndex({firstName: 1, lastName: 1, gender: 1, age: 1})</p>
+</blockquote>
+<p>IXSCAN/COLLSCAN：表示索引扫描/集合扫描:</p>
+<h4 id="Query-Shape："><a href="#Query-Shape：" class="headerlink" title="Query Shape："></a>Query Shape：</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724003958676.png" alt="image-20220724003958676"></p>
+<h4 id="Index-Prefix："><a href="#Index-Prefix：" class="headerlink" title="Index Prefix："></a>Index Prefix：</h4><p>索引前缀</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.human.createIndex(&#123;firstName: 1, lastName: 1, gender: 1, age: 1&#125;)</span><br></pre></td></tr></table></figure>
+<p>以上索引的全部前缀包括:</p>
+<ul>
+<li>{firstName: 1}</li>
+<li>{firstName: 1, lastName: 1}</li>
+<li>{firstName: 1, lastName: 1, gender: 1}</li>
+</ul>
+<p>所有索引前缀都可以被该索引覆盖，没有必要针对这些查询建立额外的索引</p>
+<h4 id="Selectivity过滤性"><a href="#Selectivity过滤性" class="headerlink" title="Selectivity过滤性"></a>Selectivity过滤性</h4><p>在一个有10000条记录的集合中:</p>
+<ul>
+<li>满足 gender= F 的记录有4000 条</li>
+<li>满足 city=LA 的记录有 100 条</li>
+<li>满足 ln=‘parker’ 的记录有 10 条</li>
+</ul>
+<p>条件 ln 能过滤掉最多的数据，city 其次，gender 最弱。所以 ln 的过 滤性（selectivity）大于 city 大于 gender。</p>
+<p>如果要查询同时满足： gender == F &amp;&amp; city == SZ &amp;&amp; ln == ‘parker’ 的记录，但只允许为 gender/city/ln 中的一个建立索引，应该把索引 放在哪里？</p>
+<h4 id="B-树结构"><a href="#B-树结构" class="headerlink" title="B+树结构"></a>B+树结构</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724004455599.png" alt="image-20220724004455599"></p>
+<h4 id="问答-12"><a href="#问答-12" class="headerlink" title="问答"></a>问答</h4><ol>
+<li><p>MongoDB 磁盘目录清理的话，是直接删除集合吗？删除集合部分数据，可以释放空间吗？谢谢</p>
+<blockquote>
+<p>不能。必须删除整个集合才会回收</p>
+</blockquote>
+</li>
+<li><p>mongo的索引跟mysql一样也是遵循最左前缀原则吗</p>
+<blockquote>
+<p>是的</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="4-2-MongoDB索引机制二"><a href="#4-2-MongoDB索引机制二" class="headerlink" title="4.2 MongoDB索引机制二"></a>4.2 MongoDB索引机制二</h3><h4 id="索引执行计划"><a href="#索引执行计划" class="headerlink" title="索引执行计划"></a>索引执行计划</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724115935615.png" alt="image-20220724115935615"></p>
+<h4 id="explain"><a href="#explain" class="headerlink" title="explain"></a>explain</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724120236688.png" alt="image-20220724120236688"></p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724120405274.png" alt="image-20220724120405274"></p>
+<h4 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h4><h5 id="单键索引"><a href="#单键索引" class="headerlink" title="单键索引"></a>单键索引</h5><h5 id="组合索引"><a href="#组合索引" class="headerlink" title="组合索引"></a>组合索引</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">db.members.find(&#123; gender: “F”， age: &#123;$gte: 18&#125;&#125;).sort(“join_date:1”)</span><br><span class="line"></span><br><span class="line">// 这么多候选的，用哪一个？</span><br><span class="line">&#123; gender: 1, age: 1, join_date: 1 &#125;</span><br><span class="line">&#123; gender: 1, join_date:1, age: 1 &#125;</span><br><span class="line">&#123; join_date: 1, gender: 1, age: 1 &#125;</span><br><span class="line">&#123; join_date: 1, age: 1, gender: 1 &#125;</span><br><span class="line">&#123; age: 1, join_date: 1, gender: 1&#125;</span><br><span class="line">&#123; age: 1, gender: 1, join_date: 1&#125;</span><br></pre></td></tr></table></figure>
+<p>组合索引的最佳方式：ESR原则<br>• 精确（Equal）匹配的字段放最前面<br>• 排序（Sort）条件放中间<br>• 范围（Range）匹配的字段放最后面<br>同样适用： ES, ER</p>
+<p>组合索引工作模式:</p>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724121218077.png" alt="image-20220724121218077"></p>
+<p>组合索引工作模式： 精确匹配</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.test.createIndex(&#123;a: 1, b: 1, c: 1&#125;)</span><br><span class="line"></span><br><span class="line">db.test.find(&#123;</span><br><span class="line">  a: 2,</span><br><span class="line">  b: 2,</span><br><span class="line">  c: 1</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724121311434.png" alt="image-20220724121311434"></p>
+<p>组合索引工作模式： 范围查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.test.createIndex(&#123;a: 1, b: 1, c: 1&#125;)</span><br><span class="line"></span><br><span class="line">db.test.find(&#123;</span><br><span class="line">  a: 2,</span><br><span class="line">  b: &#123;$gte: 2, $lte: 3&#125;,</span><br><span class="line">  c: 1</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724121344216.png" alt="image-20220724121344216"></p>
+<p>索引字段顺序的影响:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.test.find(&#123;a: 2, b: &#123;$gte: 2, $lte: 3&#125;, c: 1&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724121521781.png" alt="image-20220724121521781"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.test.find(&#123;a: 2, b: &#123;$gte: 2, $lte: 3&#125;).sort(&#123;c: 1&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220724122855132.png" alt="image-20220724122855132"></p>
+<h5 id="多值索引"><a href="#多值索引" class="headerlink" title="多值索引"></a>多值索引</h5><h5 id="地理位置索引"><a href="#地理位置索引" class="headerlink" title="地理位置索引"></a>地理位置索引</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">-- 创建索引</span><br><span class="line">db.geo_col.createIndex(</span><br><span class="line">  &#123; location: “2d”&#125; ,</span><br><span class="line">  &#123; min:-20, max: 20 , bits: 10&#125;,</span><br><span class="line">  &#123;collation:&#123;locale: &quot;simple&quot;&#125; &#125;</span><br><span class="line">)</span><br><span class="line">-- 查询</span><br><span class="line">db.geo_col.find(</span><br><span class="line">  &#123; location :</span><br><span class="line">  &#123; $geoWithin :</span><br><span class="line">  &#123; $box : [ [ 1, 1 ] , [ 3, 3 ] ] &#125; &#125; &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">-- 查询结果</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c7e7a6243513eb45bf06125&quot;), &quot;location&quot; : [ 1, 1 ] &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c7e7a6643513eb45bf06126&quot;), &quot;location&quot; : [ 1, 2 ] &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c7e7a6943513eb45bf06127&quot;), &quot;location&quot; : [ 2, 2 ] &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c7e7a6d43513eb45bf06128&quot;), &quot;location&quot; : [ 2, 1 ] &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c7e7a7343513eb45bf06129&quot;), &quot;location&quot; : [ 3, 1 ] &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c7e7a7543513eb45bf0612a&quot;), &quot;location&quot; : [ 3, 2 ] &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c7e7a7743513eb45bf0612b&quot;), &quot;location&quot; : [ 3, 3 ] &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="全文索引"><a href="#全文索引" class="headerlink" title="全文索引"></a>全文索引</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">-- 插入数据</span><br><span class="line">db.&lt;collection_name&gt;.insert(</span><br><span class="line">&#123; _id: 1, content: “This morning I had a cup of</span><br><span class="line">coffee.”, about: “beverage”, keywords: [</span><br><span class="line">“coffee” ] &#125; ,</span><br><span class="line">&#123; _id: 2, content: &quot;Who doesn&apos;t like cake?&quot;,</span><br><span class="line">about: &quot;food&quot;, keywords: [ &quot;cake&quot;, &quot;food&quot;,</span><br><span class="line">&quot;dessert&quot; ] &#125;,</span><br><span class="line">&#123; _id: 3, content: &quot;Why need coffee?&quot;, about:</span><br><span class="line">”food&quot;, keywords: [ ”drink&quot;, &quot;food&quot; ] &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">-- 创建索引</span><br><span class="line">&gt;&gt; db.&lt;collection_name&gt;.createIndex(</span><br><span class="line">	&#123;‘content’ : “text” &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">-- 查询</span><br><span class="line">db.&lt;collection_name&gt;.find(</span><br><span class="line">&#123; $text :</span><br><span class="line">&#123; $search : ”cup coffee like&quot; &#125;</span><br><span class="line">&#125; )</span><br><span class="line">db.&lt;collection_name&gt;.find(</span><br><span class="line">&#123; $text :</span><br><span class="line">&#123; $search : “ a cup of coffee” &#125;</span><br><span class="line">&#125; )</span><br><span class="line">-- 查询排序</span><br><span class="line">db.&lt;collection_name&gt;.find(</span><br><span class="line">&#123; $text : &#123; $search : ”coffee&quot;&#125; &#125;,</span><br><span class="line">&#123; textScore: &#123; $meta : &quot;textScore&quot; &#125;&#125;</span><br><span class="line">).sort(&#123; textScore: &#123; $meta: &quot;textScore&quot; &#125;&#125; )</span><br></pre></td></tr></table></figure>
+<h5 id="TTL索引"><a href="#TTL索引" class="headerlink" title="TTL索引"></a>TTL索引</h5><h5 id="部分索引"><a href="#部分索引" class="headerlink" title="部分索引"></a>部分索引</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- 创建部分索引</span><br><span class="line">&gt;&gt; db.&lt;collection_name&gt;.createIndex(</span><br><span class="line">  &#123;‘a’: 1 &#125;,</span><br><span class="line">  &#123; partialFilterExpression:</span><br><span class="line">  &#123;a:</span><br><span class="line">  &#123;$gte:5&#125;</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">//只对有wechat字段的建索引：</span><br><span class="line">&gt;&gt; db.&lt;collection_name&gt;.createIndex(</span><br><span class="line">  &#123;‘wechat’: 1 &#125;,</span><br><span class="line">  &#123; partialFilterExpression:</span><br><span class="line">  &#123;wechat:</span><br><span class="line">  &#123;$exists: true&#125;</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h5 id="哈希索引"><a href="#哈希索引" class="headerlink" title="哈希索引"></a>哈希索引</h5><h4 id="其他索引技巧"><a href="#其他索引技巧" class="headerlink" title="其他索引技巧"></a>其他索引技巧</h4><ul>
+<li><p>后台创建索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.member.createIndex( &#123; city: 1&#125;, &#123;background: true&#125; )</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对BI报表专用节点单独创建索引</p>
+<blockquote>
+<p>该从节点priority设为0</p>
+<p>关闭该从节点,</p>
+<p>以单机模式启动 </p>
+<p>添加索引（分析用） </p>
+<p>关闭该从节点，以副本集模式启动</p>
+</blockquote>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongodump -h 127.0.0.1:27017 -d test -c test</span><br><span class="line">mongorestore -h 127.0.0.1:27017 -d test -c test xxx.bson</span><br></pre></td></tr></table></figure>
-<h4 id="公有云托管服务"><a href="#公有云托管服务" class="headerlink" title="公有云托管服务"></a>公有云托管服务</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222632338.png" alt="image-20220712222632338"></p>
-<h4 id="BI-Connector"><a href="#BI-Connector" class="headerlink" title="BI Connector"></a>BI Connector</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222700822.png" alt="image-20220712222700822"></p>
-<h4 id="Ops-Manager-集群管理平台"><a href="#Ops-Manager-集群管理平台" class="headerlink" title="Ops Manager - 集群管理平台"></a>Ops Manager - 集群管理平台</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222728811.png" alt="image-20220712222728811"></p>
-<h4 id="MongoDB-Charts"><a href="#MongoDB-Charts" class="headerlink" title="MongoDB Charts"></a>MongoDB Charts</h4><p><img src="https://guanhang.oss-cn-hangzhou.aliyuncs.com/image-20220712222754210.png" alt="image-20220712222754210"></p>
-<h4 id="问答-3"><a href="#问答-3" class="headerlink" title="问答"></a>问答</h4><ol>
-<li>讲到MongoDB Ops Manager 集群管理平台时，说到该软件支持 分片集群的备份。请问分片集群的备份是什么意思？mongodump 做不了吗</li>
-</ol>
+<h3 id="问答-13"><a href="#问答-13" class="headerlink" title="问答"></a>问答</h3><ol>
+<li><p>请教一下我有A B C三个字段，这三个字段可能单独查询，也可能ABC一起组合查询。这样我是三个字段单独建索引高效，还是建组合索引</p>
 <blockquote>
-<p> mongodump 能做全量备份，但是做不到一致性备份。比如说，你想要一个半夜12点的备份，希望这个备份能够还原那个时间点的分片数据库的准确状态。事实上，当你12点开始跑的时候，可能要跑几十分钟到数小时才能备份完。这个时候又有持续的写入（可能会在备份里，可能不会在，取决于mongodump的读取顺序），所以你这个备份是属于不一致状态。 Ops Manager有自己独特的机制来保证一个备份的多个分片之间数据是在一个时间点上一致的</p>
+<p>如果3个字段分别有可能单独查询，并且频率都差不多，那你需要3个索引</p>
+<p>ABC:1 B:  1 C:  1</p>
 </blockquote>
+</li>
+<li><p>有个内嵌文档的唯一性问题请教，因为是唯一性的组合索，保证的是内嵌文档跨文档唯一，但我需要的是跨文档可以重复，但当前文档内内嵌文档唯一（比如每个客户有多个联系地址，地址的姓名/电话不能重复），MONGODB支持这种索引吗？还是说需要业务代码来实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">这个很容易实现。比如说你是这样的文档：</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">   _id: ObjectId(),</span><br><span class="line">   customer_id: 101,</span><br><span class="line">   customer_name: &quot;Nina&quot;,</span><br><span class="line">   emergency_contacts: [</span><br><span class="line">     &#123; contact_name: &apos;Nina mom&apos;, contact_phone: 12345&#125;,</span><br><span class="line">    &#123; contact_name: &apos;Nina dad&apos;, contact_phone:12346&#125; </span><br><span class="line">   ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">你可以建一个这样的唯一索引：</span><br><span class="line">  &#123; customer_id: 1, &quot;emergency_contacts.contact_name&quot;:1, </span><br><span class="line">&quot;emergency_contacts.contact_phone&quot;:1&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我这个删除方法1000万数据时，删除要60s，其中查询字段都建立了索引</p>
+<blockquote>
+<p>这个是正常的。删除需要删除数据和索引，是一个成本不低的操作</p>
+</blockquote>
+</li>
+<li><p>最后面改单机加索引的步骤，是因为副本集存储位点信息吗？不然他怎么知道从哪里继续同步呢</p>
+<blockquote>
+<p>对。每个节点都会记住自己的同步信息和offset</p>
+</blockquote>
+</li>
+</ol>
 
       
 
@@ -1090,7 +1257,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2022/07/07/MongoDB/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2022/07/24/MongoDB之进阶的副本/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -1104,18 +1271,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2022/07/24/MongoDB之进阶的副本/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          MongoDB之进阶
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/07/12/hexo/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">hexo</div>
+    <a href="/2022/07/07/MongoDB/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MongoDB之入门</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -1142,7 +1300,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker安装"><span class="toc-number">1.1.</span> <span class="toc-text">Docker安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#普通安装"><span class="toc-number">1.2.</span> <span class="toc-text">普通安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、问题收集"><span class="toc-number">2.</span> <span class="toc-text">一、问题收集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-概念"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-使用相关"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 使用相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-分布式、高可用相关"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 分布式、高可用相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-运维相关"><span class="toc-number">2.4.</span> <span class="toc-text">1.4 运维相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-对比"><span class="toc-number">2.5.</span> <span class="toc-text">1.5 对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-小技巧"><span class="toc-number">2.6.</span> <span class="toc-text">1.6 小技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、入门"><span class="toc-number">3.</span> <span class="toc-text">二、入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-介绍"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mongodb特色："><span class="toc-number">3.1.1.</span> <span class="toc-text">mongodb特色：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-增删改查"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 增删改查</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#插入"><span class="toc-number">3.2.1.</span> <span class="toc-text">插入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查询"><span class="toc-number">3.2.2.</span> <span class="toc-text">查询</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#关于-find"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">关于 find</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查询子文档："><span class="toc-number">3.2.2.2.</span> <span class="toc-text">查询子文档：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查询数组："><span class="toc-number">3.2.2.3.</span> <span class="toc-text">查询数组：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查询数组中的对象"><span class="toc-number">3.2.2.4.</span> <span class="toc-text">查询数组中的对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用find搜索数组中的对象"><span class="toc-number">3.2.2.5.</span> <span class="toc-text">使用find搜索数组中的对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#控制find返回的字段"><span class="toc-number">3.2.2.6.</span> <span class="toc-text">控制find返回的字段</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除"><span class="toc-number">3.2.3.</span> <span class="toc-text">删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更新"><span class="toc-number">3.2.4.</span> <span class="toc-text">更新</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#更新数组："><span class="toc-number">3.2.4.1.</span> <span class="toc-text">更新数组：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#drop：删除集合"><span class="toc-number">3.2.5.</span> <span class="toc-text">drop：删除集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dropDatabase：删除数据库"><span class="toc-number">3.2.6.</span> <span class="toc-text">dropDatabase：删除数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答"><span class="toc-number">3.2.7.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-聚合"><span class="toc-number">3.3.</span> <span class="toc-text">2.4 聚合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#管道和步骤"><span class="toc-number">3.3.1.</span> <span class="toc-text">管道和步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#聚合运算的使用场景"><span class="toc-number">3.3.2.</span> <span class="toc-text">聚合运算的使用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MQL常用步骤和SQL对比"><span class="toc-number">3.3.3.</span> <span class="toc-text">MQL常用步骤和SQL对比</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实操"><span class="toc-number">3.3.4.</span> <span class="toc-text">实操</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-1"><span class="toc-number">3.3.5.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-复制集"><span class="toc-number">3.4.</span> <span class="toc-text">2.5 复制集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#作用"><span class="toc-number">3.4.1.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结构"><span class="toc-number">3.4.2.</span> <span class="toc-text">结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据是如何复制的"><span class="toc-number">3.4.3.</span> <span class="toc-text">数据是如何复制的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#故障恢复"><span class="toc-number">3.4.4.</span> <span class="toc-text">故障恢复</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常见选项"><span class="toc-number">3.4.5.</span> <span class="toc-text">常见选项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复制集注意事项"><span class="toc-number">3.4.6.</span> <span class="toc-text">复制集注意事项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搭建复制集"><span class="toc-number">3.4.7.</span> <span class="toc-text">搭建复制集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-2"><span class="toc-number">3.4.8.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-MongoDB全家桶"><span class="toc-number">3.5.</span> <span class="toc-text">2.6 MongoDB全家桶</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mongodump-mongorestore"><span class="toc-number">3.5.1.</span> <span class="toc-text">mongodump / mongorestore</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#公有云托管服务"><span class="toc-number">3.5.2.</span> <span class="toc-text">公有云托管服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BI-Connector"><span class="toc-number">3.5.3.</span> <span class="toc-text">BI Connector</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ops-Manager-集群管理平台"><span class="toc-number">3.5.4.</span> <span class="toc-text">Ops Manager - 集群管理平台</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MongoDB-Charts"><span class="toc-number">3.5.5.</span> <span class="toc-text">MongoDB Charts</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-3"><span class="toc-number">3.5.6.</span> <span class="toc-text">问答</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-模型设计基础"><span class="toc-number">1.</span> <span class="toc-text">1. 模型设计基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-数据模型"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据模型设计的元素"><span class="toc-number">1.1.1.</span> <span class="toc-text">数据模型设计的元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传统模型设计"><span class="toc-number">1.1.2.</span> <span class="toc-text">传统模型设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答"><span class="toc-number">1.1.3.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-JSON文档模型设计特点"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 JSON文档模型设计特点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-文档模型设计之一：基础设计"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 文档模型设计之一：基础设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文档模型设计三部曲"><span class="toc-number">1.3.1.</span> <span class="toc-text">文档模型设计三部曲</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建立基础文档模型"><span class="toc-number">1.3.2.</span> <span class="toc-text">建立基础文档模型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#联系人管理应用的案例："><span class="toc-number">1.3.2.1.</span> <span class="toc-text">联系人管理应用的案例：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-2"><span class="toc-number">1.3.3.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-文档模型设计之二：工况细化"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 文档模型设计之二：工况细化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#联系人管理应用的分组需求"><span class="toc-number">1.4.1.</span> <span class="toc-text">联系人管理应用的分组需求:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#引用模式下的关联查询"><span class="toc-number">1.4.2.</span> <span class="toc-text">引用模式下的关联查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#什么时候该使用引用方式"><span class="toc-number">1.4.3.</span> <span class="toc-text">什么时候该使用引用方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-3"><span class="toc-number">1.4.4.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-文档模型设计之三：模式套用"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 文档模型设计之三：模式套用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分桶设计"><span class="toc-number">1.5.1.</span> <span class="toc-text">分桶设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-4"><span class="toc-number">1.5.2.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-设计模式集锦"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 设计模式集锦</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#列转行"><span class="toc-number">1.6.1.</span> <span class="toc-text">列转行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本字段"><span class="toc-number">1.6.2.</span> <span class="toc-text">版本字段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#近似计算"><span class="toc-number">1.6.3.</span> <span class="toc-text">近似计算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#预聚合"><span class="toc-number">1.6.4.</span> <span class="toc-text">预聚合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-5"><span class="toc-number">1.6.5.</span> <span class="toc-text">问答</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-事务开发"><span class="toc-number">2.</span> <span class="toc-text">2. 事务开发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-写操作事务"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 写操作事务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#writeConcern"><span class="toc-number">2.1.1.</span> <span class="toc-text">writeConcern</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#writeConcern-实验"><span class="toc-number">2.1.2.</span> <span class="toc-text">writeConcern 实验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#journal（参数-j-true-）"><span class="toc-number">2.1.3.</span> <span class="toc-text">journal（参数 j: true ）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-6"><span class="toc-number">2.1.4.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-读操作事务"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 读操作事务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是-readPreference"><span class="toc-number">2.2.1.</span> <span class="toc-text">什么是 readPreference</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#readPreference-场景举例"><span class="toc-number">2.2.2.</span> <span class="toc-text">readPreference 场景举例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#readPreference-与-Tag"><span class="toc-number">2.2.3.</span> <span class="toc-text">readPreference 与 Tag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#readPreference-配置"><span class="toc-number">2.2.4.</span> <span class="toc-text">readPreference 配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#readPreference-实验-从节点读"><span class="toc-number">2.2.5.</span> <span class="toc-text">readPreference 实验: 从节点读</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意事项"><span class="toc-number">2.2.6.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-7"><span class="toc-number">2.2.7.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-读操作事务2"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 读操作事务2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是-readConcern"><span class="toc-number">2.3.1.</span> <span class="toc-text">什么是 readConcern</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#readConcern-local-和-available"><span class="toc-number">2.3.2.</span> <span class="toc-text">readConcern: local 和 available</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#readConcern-majority"><span class="toc-number">2.3.3.</span> <span class="toc-text">readConcern: majority</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#实验-”majority”-vs-“local”"><span class="toc-number">2.3.3.1.</span> <span class="toc-text">实验 : ”majority” vs “local”</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#majority-与脏读"><span class="toc-number">2.3.3.2.</span> <span class="toc-text">majority 与脏读</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#readConcern-如何实现安全的读写分离"><span class="toc-number">2.3.3.3.</span> <span class="toc-text">readConcern: 如何实现安全的读写分离</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#readConcern-linearizable"><span class="toc-number">2.3.4.</span> <span class="toc-text">readConcern: linearizable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#readConcern-snapshot"><span class="toc-number">2.3.5.</span> <span class="toc-text">readConcern: snapshot</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#readConcern-小结"><span class="toc-number">2.3.6.</span> <span class="toc-text">readConcern: 小结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-8"><span class="toc-number">2.3.7.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-事务开发：多文档事务"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 事务开发：多文档事务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-9"><span class="toc-number">2.4.1.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-Change-Stream"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 Change Stream</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-10"><span class="toc-number">2.5.1.</span> <span class="toc-text">问答</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-开发最佳实践"><span class="toc-number">3.</span> <span class="toc-text">3. 开发最佳实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-连接到-MongoDB"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 连接到 MongoDB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常见连接字符串参数"><span class="toc-number">3.1.1.</span> <span class="toc-text">常见连接字符串参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接字符串节点和地址"><span class="toc-number">3.1.2.</span> <span class="toc-text">连接字符串节点和地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用域名连接集群"><span class="toc-number">3.1.3.</span> <span class="toc-text">使用域名连接集群</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不要在-mongos-前面使用负载均衡"><span class="toc-number">3.1.4.</span> <span class="toc-text">不要在 mongos 前面使用负载均衡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#游标使用"><span class="toc-number">3.1.5.</span> <span class="toc-text">游标使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于查询及索引"><span class="toc-number">3.1.6.</span> <span class="toc-text">关于查询及索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于写入"><span class="toc-number">3.1.7.</span> <span class="toc-text">关于写入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于文档结构"><span class="toc-number">3.1.8.</span> <span class="toc-text">关于文档结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#处理分页问题-–-避免使用-count"><span class="toc-number">3.1.9.</span> <span class="toc-text">处理分页问题 – 避免使用 count</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#处理分页问题-–-巧分页"><span class="toc-number">3.1.10.</span> <span class="toc-text">处理分页问题 – 巧分页</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于事务"><span class="toc-number">3.1.11.</span> <span class="toc-text">关于事务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问答-11"><span class="toc-number">3.2.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-MongoDB索引"><span class="toc-number">4.</span> <span class="toc-text">4. MongoDB索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-MongoDB索引机制一"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 MongoDB索引机制一</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#相关概念：Index、Key、DataPage"><span class="toc-number">4.1.1.</span> <span class="toc-text">相关概念：Index、Key、DataPage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Covered-Query-FETCH："><span class="toc-number">4.1.2.</span> <span class="toc-text">Covered Query/FETCH：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Query-Shape："><span class="toc-number">4.1.3.</span> <span class="toc-text">Query Shape：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Index-Prefix："><span class="toc-number">4.1.4.</span> <span class="toc-text">Index Prefix：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Selectivity过滤性"><span class="toc-number">4.1.5.</span> <span class="toc-text">Selectivity过滤性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-树结构"><span class="toc-number">4.1.6.</span> <span class="toc-text">B+树结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问答-12"><span class="toc-number">4.1.7.</span> <span class="toc-text">问答</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-MongoDB索引机制二"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 MongoDB索引机制二</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引执行计划"><span class="toc-number">4.2.1.</span> <span class="toc-text">索引执行计划</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#explain"><span class="toc-number">4.2.2.</span> <span class="toc-text">explain</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引类型"><span class="toc-number">4.2.3.</span> <span class="toc-text">索引类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#单键索引"><span class="toc-number">4.2.3.1.</span> <span class="toc-text">单键索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#组合索引"><span class="toc-number">4.2.3.2.</span> <span class="toc-text">组合索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#多值索引"><span class="toc-number">4.2.3.3.</span> <span class="toc-text">多值索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#地理位置索引"><span class="toc-number">4.2.3.4.</span> <span class="toc-text">地理位置索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全文索引"><span class="toc-number">4.2.3.5.</span> <span class="toc-text">全文索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#TTL索引"><span class="toc-number">4.2.3.6.</span> <span class="toc-text">TTL索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#部分索引"><span class="toc-number">4.2.3.7.</span> <span class="toc-text">部分索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#哈希索引"><span class="toc-number">4.2.3.8.</span> <span class="toc-text">哈希索引</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他索引技巧"><span class="toc-number">4.2.4.</span> <span class="toc-text">其他索引技巧</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问答-13"><span class="toc-number">4.3.</span> <span class="toc-text">问答</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
